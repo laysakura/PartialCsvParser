@@ -17,7 +17,7 @@ TEST_P(_get_current_line_Test, get_correct_line)
 
   const char * line = 0;
   size_t line_length = 0;
-  ASSERT_NO_THROW(_get_current_line(text, std::strlen(text), current_pos, &line, &line_length));
+  ASSERT_NO_THROW(_get_current_line(text, std::strlen(text), current_pos, '\n', &line, &line_length));
   EXPECT_EQ(expected_got_line, std::string(line, line_length));
 }
 
@@ -74,7 +74,7 @@ TEST_P(_get_next_line_Test, get_correct_next_line)
   const char * line = 0;
   size_t line_length = 0;
   bool has_next_line;
-  ASSERT_NO_THROW(has_next_line = _get_next_line(text, std::strlen(text), current_pos, &line, &line_length));
+  ASSERT_NO_THROW(has_next_line = _get_next_line(text, std::strlen(text), current_pos, '\n', &line, &line_length));
   ASSERT_EQ(expexted_has_next_line, has_next_line);
   if (has_next_line) EXPECT_EQ(expected_got_line, std::string(line, line_length));
 }

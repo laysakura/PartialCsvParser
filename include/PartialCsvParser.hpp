@@ -12,6 +12,7 @@
 #include <string>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -89,6 +90,7 @@ inline void _get_line_common_assert(
  * @param text Original text to find a line from.
  * @param text_length_byte Byte length of the original text.
  * @param current_pos Current position taking 0 ~ (text_length - 1).
+ * @param line_terminator Character to terminate a line.
  * @param line Pointer of start of the current line will be output.
  * @param line_length_byte Byte length of current line (not including line terminator) will be output.
  *
@@ -114,11 +116,11 @@ inline void _get_current_line(
   const char * const text,
   size_t text_length_byte,
   size_t current_pos,
+  char line_terminator,
   /* out */
   const char ** line,
-  size_t * line_length_byte,
-  /* optional */
-  char line_terminator = '\n')
+  size_t * line_length_byte
+  )
 {
   _get_line_common_assert(text, text_length_byte, current_pos);
 
@@ -141,6 +143,7 @@ inline void _get_current_line(
  * @param text Original text to find a line from.
  * @param text_length_byte Byte length of the original text.
  * @param current_pos Current position taking 0 ~ (text_length - 1).
+ * @param line_terminator Character to terminate a line.
  * @param line Pointer of start of the next line will be output.
  * @param line_length_byte Byte length of next line (not including line terminator) will be output.
  * @return false if current_pos is at the last line. true otherwise.
@@ -168,11 +171,10 @@ inline bool _get_next_line(
   const char * const text,
   size_t text_length_byte,
   size_t current_pos,
+  char line_terminator,
   /* out */
   const char ** line,
-  size_t * line_length_byte,
-  /* optional */
-  char line_terminator = '\n')
+  size_t * line_length_byte)
 {
   _get_line_common_assert(text, text_length_byte, current_pos);
 
@@ -217,6 +219,7 @@ std::vector<std::string> _split(const char * const str, size_t len, char delimit
 }
 
 
+class CsvConfig;
 class PartialCsvParser;
 
 class CsvConfig {
@@ -229,7 +232,8 @@ public:
     char enclosure_char = '"')
   : filepath(filepath), has_header_line(has_header_line),
     field_terminator(field_terminator), line_terminator(line_terminator),
-    enclosure_char(enclosure_char)
+    enclosure_char(enclosure_char),
+    header_length(CsvConfig::HEADER_LENGTH_NOT_CALCULATED)
   {
     if ((fd = open(filepath, O_RDONLY)) == -1)
       PERROR_ABORT((std::string("while opening ") + filepath).c_str());  // TODO 例外を投げる
@@ -245,22 +249,38 @@ public:
     if (close(fd) != 0) PERROR_ABORT("while closing file descriptor");
   }
 
-  size_t filesize() const { return csv_size; }
+  /**
+   * Return the size of CSV file.
+   */
+  inline size_t filesize() const { return csv_size; }
 
-  size_t body_offset() const;
+  /**
+   * Return the pointer of CSV content.
+   */
+  inline const char * const content() const { return csv_text; }
 
-  std::vector<std::string> headers() const {
+  /**
+   * Return the offset where CSV body (excluding header line) starts from.
+   */
+  size_t body_offset() {
+    if (!has_header_line) return 0;
+    if (header_length != HEADER_LENGTH_NOT_CALCULATED) return header_length + 1;
+    headers();  // calculate header_length
+    return header_length;
+  }
+
+  /**
+   * Return header string array.
+   * has_header_line flag must be set true in constructor.
+   */
+  std::vector<std::string> headers() {
     ASSERT(has_header_line);
     std::vector<std::string> header;  // NRVO optimization may prevent copy when returning this local variable.
 
     const char * line = 0;
-    size_t length;
-    _get_current_line(csv_text, csv_size, 0, &line, &length, line_terminator);
+    _get_current_line(csv_text, csv_size, 0, line_terminator, &line, &header_length);
 
-    return _split(line, length, field_terminator);
-  }
-
-  PartialCsvParser & generate_partial_parser(size_t read_from, size_t read_to) {
+    return _split(line, header_length, field_terminator);
   }
 
 private:
@@ -274,21 +294,93 @@ private:
   size_t csv_size;
   const char * csv_text;
 
+  size_t header_length;
+
+  static const size_t HEADER_LENGTH_NOT_CALCULATED = -1;
+
   PREVENT_CLASS_DEFAULT_METHODS(CsvConfig);
 };
 
+
 class PartialCsvParser {
 public:
-  PartialCsvParser(size_t read_from, size_t read_to) {}
+  /**
+   * Constructor.
+   * @param csv_config Instance of CsvConfig.
+   * @param read_from CSV file's <em>approximate</em> offset to start parsing. Must be no less than offset of CSV body.
+   *   read_from = READ_FROM_BODY_BEGINNING has the same meaning with read_from = body_offset().
+   * @param read_to CSV file's <em>approximate</em> offset to stop parsing. Must be greater than read_from and no greater than filesize().
+   *   read_to = READ_TO_FILE_END has the same meaning with read_to = filesize() - 1.
+   *
+   * In order to fully parse CSV lines without overlaps, read_from and read_to are interpreted with the following strategy.
+   *
+     @verbatim
+     <-------> means range from read_from to read_to.
+     @endverbatim
+   *
+     @verbatim
+     (beginning of CSV)  aaaaaaaaaaaaaaaa \0
+                         <---><-----><-->
+                          (1)   (2)   (3)
+     @endverbatim
+   *
+   * In this severe edge case, only (1), <b>who covers the beginning of line</b>, parses line "aaaaaaaaaaaaaaaa" to prevent overlap.
+   *
+   *
+     @verbatim
+     (beginning of CSV)  aaaaaaaaaaaaa \n bbbbbbbbbbb \0
+                         <---><-------->  <--------->
+                          (1)    (2)          (3)
+     @endverbatim
+   *
+   * In this case, (1) parses "aaaaaaaaaaaaa", (2) parses no line, and (3) parses "bbbbbbbbbbb".
+   *
+     @verbatim
+     (beginning of CSV)  aaaaaaaaaaaaa \n bbbbbbbbbbb \0
+                         <---><-----------><-------->
+                          (1)      (2)         (3)
+     @endverbatim
+   *
+   * In this case, (1) parses "aaaaaaaaaaaaa", (2) parses "bbbbbbbbbbb", and (3) parses no line.
+   *
+   * In short, <b>partial parser who covers the beginning of a line parses the line</b>.
+   */
+  PartialCsvParser(
+    CsvConfig & csv_config,
+    size_t read_from = READ_FROM_BODY_BEGINNING,
+    size_t read_to = READ_TO_FILE_END)
+  : csv_config(csv_config), read_from(read_from), read_to(read_to),
+    cur_pos(read_from)
+  {
+    if (read_from == READ_FROM_BODY_BEGINNING) read_from = csv_config.body_offset();
+    if (read_to == READ_TO_FILE_END) read_to = csv_config.filesize() - 1;
+    ASSERT(csv_config.body_offset() <= read_from);
+    ASSERT(read_from < read_to);
+    ASSERT(read_to < csv_config.filesize());
+  }
 
   ~PartialCsvParser() {}
 
   std::vector<std::string> get_row() {
+    ASSERT(has_more_rows());
     std::vector<std::string> row;  // NRVO optimization may prevent copy when returning this local variable.
     return row;
   }
 
-  bool has_more_rows() const {}
+  bool has_more_rows() const {
+    //_get_current_line(csv_config.content(), csv_config.filesize(), cur_pos, csv_config.line_terminator(), &cur_line, &cur_line_length);
+  }
+
+private:
+  static const size_t READ_FROM_BODY_BEGINNING = -1;
+  static const size_t READ_TO_FILE_END = -1;
+
+  CsvConfig & csv_config;
+  const size_t read_from, read_to;
+  size_t cur_pos;
+
+  const char * cur_line;
+  size_t cur_line_length;
 
   PREVENT_CLASS_DEFAULT_METHODS(PartialCsvParser);
 };
