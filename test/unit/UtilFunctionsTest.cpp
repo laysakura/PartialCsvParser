@@ -116,3 +116,27 @@ INSTANTIATE_TEST_CASE_P(text_with_empty_line, _get_next_line_Test, ::testing::Va
   std::make_tuple(text_with_empty_line, 4UL, true, ""),
   std::make_tuple(text_with_empty_line, 5UL, true, "")
 ));
+
+
+class _split_Test :
+  public ::testing::TestWithParam<std::tuple<const char *, std::vector<std::string> > >
+{};
+
+TEST_P(_split_Test, get_correct_split_strings)
+{
+  const char * const str = std::get<0>(GetParam());
+  std::vector<std::string> expected_split_strings = std::get<1>(GetParam());
+
+  std::vector<std::string> split_strings = std::get<1>(GetParam());
+  ASSERT_NO_THROW(split_strings = _split(str, std::strlen(str), ','));
+  ASSERT_EQ(expected_split_strings, split_strings);
+}
+
+#define STR_ARRAY(...) \
+  []() -> std::vector<std::string> { std::vector<std::string> v = { __VA_ARGS__ }; return v; }()
+
+INSTANTIATE_TEST_CASE_P(_, _split_Test, ::testing::Values(
+  std::make_tuple("aa,bbb,c", STR_ARRAY("aa", "bbb", "c")),
+  std::make_tuple(",bbb,,", STR_ARRAY("", "bbb", "", "")),
+  std::make_tuple("", STR_ARRAY(""))
+));

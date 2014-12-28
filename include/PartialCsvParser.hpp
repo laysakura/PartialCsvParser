@@ -196,6 +196,27 @@ inline bool _get_next_line(
   return true;
 }
 
+std::vector<std::string> _split(const char * const str, size_t len, char delimiter) {
+  ASSERT(str);
+  ASSERT(len >= 0);
+
+  std::vector<std::string> ret;  // NRVO optimization may prevent copy when returning this local variable.
+
+  const char *p_beg = str, *p_end = str;
+  while (p_end - str < len) {
+    // come to delimiter
+    if (*p_end == delimiter) {
+      ret.push_back(std::string(p_beg, p_end - p_beg));
+      p_beg = p_end + 1;
+    }
+    ++p_end;
+  }
+  // come to end of str
+  ret.push_back(std::string(p_beg, p_end - p_beg));
+  return ret;
+}
+
+
 class PartialCsvParser;
 
 class CsvConfig {
@@ -229,8 +250,14 @@ public:
   size_t body_offset() const;
 
   std::vector<std::string> headers() const {
+    ASSERT(has_header_line);
     std::vector<std::string> header;  // NRVO optimization may prevent copy when returning this local variable.
-    return header;
+
+    const char * line = 0;
+    size_t length;
+    _get_current_line(csv_text, csv_size, 0, &line, &length, line_terminator);
+
+    return _split(line, length, field_terminator);
   }
 
   PartialCsvParser & generate_partial_parser(size_t read_from, size_t read_to) {
