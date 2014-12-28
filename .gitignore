@@ -1,0 +1,60 @@
+# Created by https://www.gitignore.io
+
+### C++ ###
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# coredump
+core
+!core/
+
+# cmake files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+# Google Test files
+test/run_unit_test
+test/run_integrated_test
+contrib/gtest/
+
+# Editor files
+*~
+
+# Mac OSX files
+.DS_Store
+*.dSYM/
+
+# Eclipse files
+.cproject
+.project
+.settings
