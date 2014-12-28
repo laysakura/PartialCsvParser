@@ -60,6 +60,10 @@ public:
 
 
 // Macros for error cases
+#define STRERROR_THROW(err_class, msg) \
+  { \
+    throw err_class(std::string("Fatal from PartialCsvParser ") + msg + ": " + strerror(errno)); \
+  }
 #define PERROR_ABORT(msg) \
   { \
     std::perror((std::string("Fatal from PartialCsvParser ") + std::string(msg)).c_str()); \
@@ -68,10 +72,19 @@ public:
 
 namespace PCP {
 
+// Exception classes
+class PCPError : public std::runtime_error {
+public:
+  PCPError(const std::string &cause)
+  : std::runtime_error(cause)
+  {}
+};
+
+
 // Utility functions
-inline size_t _filesize(int opened_fd) {
+inline size_t _filesize(int opened_fd) throw(PCPError) {
   struct stat st;
-  if (fstat(opened_fd, &st) != 0) PERROR_ABORT("while getting stat(2) of file");
+  if (fstat(opened_fd, &st) != 0) STRERROR_THROW(PCPError, "while getting stat(2) of file");
   return st.st_size;
 }
 
@@ -230,15 +243,17 @@ public:
     char field_terminator = ',',
     char line_terminator = '\n',
     char enclosure_char = '"')
+  throw(PCPError)
   : filepath(filepath), has_header_line(has_header_line),
     field_terminator(field_terminator), line_terminator(line_terminator),
     enclosure_char(enclosure_char),
     header_length(CsvConfig::HEADER_LENGTH_NOT_CALCULATED)
   {
     if ((fd = open(filepath, O_RDONLY)) == -1)
-      PERROR_ABORT((std::string("while opening ") + filepath).c_str());  // TODO 例外を投げる
+      STRERROR_THROW(PCPError, std::string("while open ") + filepath);
     csv_size = _filesize(fd);
-    csv_text = static_cast<const char *>(mmap(NULL, csv_size, PROT_READ, MAP_PRIVATE, fd, 0));
+    if ((csv_text = static_cast<const char *>(mmap(NULL, csv_size, PROT_READ, MAP_PRIVATE, fd, 0))) == (void*)-1)
+      STRERROR_THROW(PCPError, std::string("while mmap ") + filepath);
   }
 
   ~CsvConfig() {
