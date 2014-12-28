@@ -32,6 +32,7 @@
 // Assertion also usable with Google Test
 #ifdef PCP_GTEST
 #include <stdexcept>
+#include <sstream>
 #include <string>
 
 class PCPAssertionFailed : public std::runtime_error {
@@ -42,9 +43,11 @@ public:
 };
 
 #define ASSERT(cond) \
-  if (!(cond)) \
-    throw PCPAssertionFailed( \
-      std::string(__FILE__) + ":" + std::to_string(__LINE__) + " PCPAssertionFailed: " + #cond);
+  if (!(cond)) { \
+    std::ostringstream ss; \
+    ss << __FILE__ << ":" << __LINE__ << " (in " << __FUNCTION__ << "())" << " PCPAssertionFailed: " << #cond; \
+    throw PCPAssertionFailed(ss.str()); \
+  }
 
 #else /* PCP_GTEST */
 #include <cassert>
