@@ -1,34 +1,118 @@
 #include <gtest/gtest.h>
-#include <utility>
+#include <tuple>
 #include <cstring>
 #include <PartialCsvParser.hpp>
 
 using namespace PCP;
 
-class _get_current_line_from_text_with_last_nl_Test : public ::testing::TestWithParam<std::pair<size_t, const char *> > {
-protected:
-  const char * const text_with_last_nl;
-  _get_current_line_from_text_with_last_nl_Test()
-  : text_with_last_nl("aa\nbbb\nc\n")
-    //                 012 3456 78
-  {}
-};
+class _get_current_line_Test :
+  public ::testing::TestWithParam<std::tuple<const char *, size_t, const char *> >
+{};
 
-TEST_P(_get_current_line_from_text_with_last_nl_Test, get_correct_line)
+TEST_P(_get_current_line_Test, get_correct_line)
 {
+  const char * const text = std::get<0>(GetParam());
+  size_t current_pos = std::get<1>(GetParam());
+  const char * const expected_got_line = std::get<2>(GetParam());
+
   const char * line = 0;
   size_t line_length = 0;
-  ASSERT_NO_THROW(_get_current_line(text_with_last_nl, std::strlen(text_with_last_nl), GetParam().first, &line, &line_length));
-  EXPECT_EQ(GetParam().second, std::string(line, line_length));
+  ASSERT_NO_THROW(_get_current_line(text, std::strlen(text), current_pos, &line, &line_length));
+  EXPECT_EQ(expected_got_line, std::string(line, line_length));
 }
-INSTANTIATE_TEST_CASE_P(_, _get_current_line_from_text_with_last_nl_Test, ::testing::Values(
-  std::make_pair(0UL, "aa"),
-  std::make_pair(1UL, "aa"),
-  std::make_pair(2UL, "aa"),
-  std::make_pair(3UL, "bbb"),
-  std::make_pair(4UL, "bbb"),
-  std::make_pair(5UL, "bbb"),
-  std::make_pair(6UL, "bbb"),
-  std::make_pair(7UL, "c"),
-  std::make_pair(8UL, "c")
+
+const char * const text_NL_terminated = "aa\nbbb\nc\n";
+//                                       012 3456 78
+INSTANTIATE_TEST_CASE_P(text_NL_terminated, _get_current_line_Test, ::testing::Values(
+  std::make_tuple(text_NL_terminated, 0UL, "aa"),
+  std::make_tuple(text_NL_terminated, 1UL, "aa"),
+  std::make_tuple(text_NL_terminated, 2UL, "aa"),
+  std::make_tuple(text_NL_terminated, 3UL, "bbb"),
+  std::make_tuple(text_NL_terminated, 4UL, "bbb"),
+  std::make_tuple(text_NL_terminated, 5UL, "bbb"),
+  std::make_tuple(text_NL_terminated, 6UL, "bbb"),
+  std::make_tuple(text_NL_terminated, 7UL, "c"),
+  std::make_tuple(text_NL_terminated, 8UL, "c")
+));
+
+const char * const text_NULL_char_terminated = "aa\nbbb\nc";
+//                                              012 3456 7
+INSTANTIATE_TEST_CASE_P(text_NULL_char_terminated, _get_current_line_Test, ::testing::Values(
+  std::make_tuple(text_NULL_char_terminated, 0UL, "aa"),
+  std::make_tuple(text_NULL_char_terminated, 1UL, "aa"),
+  std::make_tuple(text_NULL_char_terminated, 2UL, "aa"),
+  std::make_tuple(text_NULL_char_terminated, 3UL, "bbb"),
+  std::make_tuple(text_NULL_char_terminated, 4UL, "bbb"),
+  std::make_tuple(text_NULL_char_terminated, 5UL, "bbb"),
+  std::make_tuple(text_NULL_char_terminated, 6UL, "bbb"),
+  std::make_tuple(text_NULL_char_terminated, 7UL, "c")
+));
+
+const char * const text_with_empty_line = "\nbbb\n\n";
+//                                         0 1234 5
+INSTANTIATE_TEST_CASE_P(text_with_empty_line, _get_current_line_Test, ::testing::Values(
+  std::make_tuple(text_with_empty_line, 0UL, ""),
+  std::make_tuple(text_with_empty_line, 1UL, "bbb"),
+  std::make_tuple(text_with_empty_line, 2UL, "bbb"),
+  std::make_tuple(text_with_empty_line, 3UL, "bbb"),
+  std::make_tuple(text_with_empty_line, 4UL, "bbb"),
+  std::make_tuple(text_with_empty_line, 5UL, "")
+));
+
+
+class _get_next_line_Test :
+  public ::testing::TestWithParam<std::tuple<const char *, size_t, bool, const char *> >
+{};
+
+TEST_P(_get_next_line_Test, get_correct_next_line)
+{
+  const char * const text = std::get<0>(GetParam());
+  size_t current_pos = std::get<1>(GetParam());
+  bool expexted_has_next_line = std::get<2>(GetParam());
+  const char * const expected_got_line = std::get<3>(GetParam());
+
+  const char * line = 0;
+  size_t line_length = 0;
+  bool has_next_line;
+  ASSERT_NO_THROW(has_next_line = _get_next_line(text, std::strlen(text), current_pos, &line, &line_length));
+  ASSERT_EQ(expexted_has_next_line, has_next_line);
+  if (has_next_line) EXPECT_EQ(expected_got_line, std::string(line, line_length));
+}
+
+// const char * const text_NL_terminated = "aa\nbbb\nc\n";
+// //                                       012 3456 78
+INSTANTIATE_TEST_CASE_P(text_NL_terminated, _get_next_line_Test, ::testing::Values(
+  std::make_tuple(text_NL_terminated, 0UL, true, "bbb"),
+  std::make_tuple(text_NL_terminated, 1UL, true, "bbb"),
+  std::make_tuple(text_NL_terminated, 2UL, true, "bbb"),
+  std::make_tuple(text_NL_terminated, 3UL, true, "c"),
+  std::make_tuple(text_NL_terminated, 4UL, true, "c"),
+  std::make_tuple(text_NL_terminated, 5UL, true, "c"),
+  std::make_tuple(text_NL_terminated, 6UL, true, "c"),
+  std::make_tuple(text_NL_terminated, 7UL, true, ""),
+  std::make_tuple(text_NL_terminated, 8UL, true, "")
+));
+
+// const char * const text_NULL_char_terminated = "aa\nbbb\nc";
+//                                                 012 3456 7
+INSTANTIATE_TEST_CASE_P(text_NULL_char_terminated, _get_next_line_Test, ::testing::Values(
+  std::make_tuple(text_NULL_char_terminated, 0UL, true, "bbb"),
+  std::make_tuple(text_NULL_char_terminated, 1UL, true, "bbb"),
+  std::make_tuple(text_NULL_char_terminated, 2UL, true, "bbb"),
+  std::make_tuple(text_NULL_char_terminated, 3UL, true, "c"),
+  std::make_tuple(text_NULL_char_terminated, 4UL, true, "c"),
+  std::make_tuple(text_NULL_char_terminated, 5UL, true, "c"),
+  std::make_tuple(text_NULL_char_terminated, 6UL, true, "c"),
+  std::make_tuple(text_NULL_char_terminated, 7UL, false, "")
+));
+
+// const char * const text_with_empty_line = "\nbbb\n\n";
+//                                            0 1234 5
+INSTANTIATE_TEST_CASE_P(text_with_empty_line, _get_next_line_Test, ::testing::Values(
+  std::make_tuple(text_with_empty_line, 0UL, true, "bbb"),
+  std::make_tuple(text_with_empty_line, 1UL, true, ""),
+  std::make_tuple(text_with_empty_line, 2UL, true, ""),
+  std::make_tuple(text_with_empty_line, 3UL, true, ""),
+  std::make_tuple(text_with_empty_line, 4UL, true, ""),
+  std::make_tuple(text_with_empty_line, 5UL, true, "")
 ));
