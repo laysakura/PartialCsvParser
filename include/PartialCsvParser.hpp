@@ -142,7 +142,7 @@ public:
     field_terminator(field_terminator), line_terminator(line_terminator),
     enclosure_char(enclosure_char)
   {
-    if ((fd = open(filepath, O_RDONLY | O_SHLOCK)) == -1)
+    if ((fd = open(filepath, O_RDONLY)) == -1)
       PERROR_ABORT((std::string("while opening ") + filepath).c_str());  // TODO 例外を投げる
     csv_size = _filesize(fd);
     csv_text = static_cast<const char *>(mmap(NULL, csv_size, PROT_READ, MAP_PRIVATE, fd, 0));
