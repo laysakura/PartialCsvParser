@@ -198,7 +198,7 @@ inline bool _get_next_line(
   return true;
 }
 
-std::vector<std::string> _split(const char * const str, size_t len, char delimiter) {
+inline std::vector<std::string> _split(const char * const str, size_t len, char delimiter) {
   ASSERT(str);
   ASSERT(len >= 0);
 
@@ -259,7 +259,7 @@ public:
   /**
    * Return the offset where CSV body (excluding header line) starts from.
    */
-  size_t body_offset() {
+  inline size_t body_offset() {
     if (!has_header_line) return 0;
     if (header_length != HEADER_LENGTH_NOT_CALCULATED) return header_length + 1;
     headers();  // calculate header_length
@@ -270,7 +270,7 @@ public:
    * Return header string array.
    * has_header_line flag must be set true in constructor.
    */
-  std::vector<std::string> headers() {
+  inline std::vector<std::string> headers() {
     ASSERT(has_header_line);
     std::vector<std::string> header;  // NRVO optimization may prevent copy when returning this local variable.
 
@@ -364,7 +364,7 @@ public:
 
   ~PartialCsvParser() {}
 
-  std::vector<std::string> get_row() {
+  inline std::vector<std::string> get_row() {
     while (cur_pos <= read_to) {
       const char * line;
       size_t line_length;
