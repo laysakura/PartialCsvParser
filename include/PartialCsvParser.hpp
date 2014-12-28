@@ -82,7 +82,8 @@ inline void _get_line_common_assert(
 {
   ASSERT(text);
   ASSERT(text_length_byte >= 1);
-  ASSERT(0 <= current_pos && current_pos <= text_length_byte - 1);
+  ASSERT(0 <= current_pos);
+  ASSERT(current_pos <= text_length_byte - 1);
 }
 
 /**
@@ -119,8 +120,7 @@ inline void _get_current_line(
   char line_terminator,
   /* out */
   const char ** line,
-  size_t * line_length_byte
-  )
+  size_t * line_length_byte)
 {
   _get_line_common_assert(text, text_length_byte, current_pos);
 
@@ -239,9 +239,6 @@ public:
       PERROR_ABORT((std::string("while opening ") + filepath).c_str());  // TODO 例外を投げる
     csv_size = _filesize(fd);
     csv_text = static_cast<const char *>(mmap(NULL, csv_size, PROT_READ, MAP_PRIVATE, fd, 0));
-
-    std::printf("size=%d\n\n%s\n", csv_size, csv_text);
-    // reads header
   }
 
   ~CsvConfig() {
@@ -283,6 +280,10 @@ public:
     return _split(line, header_length, field_terminator);
   }
 
+  inline const char get_field_terminator() const { return field_terminator; }
+  inline const char get_line_terminator() const { return line_terminator; }
+  inline const char get_enclosure_char() const { return enclosure_char; }
+
 private:
   const char * const filepath;
   const bool has_header_line;
@@ -304,6 +305,8 @@ private:
 
 class PartialCsvParser {
 public:
+  static const std::vector<std::string> NO_MORE_ROW;
+
   /**
    * Constructor.
    * @param csv_config Instance of CsvConfig.
@@ -349,26 +352,55 @@ public:
     CsvConfig & csv_config,
     size_t read_from = READ_FROM_BODY_BEGINNING,
     size_t read_to = READ_TO_FILE_END)
-  : csv_config(csv_config), read_from(read_from), read_to(read_to),
-    cur_pos(read_from)
+  : csv_config(csv_config), read_from(read_from), read_to(read_to)
   {
-    if (read_from == READ_FROM_BODY_BEGINNING) read_from = csv_config.body_offset();
-    if (read_to == READ_TO_FILE_END) read_to = csv_config.filesize() - 1;
-    ASSERT(csv_config.body_offset() <= read_from);
-    ASSERT(read_from < read_to);
-    ASSERT(read_to < csv_config.filesize());
+    if (read_from == READ_FROM_BODY_BEGINNING) this->read_from = csv_config.body_offset();
+    if (read_to == READ_TO_FILE_END) this->read_to = csv_config.filesize() - 1;
+    cur_pos = this->read_from;
+    ASSERT(csv_config.body_offset() <= this->read_from);
+    ASSERT(this->read_from < this->read_to);
+    ASSERT(this->read_to < csv_config.filesize());
   }
 
   ~PartialCsvParser() {}
 
   std::vector<std::string> get_row() {
-    ASSERT(has_more_rows());
-    std::vector<std::string> row;  // NRVO optimization may prevent copy when returning this local variable.
-    return row;
-  }
+    while (cur_pos <= read_to) {
+      const char * line;
+      size_t line_length;
+      _get_current_line(csv_config.content(), csv_config.filesize(), cur_pos, csv_config.get_line_terminator(), &line, &line_length);
 
-  bool has_more_rows() const {
-    //_get_current_line(csv_config.content(), csv_config.filesize(), cur_pos, csv_config.line_terminator(), &cur_line, &cur_line_length);
+      // cur_pos exactly is the beginning of current line.
+      //
+      // (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n
+      //                                <----...
+      //                                cur_pos
+      //
+      // Parse "aaaaaaaaaaaaaa" and move cur_pos to the beginning of the next line.
+      if (csv_config.content() + cur_pos == line) {
+        cur_pos += line_length + 1;  // +1 is from line_delimitor
+        return _split(line, line_length, csv_config.get_field_terminator());
+      }
+
+      // read_to is at the same line with cur_pos.
+      //
+      // (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n
+      //                                    <---------->
+      //                                    cur_pos    read_to
+      if (csv_config.content() + read_to <= line + line_length + 1)  // +1 is from line_delimitor
+        return NO_MORE_ROW;
+
+      // read_to is beyond the same line with cur_pos.
+      //
+      // (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n bbbbbbbbbb
+      //                                    <--------------...
+      //                                    cur_pos
+      //
+      // Move cur_pos to the beginning of the next line.
+      if (csv_config.content() + read_to > line + line_length + 1)  // +1 is from line_delimitor
+        cur_pos += line_length + 1;  // +1 is from line_delimitor
+    }
+    return NO_MORE_ROW;
   }
 
 private:
@@ -376,14 +408,12 @@ private:
   static const size_t READ_TO_FILE_END = -1;
 
   CsvConfig & csv_config;
-  const size_t read_from, read_to;
+  size_t read_from, read_to;
   size_t cur_pos;
-
-  const char * cur_line;
-  size_t cur_line_length;
 
   PREVENT_CLASS_DEFAULT_METHODS(PartialCsvParser);
 };
+const std::vector<std::string> PartialCsvParser::NO_MORE_ROW = std::vector<std::string>(0);
 
 }
 
