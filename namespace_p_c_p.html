@@ -99,9 +99,16 @@ Classes</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ad3ab64f62d337aa2601e7ef23489d8f4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">_filesize</a> (int opened_fd)</td></tr>
 <tr class="separator:ad3ab64f62d337aa2601e7ef23489d8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a277231601ad2528166b2d489fc0b8b53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">_get_line_common_assert</a> (const char *const text, size_t text_length_byte, size_t current_pos)</td></tr>
+<tr class="separator:a277231601ad2528166b2d489fc0b8b53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9d04007e5c5588ea82239b4f4ab1898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#ad9d04007e5c5588ea82239b4f4ab1898">_get_current_line</a> (const char *const text, size_t text_length_byte, size_t current_pos, const char **line, size_t *line_length_byte, char line_terminator= '\n')</td></tr>
 <tr class="memdesc:ad9d04007e5c5588ea82239b4f4ab1898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a line including specified current_pos.  <a href="#ad9d04007e5c5588ea82239b4f4ab1898">More...</a><br /></td></tr>
 <tr class="separator:ad9d04007e5c5588ea82239b4f4ab1898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a2e8581dd916409b48d933b44eae5d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a4a2e8581dd916409b48d933b44eae5d7">_get_next_line</a> (const char *const text, size_t text_length_byte, size_t current_pos, const char **line, size_t *line_length_byte, char line_terminator= '\n')</td></tr>
+<tr class="memdesc:a4a2e8581dd916409b48d933b44eae5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find next line of specified current_pos.  <a href="#a4a2e8581dd916409b48d933b44eae5d7">More...</a><br /></td></tr>
+<tr class="separator:a4a2e8581dd916409b48d933b44eae5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02673b8eee0cb6ac2cfcef03a2860c02"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">_split</a> (const char *const str, size_t len, char delimiter)</td></tr>
+<tr class="separator:a02673b8eee0cb6ac2cfcef03a2860c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ad3ab64f62d337aa2601e7ef23489d8f4"></a>
@@ -131,6 +138,9 @@ Functions</h2></td></tr>
 <a class="anchor" id="ad9d04007e5c5588ea82239b4f4ab1898"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void PCP::_get_current_line </td>
@@ -174,6 +184,11 @@ Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Find a line including specified current_pos. </p>
@@ -198,10 +213,161 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a277231601ad2528166b2d489fc0b8b53"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PCP::_get_line_common_assert </td>
+          <td>(</td>
+          <td class="paramtype">const char *const&#160;</td>
+          <td class="paramname"><em>text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>text_length_byte</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>current_pos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4a2e8581dd916409b48d933b44eae5d7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool PCP::_get_next_line </td>
+          <td>(</td>
+          <td class="paramtype">const char *const&#160;</td>
+          <td class="paramname"><em>text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>text_length_byte</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>current_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char **&#160;</td>
+          <td class="paramname"><em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>line_length_byte</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>line_terminator</em> = <code>'\n'</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Find next line of specified current_pos. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>Original text to find a line from. </td></tr>
+    <tr><td class="paramname">text_length_byte</td><td>Byte length of the original text. </td></tr>
+    <tr><td class="paramname">current_pos</td><td>Current position taking 0 ~ (text_length - 1). </td></tr>
+    <tr><td class="paramname">line</td><td>Pointer of start of the next line will be output. </td></tr>
+    <tr><td class="paramname">line_length_byte</td><td>Byte length of next line (not including line terminator) will be output. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>false if current_pos is at the last line. true otherwise.</dd></dl>
+<pre class="fragment">\n aaaaaaaaaaa \n bbbbbbbbbbbbb \n  cccccccccc \0
+                  ^           ^  ^  ^
+                 (1)         (2)(3)(4)
+</pre><p>If current_pos is at between (1) and (2), next line will point at (4). If current_pos is at (3), next line will also point at (4). If curretn_pos is at (4), next line does not exist. Return false.</p>
+<pre class="fragment">\n ddddddddd \n eeeeeeeeeee \n \0
+                ^            ^
+               (1)          (2)
+</pre><p>Consider null character just after line terminator. If current_pos is at between (1) and (2), next line will be "". </p>
+
+</div>
+</div>
+<a class="anchor" id="a02673b8eee0cb6ac2cfcef03a2860c02"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; PCP::_split </td>
+          <td>(</td>
+          <td class="paramtype">const char *const&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>delimiter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 28 2014 17:57:53 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Dec 28 2014 23:31:06 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

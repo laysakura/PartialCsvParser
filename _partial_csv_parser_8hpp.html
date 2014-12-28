@@ -97,6 +97,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;cstdio&gt;</code><br />
 <code>#include &lt;cstdlib&gt;</code><br />
+<code>#include &lt;cstring&gt;</code><br />
 <code>#include &lt;fcntl.h&gt;</code><br />
 <code>#include &lt;sys/stat.h&gt;</code><br />
 <code>#include &lt;sys/mman.h&gt;</code><br />
@@ -130,14 +131,23 @@ Macros</h2></td></tr>
 <tr class="separator:a0966b817b229d48e5ffc7feab19a0be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaa5bb20079c7f5d174699af0adf5a54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a>(msg)</td></tr>
 <tr class="separator:aaaa5bb20079c7f5d174699af0adf5a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e7ecf8c3dbdbf4c120ee95c099baa1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#a37e7ecf8c3dbdbf4c120ee95c099baa1">CSV_CONFIG_MUST_ALIVE</a>&#160;&#160;&#160;<a class="el" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(csv_config)</td></tr>
+<tr class="separator:a37e7ecf8c3dbdbf4c120ee95c099baa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad3ab64f62d337aa2601e7ef23489d8f4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">PCP::_filesize</a> (int opened_fd)</td></tr>
 <tr class="separator:ad3ab64f62d337aa2601e7ef23489d8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a277231601ad2528166b2d489fc0b8b53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">PCP::_get_line_common_assert</a> (const char *const text, size_t text_length_byte, size_t current_pos)</td></tr>
+<tr class="separator:a277231601ad2528166b2d489fc0b8b53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9d04007e5c5588ea82239b4f4ab1898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#ad9d04007e5c5588ea82239b4f4ab1898">PCP::_get_current_line</a> (const char *const text, size_t text_length_byte, size_t current_pos, const char **line, size_t *line_length_byte, char line_terminator= '\n')</td></tr>
 <tr class="memdesc:ad9d04007e5c5588ea82239b4f4ab1898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a line including specified current_pos.  <a href="#ad9d04007e5c5588ea82239b4f4ab1898">More...</a><br /></td></tr>
 <tr class="separator:ad9d04007e5c5588ea82239b4f4ab1898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a2e8581dd916409b48d933b44eae5d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a4a2e8581dd916409b48d933b44eae5d7">PCP::_get_next_line</a> (const char *const text, size_t text_length_byte, size_t current_pos, const char **line, size_t *line_length_byte, char line_terminator= '\n')</td></tr>
+<tr class="memdesc:a4a2e8581dd916409b48d933b44eae5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find next line of specified current_pos.  <a href="#a4a2e8581dd916409b48d933b44eae5d7">More...</a><br /></td></tr>
+<tr class="separator:a4a2e8581dd916409b48d933b44eae5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02673b8eee0cb6ac2cfcef03a2860c02"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">PCP::_split</a> (const char *const str, size_t len, char delimiter)</td></tr>
+<tr class="separator:a02673b8eee0cb6ac2cfcef03a2860c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a0966b817b229d48e5ffc7feab19a0be6"></a>
@@ -150,6 +160,18 @@ Functions</h2></td></tr>
           <td class="paramtype">&#160;</td>
           <td class="paramname">cond</td><td>)</td>
           <td>&#160;&#160;&#160;std::assert(cond);</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a37e7ecf8c3dbdbf4c120ee95c099baa1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CSV_CONFIG_MUST_ALIVE&#160;&#160;&#160;<a class="el" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(csv_config)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -192,9 +214,9 @@ Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line"><a class="code" href="_partial_csv_parser_8hpp.html#ae4db8024bd49fcf860750ff94bec2f22">PREVENT_DEFAULT_CONSTRUCTOR</a>(klass); <a class="code" href="_partial_csv_parser_8hpp.html#abc9787a0acc99688b0e1ecaa8e1214ce">\</a></div>
 <div class="line"><a class="code" href="_partial_csv_parser_8hpp.html#abc9787a0acc99688b0e1ecaa8e1214ce">  PREVENT_COPY_CONSTRUCTOR</a>(klass); <a class="code" href="_partial_csv_parser_8hpp.html#af30db486a691ab283a2d6dc7df2efae2">\</a></div>
 <div class="line"><a class="code" href="_partial_csv_parser_8hpp.html#af30db486a691ab283a2d6dc7df2efae2">  PREVENT_OBJECT_ASSIGNMENT</a>(klass); \</div>
-<div class="ttc" id="_partial_csv_parser_8hpp_html_ae4db8024bd49fcf860750ff94bec2f22"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#ae4db8024bd49fcf860750ff94bec2f22">PREVENT_DEFAULT_CONSTRUCTOR</a></div><div class="ttdeci">#define PREVENT_DEFAULT_CONSTRUCTOR(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:20</div></div>
-<div class="ttc" id="_partial_csv_parser_8hpp_html_af30db486a691ab283a2d6dc7df2efae2"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#af30db486a691ab283a2d6dc7df2efae2">PREVENT_OBJECT_ASSIGNMENT</a></div><div class="ttdeci">#define PREVENT_OBJECT_ASSIGNMENT(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:24</div></div>
-<div class="ttc" id="_partial_csv_parser_8hpp_html_abc9787a0acc99688b0e1ecaa8e1214ce"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#abc9787a0acc99688b0e1ecaa8e1214ce">PREVENT_COPY_CONSTRUCTOR</a></div><div class="ttdeci">#define PREVENT_COPY_CONSTRUCTOR(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:22</div></div>
+<div class="ttc" id="_partial_csv_parser_8hpp_html_ae4db8024bd49fcf860750ff94bec2f22"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#ae4db8024bd49fcf860750ff94bec2f22">PREVENT_DEFAULT_CONSTRUCTOR</a></div><div class="ttdeci">#define PREVENT_DEFAULT_CONSTRUCTOR(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:21</div></div>
+<div class="ttc" id="_partial_csv_parser_8hpp_html_af30db486a691ab283a2d6dc7df2efae2"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#af30db486a691ab283a2d6dc7df2efae2">PREVENT_OBJECT_ASSIGNMENT</a></div><div class="ttdeci">#define PREVENT_OBJECT_ASSIGNMENT(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:25</div></div>
+<div class="ttc" id="_partial_csv_parser_8hpp_html_abc9787a0acc99688b0e1ecaa8e1214ce"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#abc9787a0acc99688b0e1ecaa8e1214ce">PREVENT_COPY_CONSTRUCTOR</a></div><div class="ttdeci">#define PREVENT_COPY_CONSTRUCTOR(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:23</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -249,7 +271,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 28 2014 17:57:53 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Dec 28 2014 23:31:06 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
