@@ -320,20 +320,19 @@ private:
 
 class PartialCsvParser {
 public:
-  static const std::vector<std::string> NO_MORE_ROW;
 
   /**
    * Constructor.
    * @param csv_config Instance of CsvConfig.
-   * @param read_from CSV file's <em>approximate</em> offset to start parsing. Must be no less than offset of CSV body.
-   *   read_from = READ_FROM_BODY_BEGINNING has the same meaning with read_from = body_offset().
-   * @param read_to CSV file's <em>approximate</em> offset to stop parsing. Must be greater than read_from and no greater than filesize().
-   *   read_to = READ_TO_FILE_END has the same meaning with read_to = filesize() - 1.
+   * @param parse_from CSV file's <em>approximate</em> offset to start parsing. Must be no less than offset of CSV body.
+   *   parse_from = PARSE_FROM_BODY_BEGINNING has the same meaning with parse_from = body_offset().
+   * @param parse_to CSV file's <em>approximate</em> offset to stop parsing. Must be greater than parse_from and no greater than filesize().
+   *   parse_to = PARSE_TO_FILE_END has the same meaning with parse_to = filesize() - 1.
    *
-   * In order to fully parse CSV lines without overlaps, read_from and read_to are interpreted with the following strategy.
+   * In order to fully parse CSV lines without overlaps, parse_from and parse_to are interpreted with the following strategy.
    *
      @verbatim
-     <-------> means range from read_from to read_to.
+     <-------> means range from parse_from to parse_to.
      @endverbatim
    *
      @verbatim
@@ -365,22 +364,27 @@ public:
    */
   PartialCsvParser(
     CsvConfig & csv_config,
-    size_t read_from = READ_FROM_BODY_BEGINNING,
-    size_t read_to = READ_TO_FILE_END)
-  : csv_config(csv_config), read_from(read_from), read_to(read_to)
+    size_t parse_from = PARSE_FROM_BODY_BEGINNING,
+    size_t parse_to = PARSE_TO_FILE_END)
+  : csv_config(csv_config), parse_from(parse_from), parse_to(parse_to)
   {
-    if (read_from == READ_FROM_BODY_BEGINNING) this->read_from = csv_config.body_offset();
-    if (read_to == READ_TO_FILE_END) this->read_to = csv_config.filesize() - 1;
-    cur_pos = this->read_from;
-    ASSERT(csv_config.body_offset() <= this->read_from);
-    ASSERT(this->read_from < this->read_to);
-    ASSERT(this->read_to < csv_config.filesize());
+    if (parse_from == PARSE_FROM_BODY_BEGINNING) this->parse_from = csv_config.body_offset();
+    if (parse_to == PARSE_TO_FILE_END) this->parse_to = csv_config.filesize() - 1;
+    cur_pos = this->parse_from;
+    ASSERT(csv_config.body_offset() <= this->parse_from);
+    ASSERT(this->parse_from < this->parse_to);
+    ASSERT(this->parse_to < csv_config.filesize());
   }
 
   ~PartialCsvParser() {}
 
+  /**
+   * Returns an array of parsed columns.
+   * Parses only around [parse_from, parse_to) specified in constuctor is parsed.
+   * @return Array of columns if line to parse remains. Otherwise, empty vector is returned. Check by retval.empty().
+   */
   inline std::vector<std::string> get_row() {
-    while (cur_pos <= read_to) {
+    while (cur_pos <= parse_to) {
       const char * line;
       size_t line_length;
       _get_current_line(csv_config.content(), csv_config.filesize(), cur_pos, csv_config.get_line_terminator(), &line, &line_length);
@@ -397,38 +401,38 @@ public:
         return _split(line, line_length, csv_config.get_field_terminator());
       }
 
-      // read_to is at the same line with cur_pos.
+      // parse_to is at the same line with cur_pos.
       //
       // (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n
       //                                    <---------->
-      //                                    cur_pos    read_to
-      if (csv_config.content() + read_to <= line + line_length + 1)  // +1 is from line_delimitor
-        return NO_MORE_ROW;
+      //                                    cur_pos    parse_to
+      if (csv_config.content() + parse_to <= line + line_length + 1)  // +1 is from line_delimitor
+        return std::vector<std::string>(0);
 
-      // read_to is beyond the same line with cur_pos.
+      // parse_to is beyond the same line with cur_pos.
       //
       // (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n bbbbbbbbbb
       //                                    <--------------...
       //                                    cur_pos
       //
       // Move cur_pos to the beginning of the next line.
-      if (csv_config.content() + read_to > line + line_length + 1)  // +1 is from line_delimitor
+      if (csv_config.content() + parse_to > line + line_length + 1)  // +1 is from line_delimitor
         cur_pos += line_length + 1;  // +1 is from line_delimitor
     }
-    return NO_MORE_ROW;
+    return std::vector<std::string>(0);
   }
 
 private:
-  static const size_t READ_FROM_BODY_BEGINNING = -1;
-  static const size_t READ_TO_FILE_END = -1;
+  static const size_t PARSE_FROM_BODY_BEGINNING = -1;
+  static const size_t PARSE_TO_FILE_END = -1;
 
   CsvConfig & csv_config;
-  size_t read_from, read_to;
+  size_t parse_from, parse_to;
   size_t cur_pos;
 
   PREVENT_CLASS_DEFAULT_METHODS(PartialCsvParser);
 };
-const std::vector<std::string> PartialCsvParser::NO_MORE_ROW = std::vector<std::string>(0);
+
 
 }
 
