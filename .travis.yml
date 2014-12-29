@@ -39,6 +39,13 @@ script:
   - pwd
   - (cd example ; for exe in $(find . -maxdepth 1 -type f -executable); do echo $exe ; ./$exe || exit ; done)
 
+  # build benchmarks
+  - (cd benchmark ; cmake . && make VERBOSE=1)
+  # generate small dataset
+  - ./script/generate-benchmark-data.sh 1
+  # run light-weight benchmark
+  - (cd benchmark ; time ./PartialCsvParserBench -p 2 -c 10000 -f csv/10000col.csv)
+
 notifications:
   email:
     recipients:
