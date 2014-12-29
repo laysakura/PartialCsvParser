@@ -39,6 +39,9 @@ script:
   - pwd
   - (cd example ; for exe in $(find . -maxdepth 1 -type f -executable); do echo $exe ; ./$exe || exit ; done)
 
+  # build benchmarks
+  - (cd benchmark ; cmake . && make VERBOSE=1)
+
 notifications:
   email:
     recipients:
