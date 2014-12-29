@@ -151,66 +151,6 @@ inline void _get_current_line(
   *line_length_byte = line_end - line_start;
 }
 
-/**
- * Find next line of specified current_pos.
- * @param text Original text to find a line from.
- * @param text_length_byte Byte length of the original text.
- * @param current_pos Current position taking 0 ~ (text_length - 1).
- * @param line_terminator Character to terminate a line.
- * @param line Pointer of start of the next line will be output.
- * @param line_length_byte Byte length of next line (not including line terminator) will be output.
- * @return false if current_pos is at the last line. true otherwise.
- *
-   @verbatim
-   \n aaaaaaaaaaa \n bbbbbbbbbbbbb \n  cccccccccc \0
-                     ^           ^  ^  ^
-                    (1)         (2)(3)(4)
-   @endverbatim
- *
- * If current_pos is at between (1) and (2), next line will point at (4).
- * If current_pos is at (3), next line will also point at (4).
- * If curretn_pos is at (4), next line does not exist. Return false.
- *
-   @verbatim
-   \n ddddddddd \n eeeeeeeeeee \n \0
-                   ^            ^
-                  (1)          (2)
-   @endverbatim
- *
- * Consider null character just after line terminator.
- * If current_pos is at between (1) and (2), next line will be "".
- */
-inline bool _get_next_line(
-  const char * const text,
-  size_t text_length_byte,
-  size_t current_pos,
-  char line_terminator,
-  /* out */
-  const char ** line,
-  size_t * line_length_byte)
-{
-  _get_line_common_assert(text, text_length_byte, current_pos);
-
-  // \n aaaaaaaaaaaa \n
-  //    ^            ^
-  //    start        end
-  const char *line_start = text + current_pos, *line_end;
-
-  // search line_start
-  while (line_start < text + text_length_byte && *line_start != line_terminator) {
-    ++line_start;
-    if (line_start == text + text_length_byte) return false;
-  }
-  ++line_start;
-  // search line_end
-  line_end = line_start;
-  while (line_end < text + text_length_byte && *line_end != line_terminator) ++line_end;
-
-  *line = line_start;
-  *line_length_byte = line_end - line_start;
-  return true;
-}
-
 inline std::vector<std::string> _split(const char * const str, size_t len, char delimiter) {
   ASSERT(str);
   ASSERT(len >= 0);
