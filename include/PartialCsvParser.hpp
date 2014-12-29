@@ -92,9 +92,9 @@ public:
  *
  * CSV format is (weakly) defined in <a href="http://tools.ietf.org/html/rfc4180#section-2">RFC4180 Section2</a>
  *
- * PartialCsvParser throws this exception when the following condition is satisfied.
+ * PartialCsvParser throws this exception when one of the following conditions is satisfied.
  * @li A row has different number of columns from first row.
-  */
+ */
 class PCPCsvError : public PCPError {
 public:
   PCPCsvError(const std::string &cause)
@@ -197,24 +197,20 @@ public:
    * @param has_header_line If CSV file has header at first line, set true.
    * @param field_terminator Character to separate columns. For UTF-8 compatibility, only 0 ~ 127 are allowed.
    * @param line_terminator Character to separate rows. For UTF-8 compatibility, only 0 ~ 127 are allowed.
-   * @param enclosure_char \p field_terminator and \p line_terminator enclosed by \p enclosure_char are ignored by parser. For UTF-8 compatibility, only 0 ~ 127 are allowed.
    */
   CsvConfig(
     const char * const filepath,
     bool has_header_line = true,
     char field_terminator = ',',
-    char line_terminator = '\n',
-    char enclosure_char = '"')
+    char line_terminator = '\n')
   throw(PCPError)
   : filepath(filepath), has_header_line(has_header_line),
     field_terminator(field_terminator), line_terminator(line_terminator),
-    enclosure_char(enclosure_char),
     n_columns(0)
   {
     // UTF-8 compatibility
     ASSERT(0 <= field_terminator); ASSERT(field_terminator <= 127);
     ASSERT(0 <= line_terminator); ASSERT(line_terminator <= 127);
-    ASSERT(0 <= enclosure_char); ASSERT(enclosure_char <= 127);
 
     if ((fd = open(filepath, O_RDONLY)) == -1)
       STRERROR_THROW(PCPError, std::string("while open ") + filepath);
@@ -281,17 +277,12 @@ public:
    * Return a character to separate rows.
    */
   inline const char get_line_terminator() const { return line_terminator; }
-  /**
-   * Return a character to ignore field terminator and line terminator.
-   */
-  inline const char get_enclosure_char() const { return enclosure_char; }
 
 private:
   const char * const filepath;
   const bool has_header_line;
   const char field_terminator;
   const char line_terminator;
-  const char enclosure_char;
 
   int fd;
   size_t csv_size;
