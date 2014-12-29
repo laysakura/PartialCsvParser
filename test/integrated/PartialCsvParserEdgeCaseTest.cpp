@@ -101,3 +101,22 @@ TEST_F(PartialCsvParserEdgeCaseTest, csv_with_empty_columns) {
   EXPECT_EQ("d", row[0]); EXPECT_EQ("", row[1]);
   EXPECT_TRUE(parser.get_row().empty());
 }
+
+TEST_F(PartialCsvParserEdgeCaseTest, csv_utf8) {
+  CsvConfig csv_config("fixture/Valid_Utf8.csv");
+  std::vector<std::string> headers = csv_config.get_headers();
+  EXPECT_EQ("タイトル", headers[0]); EXPECT_EQ("本文", headers[1]);
+
+  PartialCsvParser parser(csv_config);
+  std::vector<std::string> row;
+
+  row = parser.get_row();
+  EXPECT_EQ("寿限無", row[0]);
+  EXPECT_EQ("寿限無、寿限無 五劫の擦り切れ 海砂利水魚の 水行末 雲来末 風来末 食う寝る処に住む処 藪ら柑子の藪柑子", row[1]);
+
+  row = parser.get_row();
+  EXPECT_EQ("妙法蓮華経", row[0]);
+  EXPECT_EQ("如是。我聞。一時。仏住。王舎城。耆闍崛山中。", row[1]);
+
+  EXPECT_TRUE(parser.get_row().empty());
+}

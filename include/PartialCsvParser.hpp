@@ -195,9 +195,9 @@ public:
    * Constructor.
    * @param filepath Path to CSV file to read.
    * @param has_header_line If CSV file has header at first line, set true.
-   * @param field_terminator Character to separate columns.
-   * @param line_terminator Character to separate rows.
-   * @param enclosure_char \p field_terminator and \p line_terminator enclosed by \p enclosure_char are ignored by parser.
+   * @param field_terminator Character to separate columns. For UTF-8 compatibility, only 0 ~ 127 are allowed.
+   * @param line_terminator Character to separate rows. For UTF-8 compatibility, only 0 ~ 127 are allowed.
+   * @param enclosure_char \p field_terminator and \p line_terminator enclosed by \p enclosure_char are ignored by parser. For UTF-8 compatibility, only 0 ~ 127 are allowed.
    */
   CsvConfig(
     const char * const filepath,
@@ -211,6 +211,11 @@ public:
     enclosure_char(enclosure_char),
     n_columns(0)
   {
+    // UTF-8 compatibility
+    ASSERT(0 <= field_terminator); ASSERT(field_terminator <= 127);
+    ASSERT(0 <= line_terminator); ASSERT(line_terminator <= 127);
+    ASSERT(0 <= enclosure_char); ASSERT(enclosure_char <= 127);
+
     if ((fd = open(filepath, O_RDONLY)) == -1)
       STRERROR_THROW(PCPError, std::string("while open ") + filepath);
     csv_size = _filesize(fd);
