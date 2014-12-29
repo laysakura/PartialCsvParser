@@ -52,8 +52,8 @@ Some examples are available in [example/](./example) directory.
 You can also build and run them quickly.
 
 ```bash
-$ cmake . && make
 $ cd example/
+$ cmake . && make
 $ ./00_parse_with_1parser
 ```
 
