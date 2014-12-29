@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <iostream>
 #include <pthread.h>
+#include "benchmark.hpp"
+
 
 typedef struct parser_thread_arg_t {
   PCP::partial_csv_t partial_csv;
@@ -25,7 +27,9 @@ int main() {
   const char * filepath = "in.csv";
   const size_t n_threads = 4;
 
+  BENCH_START;
   PCP::CsvConfig csv_config(filepath, false);
+  BENCH_STOP("mmap(2) file");
 
   // Setup range each thread parse.
   size_t size_per_thread = (csv_config.filesize() - csv_config.body_offset()) / n_threads;
@@ -42,11 +46,13 @@ int main() {
 
   // create threads
   std::vector<pthread_t> tids(n_threads);
+  BENCH_START;
   for (size_t i = 0; i < n_threads; ++i)
       pthread_create(&tids[i], NULL, (void *(*)(void *))partial_parse, &parser_thread_args[i]);
   // join threads
   for (size_t i = 0; i < n_threads; ++i)
       pthread_join(tids[i], NULL);
+  BENCH_STOP("join parsing threads");
 
   // calculate total number of columns
   size_t n_total_columns = 0;
