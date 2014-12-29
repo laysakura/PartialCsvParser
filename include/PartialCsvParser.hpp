@@ -297,6 +297,16 @@ private:
 };
 
 
+/**
+ * Set of parameters passed to PartialCsvParser::PartialCsvParser().
+ */
+typedef struct partial_csv_t {
+  CsvConfig & csv_config;
+  size_t parse_from;
+  size_t parse_to;
+} partial_csv_t;
+
+
 class PartialCsvParser {
 public:
 

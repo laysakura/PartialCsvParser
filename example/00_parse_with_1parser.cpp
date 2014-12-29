@@ -1,3 +1,7 @@
+/**
+ * Parses a CSV file and print the contents.
+ */
+
 #include <PartialCsvParser.hpp>
 #include <vector>
 #include <string>
