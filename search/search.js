@@ -12,7 +12,8 @@ var indexSectionsWithContent =
   2: "p",
   3: "p",
   4: "_bcfghp~",
-  5: "aps"
+  5: "aps",
+  6: "h"
 };
 
 var indexSectionNames =
@@ -22,7 +23,8 @@ var indexSectionNames =
   2: "namespaces",
   3: "files",
   4: "functions",
-  5: "defines"
+  5: "defines",
+  6: "pages"
 };
 
 function convertToId(search)
