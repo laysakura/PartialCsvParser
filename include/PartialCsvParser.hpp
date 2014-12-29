@@ -8,6 +8,8 @@
  * To see installation, sample codes, and license, check the <a href="https://github.com/laysakura/partial_csv_parser">GitHub repository</a>.
  *
  * @author Sho Nakatani
+ *
+ * \license This project is distributed under public domain. See the <a href="https://github.com/laysakura/partial_csv_parser/UNLICENSE">UNLICENSE</a> file for more detailed explanation.
  */
 
 #ifndef INCLUDE_PARTIALCSVPARSER_HPP_
