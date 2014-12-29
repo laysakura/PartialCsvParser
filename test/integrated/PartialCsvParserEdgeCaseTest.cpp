@@ -120,3 +120,16 @@ TEST_F(PartialCsvParserEdgeCaseTest, csv_utf8) {
 
   EXPECT_TRUE(parser.get_row().empty());
 }
+
+TEST_F(PartialCsvParserEdgeCaseTest, realistic_ascii_csv) {
+  CsvConfig csv_config("fixture/Realistic_5col_1000row.csv");
+  std::vector<std::string> headers = csv_config.get_headers();
+  EXPECT_EQ(5, headers.size());
+
+  size_t n_total_columns = 0;
+  PartialCsvParser parser(csv_config);
+  std::vector<std::string> row;
+
+  while (!(row = parser.get_row()).empty()) n_total_columns += row.size();
+  EXPECT_EQ(5 * 1000, n_total_columns);
+}
