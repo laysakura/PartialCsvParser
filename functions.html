@@ -70,6 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li class="current"><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
+      <li><a href="functions_vars.html"><span>Variables</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -78,7 +79,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -94,6 +95,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>content()
 : <a class="el" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">PCP::CsvConfig</a>
+</li>
+<li>csv_config
+: <a class="el" href="struct_p_c_p_1_1partial__csv__t.html#a691deef6a807624f1fc79723fe0caf50">PCP::partial_csv_t</a>
 </li>
 <li>CsvConfig()
 : <a class="el" href="class_p_c_p_1_1_csv_config.html#a1fa63ddd3df0cef95ea9ded49505a73f">PCP::CsvConfig</a>
@@ -116,6 +120,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>get_row()
 : <a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">PCP::PartialCsvParser</a>
 </li>
+<li>parse_from
+: <a class="el" href="struct_p_c_p_1_1partial__csv__t.html#a3b29837086ea84b1f2adf1b1378076d2">PCP::partial_csv_t</a>
+</li>
+<li>parse_to
+: <a class="el" href="struct_p_c_p_1_1partial__csv__t.html#ae70ca449e0550775c6c21ad8046d9f64">PCP::partial_csv_t</a>
+</li>
 <li>PartialCsvParser()
 : <a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">PCP::PartialCsvParser</a>
 </li>
@@ -135,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 29 2014 17:21:56 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 29 2014 18:06:18 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">PartialCsvParser.hpp File Reference</div>  </div>
@@ -95,9 +96,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;stdexcept&gt;</code><br />
 <code>#include &lt;cstdio&gt;</code><br />
 <code>#include &lt;cstdlib&gt;</code><br />
 <code>#include &lt;cstring&gt;</code><br />
+<code>#include &lt;cerrno&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;fcntl.h&gt;</code><br />
 <code>#include &lt;sys/stat.h&gt;</code><br />
 <code>#include &lt;sys/mman.h&gt;</code><br />
@@ -114,6 +119,9 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thrown when invalid CSV is parsed.  <a href="class_p_c_p_1_1_p_c_p_csv_error.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html">PCP::CsvConfig</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_p_c_p_1_1partial__csv__t.html">PCP::partial_csv_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of parameters passed to <a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed" title="Constructor. ">PartialCsvParser::PartialCsvParser()</a>.  <a href="struct_p_c_p_1_1partial__csv__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html">PCP::PartialCsvParser</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,12 +141,18 @@ Macros</h2></td></tr>
 <tr class="separator:af30db486a691ab283a2d6dc7df2efae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa85937d2df9b8f617841e2aa68a7753f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#aa85937d2df9b8f617841e2aa68a7753f">PREVENT_CLASS_DEFAULT_METHODS</a>(klass)</td></tr>
 <tr class="separator:aa85937d2df9b8f617841e2aa68a7753f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0966b817b229d48e5ffc7feab19a0be6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(cond)&#160;&#160;&#160;std::assert(cond);</td></tr>
+<tr class="memitem:a0966b817b229d48e5ffc7feab19a0be6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(cond)&#160;&#160;&#160;assert(cond);</td></tr>
 <tr class="separator:a0966b817b229d48e5ffc7feab19a0be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6e1fa2f30bd919dd586759e4bf770be"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#ab6e1fa2f30bd919dd586759e4bf770be">STRERROR_THROW</a>(err_class, msg)</td></tr>
 <tr class="separator:ab6e1fa2f30bd919dd586759e4bf770be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaa5bb20079c7f5d174699af0adf5a54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a>(msg)</td></tr>
 <tr class="separator:aaaa5bb20079c7f5d174699af0adf5a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a061d04d3ec716200b891b79883268e32"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="struct_p_c_p_1_1partial__csv__t.html">PCP::partial_csv_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a061d04d3ec716200b891b79883268e32">PCP::partial_csv_t</a></td></tr>
+<tr class="memdesc:a061d04d3ec716200b891b79883268e32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of parameters passed to <a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed" title="Constructor. ">PartialCsvParser::PartialCsvParser()</a>.  <a href="#a061d04d3ec716200b891b79883268e32">More...</a><br /></td></tr>
+<tr class="separator:a061d04d3ec716200b891b79883268e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -160,7 +174,7 @@ Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">cond</td><td>)</td>
-          <td>&#160;&#160;&#160;std::assert(cond);</td>
+          <td>&#160;&#160;&#160;assert(cond);</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -203,9 +217,9 @@ Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line"><a class="code" href="_partial_csv_parser_8hpp.html#ae4db8024bd49fcf860750ff94bec2f22">PREVENT_DEFAULT_CONSTRUCTOR</a>(klass); <a class="code" href="_partial_csv_parser_8hpp.html#abc9787a0acc99688b0e1ecaa8e1214ce">\</a></div>
 <div class="line"><a class="code" href="_partial_csv_parser_8hpp.html#abc9787a0acc99688b0e1ecaa8e1214ce">  PREVENT_COPY_CONSTRUCTOR</a>(klass); <a class="code" href="_partial_csv_parser_8hpp.html#af30db486a691ab283a2d6dc7df2efae2">\</a></div>
 <div class="line"><a class="code" href="_partial_csv_parser_8hpp.html#af30db486a691ab283a2d6dc7df2efae2">  PREVENT_OBJECT_ASSIGNMENT</a>(klass); \</div>
-<div class="ttc" id="_partial_csv_parser_8hpp_html_ae4db8024bd49fcf860750ff94bec2f22"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#ae4db8024bd49fcf860750ff94bec2f22">PREVENT_DEFAULT_CONSTRUCTOR</a></div><div class="ttdeci">#define PREVENT_DEFAULT_CONSTRUCTOR(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:26</div></div>
-<div class="ttc" id="_partial_csv_parser_8hpp_html_af30db486a691ab283a2d6dc7df2efae2"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#af30db486a691ab283a2d6dc7df2efae2">PREVENT_OBJECT_ASSIGNMENT</a></div><div class="ttdeci">#define PREVENT_OBJECT_ASSIGNMENT(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:30</div></div>
-<div class="ttc" id="_partial_csv_parser_8hpp_html_abc9787a0acc99688b0e1ecaa8e1214ce"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#abc9787a0acc99688b0e1ecaa8e1214ce">PREVENT_COPY_CONSTRUCTOR</a></div><div class="ttdeci">#define PREVENT_COPY_CONSTRUCTOR(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:28</div></div>
+<div class="ttc" id="_partial_csv_parser_8hpp_html_ae4db8024bd49fcf860750ff94bec2f22"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#ae4db8024bd49fcf860750ff94bec2f22">PREVENT_DEFAULT_CONSTRUCTOR</a></div><div class="ttdeci">#define PREVENT_DEFAULT_CONSTRUCTOR(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:30</div></div>
+<div class="ttc" id="_partial_csv_parser_8hpp_html_af30db486a691ab283a2d6dc7df2efae2"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#af30db486a691ab283a2d6dc7df2efae2">PREVENT_OBJECT_ASSIGNMENT</a></div><div class="ttdeci">#define PREVENT_OBJECT_ASSIGNMENT(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:34</div></div>
+<div class="ttc" id="_partial_csv_parser_8hpp_html_abc9787a0acc99688b0e1ecaa8e1214ce"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#abc9787a0acc99688b0e1ecaa8e1214ce">PREVENT_COPY_CONSTRUCTOR</a></div><div class="ttdeci">#define PREVENT_COPY_CONSTRUCTOR(klass)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:32</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -281,7 +295,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{ \</div>
-<div class="line">    throw err_class(std::string(<span class="stringliteral">&quot;Fatal from PartialCsvParser &quot;</span>) + msg + <span class="stringliteral">&quot;: &quot;</span> + strerror(errno)); \</div>
+<div class="line">    throw err_class(std::string(<span class="stringliteral">&quot;Fatal from PartialCsvParser &quot;</span>) + msg + <span class="stringliteral">&quot;: &quot;</span> + std::strerror(errno)); \</div>
 <div class="line">  }</div>
 </div><!-- fragment -->
 </div>
@@ -289,7 +303,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 29 2014 17:21:56 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 29 2014 18:06:18 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

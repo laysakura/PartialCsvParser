@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -94,32 +94,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;sys/mman.h&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">// Prevent default class methods</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#ae4db8024bd49fcf860750ff94bec2f22">   26</a></span>&#160;<span class="preprocessor">#define PREVENT_DEFAULT_CONSTRUCTOR(klass) \</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">  private: klass();</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#abc9787a0acc99688b0e1ecaa8e1214ce">   28</a></span>&#160;<span class="preprocessor">#define PREVENT_COPY_CONSTRUCTOR(klass) \</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">  private: klass(const klass&amp;);</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#af30db486a691ab283a2d6dc7df2efae2">   30</a></span>&#160;<span class="preprocessor">#define PREVENT_OBJECT_ASSIGNMENT(klass) \</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">  private: klass&amp; operator=(const klass&amp;);</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#aa85937d2df9b8f617841e2aa68a7753f">   32</a></span>&#160;<span class="preprocessor">#define PREVENT_CLASS_DEFAULT_METHODS(klass) \</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">  PREVENT_DEFAULT_CONSTRUCTOR(klass); \</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">  PREVENT_COPY_CONSTRUCTOR(klass); \</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">  PREVENT_OBJECT_ASSIGNMENT(klass); \</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">// Assertion also usable with Google Test</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#ifdef PCP_GTEST</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;cstring&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;cerrno&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;sys/mman.h&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">// Prevent default class methods</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#ae4db8024bd49fcf860750ff94bec2f22">   30</a></span>&#160;<span class="preprocessor">#define PREVENT_DEFAULT_CONSTRUCTOR(klass) \</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">  private: klass();</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#abc9787a0acc99688b0e1ecaa8e1214ce">   32</a></span>&#160;<span class="preprocessor">#define PREVENT_COPY_CONSTRUCTOR(klass) \</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">  private: klass(const klass&amp;);</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#af30db486a691ab283a2d6dc7df2efae2">   34</a></span>&#160;<span class="preprocessor">#define PREVENT_OBJECT_ASSIGNMENT(klass) \</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">  private: klass&amp; operator=(const klass&amp;);</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#aa85937d2df9b8f617841e2aa68a7753f">   36</a></span>&#160;<span class="preprocessor">#define PREVENT_CLASS_DEFAULT_METHODS(klass) \</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">  PREVENT_DEFAULT_CONSTRUCTOR(klass); \</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">  PREVENT_COPY_CONSTRUCTOR(klass); \</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">  PREVENT_OBJECT_ASSIGNMENT(klass); \</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">// Assertion also usable with Google Test</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#ifdef PCP_GTEST</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">class </span>PCPAssertionFailed : <span class="keyword">public</span> std::runtime_error {</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  PCPAssertionFailed(<span class="keyword">const</span> std::string &amp;cause)</div>
@@ -138,7 +138,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
 <div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">   61</a></span>&#160;<span class="preprocessor">#define ASSERT(cond) \</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">  std::assert(cond);</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">  assert(cond);</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PCP_GTEST */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
@@ -146,7 +146,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">// Macros for error cases</span></div>
 <div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#ab6e1fa2f30bd919dd586759e4bf770be">   68</a></span>&#160;<span class="preprocessor">#define STRERROR_THROW(err_class, msg) \</span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">    throw err_class(std::string(&quot;Fatal from PartialCsvParser &quot;) + msg + &quot;: &quot; + strerror(errno)); \</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">    throw err_class(std::string(&quot;Fatal from PartialCsvParser &quot;) + msg + &quot;: &quot; + std::strerror(errno)); \</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">  }</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">   72</a></span>&#160;<span class="preprocessor">#define PERROR_ABORT(msg) \</span></div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">  { \</span></div>
@@ -309,108 +309,120 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;};</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
-<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html">  300</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a> {</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;</div>
-<div class="line"><a name="l00342"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">  342</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">PartialCsvParser</a>(</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp; csv_config,</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordtype">size_t</span> parse_from = PARSE_FROM_BODY_BEGINNING,</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="keywordtype">size_t</span> parse_to = PARSE_TO_FILE_END)</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  : csv_config(csv_config), parse_from(parse_from), parse_to(parse_to)</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  {</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keywordflow">if</span> (parse_from == PARSE_FROM_BODY_BEGINNING) this-&gt;parse_from = csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#aa28eae4c19dda51ea055973ae2cdd84e">body_offset</a>();</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="keywordflow">if</span> (parse_to == PARSE_TO_FILE_END) this-&gt;parse_to = csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>() - 1;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    cur_pos = this-&gt;parse_from;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#aa28eae4c19dda51ea055973ae2cdd84e">body_offset</a>() &lt;= this-&gt;parse_from);</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(this-&gt;parse_to &lt; csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>());</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="comment">// Do not assert this-&gt;parse_from &lt;= this-&gt;parse_to.</span></div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="comment">// This case occurs when CSV file only has header, has no body.</span></div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="comment">// Even in such case, get_row() can be safely called, which returns empty vector.</span></div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  }</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;</div>
-<div class="line"><a name="l00358"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">  358</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">~PartialCsvParser</a>() {}</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
-<div class="line"><a name="l00365"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">  365</a></span>&#160;  <span class="keyword">inline</span> std::vector&lt;std::string&gt; <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">get_row</a>() throw(<a class="code" href="class_p_c_p_1_1_p_c_p_csv_error.html">PCPCsvError</a>) {</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keywordflow">while</span> (cur_pos &lt;= parse_to) {</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">char</span> * line;</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;      <span class="keywordtype">size_t</span> line_length;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;      <a class="code" href="namespace_p_c_p.html#ac758311c6b4b947f12a742770b5f7a5d">_get_current_line</a>(csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>(), csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>(), cur_pos, csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a250d71e4aa3786628da627ffc6570598">get_line_terminator</a>(), &amp;line, &amp;line_length);</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;      <span class="comment">// cur_pos exactly is the beginning of current line.</span></div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;      <span class="comment">//</span></div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;      <span class="comment">// (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n</span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      <span class="comment">//                                &lt;----...</span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      <span class="comment">//                                cur_pos</span></div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;      <span class="comment">//</span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;      <span class="comment">// Parse &quot;aaaaaaaaaaaaaa&quot; and move cur_pos to the beginning of the next line.</span></div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;      <span class="keywordflow">if</span> (csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>() + cur_pos == line) {</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        cur_pos += line_length + 1;  <span class="comment">// +1 is from line_delimitor</span></div>
+<div class="line"><a name="l00303"></a><span class="lineno"><a class="line" href="struct_p_c_p_1_1partial__csv__t.html">  303</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="struct_p_c_p_1_1partial__csv__t.html">partial_csv_t</a> {</div>
+<div class="line"><a name="l00304"></a><span class="lineno"><a class="line" href="struct_p_c_p_1_1partial__csv__t.html#a691deef6a807624f1fc79723fe0caf50">  304</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp; <a class="code" href="struct_p_c_p_1_1partial__csv__t.html#a691deef6a807624f1fc79723fe0caf50">csv_config</a>;</div>
+<div class="line"><a name="l00305"></a><span class="lineno"><a class="line" href="struct_p_c_p_1_1partial__csv__t.html#a3b29837086ea84b1f2adf1b1378076d2">  305</a></span>&#160;  <span class="keywordtype">size_t</span> <a class="code" href="struct_p_c_p_1_1partial__csv__t.html#a3b29837086ea84b1f2adf1b1378076d2">parse_from</a>;</div>
+<div class="line"><a name="l00306"></a><span class="lineno"><a class="line" href="struct_p_c_p_1_1partial__csv__t.html#ae70ca449e0550775c6c21ad8046d9f64">  306</a></span>&#160;  <span class="keywordtype">size_t</span> <a class="code" href="struct_p_c_p_1_1partial__csv__t.html#ae70ca449e0550775c6c21ad8046d9f64">parse_to</a>;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;} <a class="code" href="namespace_p_c_p.html#a061d04d3ec716200b891b79883268e32">partial_csv_t</a>;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;</div>
+<div class="line"><a name="l00310"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html">  310</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a> {</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;</div>
+<div class="line"><a name="l00352"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">  352</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">PartialCsvParser</a>(</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp; csv_config,</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keywordtype">size_t</span> parse_from = PARSE_FROM_BODY_BEGINNING,</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordtype">size_t</span> parse_to = PARSE_TO_FILE_END)</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  : csv_config(csv_config), parse_from(parse_from), parse_to(parse_to)</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  {</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordflow">if</span> (parse_from == PARSE_FROM_BODY_BEGINNING) this-&gt;parse_from = csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#aa28eae4c19dda51ea055973ae2cdd84e">body_offset</a>();</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    <span class="keywordflow">if</span> (parse_to == PARSE_TO_FILE_END) this-&gt;parse_to = csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>() - 1;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    cur_pos = this-&gt;parse_from;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#aa28eae4c19dda51ea055973ae2cdd84e">body_offset</a>() &lt;= this-&gt;parse_from);</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(this-&gt;parse_to &lt; csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>());</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="comment">// Do not assert this-&gt;parse_from &lt;= this-&gt;parse_to.</span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="comment">// This case occurs when CSV file only has header, has no body.</span></div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="comment">// Even in such case, get_row() can be safely called, which returns empty vector.</span></div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  }</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;</div>
+<div class="line"><a name="l00368"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">  368</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">~PartialCsvParser</a>() {}</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;</div>
+<div class="line"><a name="l00375"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">  375</a></span>&#160;  <span class="keyword">inline</span> std::vector&lt;std::string&gt; <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">get_row</a>() throw(<a class="code" href="class_p_c_p_1_1_p_c_p_csv_error.html">PCPCsvError</a>) {</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keywordflow">while</span> (cur_pos &lt;= parse_to) {</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">char</span> * line;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;      <span class="keywordtype">size_t</span> line_length;</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;      <a class="code" href="namespace_p_c_p.html#ac758311c6b4b947f12a742770b5f7a5d">_get_current_line</a>(csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>(), csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>(), cur_pos, csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a250d71e4aa3786628da627ffc6570598">get_line_terminator</a>(), &amp;line, &amp;line_length);</div>
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;        <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp; columns = <a class="code" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">_split</a>(line, line_length, csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a0e67bce5ddf6f79149fa53f876941c71">get_field_terminator</a>());</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        <span class="keywordflow">if</span> (columns.size() != csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a66c59b76b98e329e51e22d0e13bfd4bd">get_n_columns</a>()) {</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;          std::ostringstream ss; \</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;          ss &lt;&lt; <span class="stringliteral">&quot;The following line has &quot;</span> &lt;&lt; columns.size() &lt;&lt; <span class="stringliteral">&quot; columns, while the first line has &quot;</span> &lt;&lt; csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a66c59b76b98e329e51e22d0e13bfd4bd">get_n_columns</a>() &lt;&lt; <span class="stringliteral">&quot; columns.&quot;</span> &lt;&lt; std::endl &lt;&lt; std::string(line, line_length);</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;          <span class="keywordflow">throw</span> PCPCsvError(ss.str());</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        }</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        <span class="keywordflow">return</span> columns;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;      }</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;      <span class="comment">// parse_to is at the same line with cur_pos.</span></div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;      <span class="comment">//</span></div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;      <span class="comment">// (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n</span></div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;      <span class="comment">//                                    &lt;----------&gt;</span></div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;      <span class="comment">//                                    cur_pos    parse_to</span></div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;      <span class="keywordflow">if</span> (csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>() + parse_to &lt; line + line_length + 1)  <span class="comment">// +1 is from line_delimitor</span></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;        <span class="keywordflow">return</span> std::vector&lt;std::string&gt;(0);</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;      <span class="comment">// parse_to is beyond the same line with cur_pos.</span></div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;      <span class="comment">//</span></div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      <span class="comment">// (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n bbbbbbbbbb</span></div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;      <span class="comment">//                                    &lt;--------------...</span></div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;      <span class="comment">//                                    cur_pos</span></div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;      <span class="comment">//</span></div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;      <span class="comment">// Move cur_pos to the beginning of the next line.</span></div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;      <span class="keywordflow">if</span> (csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>() + parse_to &gt;= line + line_length + 1)  <span class="comment">// +1 is from line_delimitor</span></div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;        cur_pos = (line - csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>()) + line_length + 1;  <span class="comment">// +1 is from line_delimitor</span></div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    }</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="keywordflow">return</span> std::vector&lt;std::string&gt;(0);</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;  }</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> PARSE_FROM_BODY_BEGINNING = -1;</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> PARSE_TO_FILE_END = -1;</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;  <a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp; csv_config;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;  <span class="keywordtype">size_t</span> parse_from, parse_to;</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;  <span class="keywordtype">size_t</span> cur_pos;</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;  PREVENT_CLASS_DEFAULT_METHODS(<a class="code" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a>);</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;};</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;}</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;      <span class="comment">// cur_pos exactly is the beginning of current line.</span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;      <span class="comment">//</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;      <span class="comment">// (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n</span></div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;      <span class="comment">//                                &lt;----...</span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;      <span class="comment">//                                cur_pos</span></div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;      <span class="comment">//</span></div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;      <span class="comment">// Parse &quot;aaaaaaaaaaaaaa&quot; and move cur_pos to the beginning of the next line.</span></div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;      <span class="keywordflow">if</span> (csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>() + cur_pos == line) {</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;        cur_pos += line_length + 1;  <span class="comment">// +1 is from line_delimitor</span></div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;        <span class="keyword">const</span> std::vector&lt;std::string&gt; &amp; columns = <a class="code" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">_split</a>(line, line_length, csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a0e67bce5ddf6f79149fa53f876941c71">get_field_terminator</a>());</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;        <span class="keywordflow">if</span> (columns.size() != csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a66c59b76b98e329e51e22d0e13bfd4bd">get_n_columns</a>()) {</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;          std::ostringstream ss; \</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;          ss &lt;&lt; <span class="stringliteral">&quot;The following line has &quot;</span> &lt;&lt; columns.size() &lt;&lt; <span class="stringliteral">&quot; columns, while the first line has &quot;</span> &lt;&lt; csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a66c59b76b98e329e51e22d0e13bfd4bd">get_n_columns</a>() &lt;&lt; <span class="stringliteral">&quot; columns.&quot;</span> &lt;&lt; std::endl &lt;&lt; std::string(line, line_length);</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;          <span class="keywordflow">throw</span> PCPCsvError(ss.str());</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;        }</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;        <span class="keywordflow">return</span> columns;</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;      }</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      <span class="comment">// parse_to is at the same line with cur_pos.</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;      <span class="comment">//</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;      <span class="comment">// (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n</span></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;      <span class="comment">//                                    &lt;----------&gt;</span></div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;      <span class="comment">//                                    cur_pos    parse_to</span></div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;      <span class="keywordflow">if</span> (csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>() + parse_to &lt; line + line_length + 1)  <span class="comment">// +1 is from line_delimitor</span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;        <span class="keywordflow">return</span> std::vector&lt;std::string&gt;(0);</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;      <span class="comment">// parse_to is beyond the same line with cur_pos.</span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;      <span class="comment">//</span></div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;      <span class="comment">// (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n bbbbbbbbbb</span></div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;      <span class="comment">//                                    &lt;--------------...</span></div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;      <span class="comment">//                                    cur_pos</span></div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;      <span class="comment">//</span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;      <span class="comment">// Move cur_pos to the beginning of the next line.</span></div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;      <span class="keywordflow">if</span> (csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>() + parse_to &gt;= line + line_length + 1)  <span class="comment">// +1 is from line_delimitor</span></div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        cur_pos = (line - csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>()) + line_length + 1;  <span class="comment">// +1 is from line_delimitor</span></div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    }</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    <span class="keywordflow">return</span> std::vector&lt;std::string&gt;(0);</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;  }</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> PARSE_FROM_BODY_BEGINNING = -1;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> PARSE_TO_FILE_END = -1;</div>
 <div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* INCLUDE_PARTIALCSVPARSER_HPP_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_ab7dd18ced1bab5bd08812b1b7ecd527f"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">PCP::PartialCsvParser::~PartialCsvParser</a></div><div class="ttdeci">~PartialCsvParser()</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:358</div></div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;  <a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp; csv_config;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;  <span class="keywordtype">size_t</span> parse_from, parse_to;</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;  <span class="keywordtype">size_t</span> cur_pos;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;  PREVENT_CLASS_DEFAULT_METHODS(<a class="code" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a>);</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;};</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;}</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* INCLUDE_PARTIALCSVPARSER_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="struct_p_c_p_1_1partial__csv__t_html"><div class="ttname"><a href="struct_p_c_p_1_1partial__csv__t.html">PCP::partial_csv_t</a></div><div class="ttdoc">Set of parameters passed to PartialCsvParser::PartialCsvParser(). </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:303</div></div>
+<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_ab7dd18ced1bab5bd08812b1b7ecd527f"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">PCP::PartialCsvParser::~PartialCsvParser</a></div><div class="ttdeci">~PartialCsvParser()</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:368</div></div>
 <div class="ttc" id="class_p_c_p_1_1_csv_config_html_a0e67bce5ddf6f79149fa53f876941c71"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a0e67bce5ddf6f79149fa53f876941c71">PCP::CsvConfig::get_field_terminator</a></div><div class="ttdeci">const char get_field_terminator() const </div><div class="ttdoc">Return a character to separate columns. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:275</div></div>
 <div class="ttc" id="class_p_c_p_1_1_p_c_p_error_html_a2ee431ae7697f3b3302ac67ee4e26e74"><div class="ttname"><a href="class_p_c_p_1_1_p_c_p_error.html#a2ee431ae7697f3b3302ac67ee4e26e74">PCP::PCPError::PCPError</a></div><div class="ttdeci">PCPError(const std::string &amp;cause)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:85</div></div>
 <div class="ttc" id="namespace_p_c_p_html_ac758311c6b4b947f12a742770b5f7a5d"><div class="ttname"><a href="namespace_p_c_p.html#ac758311c6b4b947f12a742770b5f7a5d">PCP::_get_current_line</a></div><div class="ttdeci">void _get_current_line(const char *const text, size_t text_length_byte, size_t current_pos, char line_terminator, const char **line, size_t *line_length_byte)</div><div class="ttdoc">Find a line including specified current_pos. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:140</div></div>
 <div class="ttc" id="class_p_c_p_1_1_csv_config_html_a85b56c5f5e4a4d8970c99e9de9324eaa"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a85b56c5f5e4a4d8970c99e9de9324eaa">PCP::CsvConfig::~CsvConfig</a></div><div class="ttdeci">~CsvConfig()</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:235</div></div>
 <div class="ttc" id="namespace_p_c_p_html_ad3ab64f62d337aa2601e7ef23489d8f4"><div class="ttname"><a href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">PCP::_filesize</a></div><div class="ttdeci">size_t _filesize(int opened_fd)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:107</div></div>
+<div class="ttc" id="struct_p_c_p_1_1partial__csv__t_html_a3b29837086ea84b1f2adf1b1378076d2"><div class="ttname"><a href="struct_p_c_p_1_1partial__csv__t.html#a3b29837086ea84b1f2adf1b1378076d2">PCP::partial_csv_t::parse_from</a></div><div class="ttdeci">size_t parse_from</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:305</div></div>
 <div class="ttc" id="namespace_p_c_p_html_a02673b8eee0cb6ac2cfcef03a2860c02"><div class="ttname"><a href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">PCP::_split</a></div><div class="ttdeci">std::vector&lt; std::string &gt; _split(const char *const str, size_t len, char delimiter)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:168</div></div>
 <div class="ttc" id="class_p_c_p_1_1_csv_config_html_a66c59b76b98e329e51e22d0e13bfd4bd"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a66c59b76b98e329e51e22d0e13bfd4bd">PCP::CsvConfig::get_n_columns</a></div><div class="ttdeci">size_t get_n_columns() const </div><div class="ttdoc">Return the number of columns in first line. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:253</div></div>
 <div class="ttc" id="class_p_c_p_1_1_csv_config_html"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html">PCP::CsvConfig</a></div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:192</div></div>
 <div class="ttc" id="class_p_c_p_1_1_csv_config_html_a1fa63ddd3df0cef95ea9ded49505a73f"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a1fa63ddd3df0cef95ea9ded49505a73f">PCP::CsvConfig::CsvConfig</a></div><div class="ttdeci">CsvConfig(const char *const filepath, bool has_header_line=true, char field_terminator= ',', char line_terminator= '\n')</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:201</div></div>
 <div class="ttc" id="_partial_csv_parser_8hpp_html_ab6e1fa2f30bd919dd586759e4bf770be"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#ab6e1fa2f30bd919dd586759e4bf770be">STRERROR_THROW</a></div><div class="ttdeci">#define STRERROR_THROW(err_class, msg)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:68</div></div>
 <div class="ttc" id="class_p_c_p_1_1_csv_config_html_aff72f39f8082f2bf37a694d6f6e27373"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#aff72f39f8082f2bf37a694d6f6e27373">PCP::CsvConfig::get_headers</a></div><div class="ttdeci">std::vector&lt; std::string &gt; get_headers() const </div><div class="ttdoc">Return header string array. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:267</div></div>
-<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_a65af2617da69841fa4ed264cfa49ad4c"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">PCP::PartialCsvParser::get_row</a></div><div class="ttdeci">std::vector&lt; std::string &gt; get_row()</div><div class="ttdoc">Returns an array of parsed columns. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:365</div></div>
+<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_a65af2617da69841fa4ed264cfa49ad4c"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">PCP::PartialCsvParser::get_row</a></div><div class="ttdeci">std::vector&lt; std::string &gt; get_row()</div><div class="ttdoc">Returns an array of parsed columns. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:375</div></div>
 <div class="ttc" id="class_p_c_p_1_1_p_c_p_error_html"><div class="ttname"><a href="class_p_c_p_1_1_p_c_p_error.html">PCP::PCPError</a></div><div class="ttdoc">Runtime error. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:83</div></div>
-<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html">PCP::PartialCsvParser</a></div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:300</div></div>
-<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_aaf19c1d20e4337cea84596d22eb915ed"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">PCP::PartialCsvParser::PartialCsvParser</a></div><div class="ttdeci">PartialCsvParser(CsvConfig &amp;csv_config, size_t parse_from=PARSE_FROM_BODY_BEGINNING, size_t parse_to=PARSE_TO_FILE_END)</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:342</div></div>
+<div class="ttc" id="struct_p_c_p_1_1partial__csv__t_html_ae70ca449e0550775c6c21ad8046d9f64"><div class="ttname"><a href="struct_p_c_p_1_1partial__csv__t.html#ae70ca449e0550775c6c21ad8046d9f64">PCP::partial_csv_t::parse_to</a></div><div class="ttdeci">size_t parse_to</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:306</div></div>
+<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html">PCP::PartialCsvParser</a></div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:310</div></div>
+<div class="ttc" id="namespace_p_c_p_html_a061d04d3ec716200b891b79883268e32"><div class="ttname"><a href="namespace_p_c_p.html#a061d04d3ec716200b891b79883268e32">PCP::partial_csv_t</a></div><div class="ttdeci">struct PCP::partial_csv_t partial_csv_t</div><div class="ttdoc">Set of parameters passed to PartialCsvParser::PartialCsvParser(). </div></div>
+<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_aaf19c1d20e4337cea84596d22eb915ed"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">PCP::PartialCsvParser::PartialCsvParser</a></div><div class="ttdeci">PartialCsvParser(CsvConfig &amp;csv_config, size_t parse_from=PARSE_FROM_BODY_BEGINNING, size_t parse_to=PARSE_TO_FILE_END)</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:352</div></div>
 <div class="ttc" id="class_p_c_p_1_1_csv_config_html_a73b33aa17d61b546eacc4b68c7237bfd"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">PCP::CsvConfig::content</a></div><div class="ttdeci">const char *const content() const </div><div class="ttdoc">Return the pointer of CSV content. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:248</div></div>
 <div class="ttc" id="class_p_c_p_1_1_p_c_p_csv_error_html_a97655759dc1c02fcb4d5e6416137b4e0"><div class="ttname"><a href="class_p_c_p_1_1_p_c_p_csv_error.html#a97655759dc1c02fcb4d5e6416137b4e0">PCP::PCPCsvError::PCPCsvError</a></div><div class="ttdeci">PCPCsvError(const std::string &amp;cause)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:100</div></div>
 <div class="ttc" id="_partial_csv_parser_8hpp_html_aaaa5bb20079c7f5d174699af0adf5a54"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a></div><div class="ttdeci">#define PERROR_ABORT(msg)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:72</div></div>
 <div class="ttc" id="class_p_c_p_1_1_p_c_p_csv_error_html"><div class="ttname"><a href="class_p_c_p_1_1_p_c_p_csv_error.html">PCP::PCPCsvError</a></div><div class="ttdoc">Thrown when invalid CSV is parsed. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:98</div></div>
+<div class="ttc" id="struct_p_c_p_1_1partial__csv__t_html_a691deef6a807624f1fc79723fe0caf50"><div class="ttname"><a href="struct_p_c_p_1_1partial__csv__t.html#a691deef6a807624f1fc79723fe0caf50">PCP::partial_csv_t::csv_config</a></div><div class="ttdeci">CsvConfig &amp; csv_config</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:304</div></div>
 <div class="ttc" id="class_p_c_p_1_1_csv_config_html_aa28eae4c19dda51ea055973ae2cdd84e"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#aa28eae4c19dda51ea055973ae2cdd84e">PCP::CsvConfig::body_offset</a></div><div class="ttdeci">size_t body_offset() const </div><div class="ttdoc">Return the offset where CSV body (excluding header line) starts from. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:258</div></div>
 <div class="ttc" id="_partial_csv_parser_8hpp_html_a0966b817b229d48e5ffc7feab19a0be6"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a></div><div class="ttdeci">#define ASSERT(cond)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:61</div></div>
 <div class="ttc" id="class_p_c_p_1_1_csv_config_html_a596c6599cb72bf93a5cc4a7f4b07fadf"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">PCP::CsvConfig::filesize</a></div><div class="ttdeci">size_t filesize() const </div><div class="ttdoc">Return the size of CSV file. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:243</div></div>
@@ -418,7 +430,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 29 2014 17:21:56 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 29 2014 18:06:18 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
