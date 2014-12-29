@@ -1,8 +1,13 @@
-/*
- * PartialCsvParser.hpp
+/**
+ * \mainpage PartialCsvParser's reference manual
  *
- *  Created on: 2014/12/28
- *      Author: nakatani.sho
+ * This page is a reference manual of PartialCsvParser.
+ *
+ * @par
+ *
+ * To see installation, sample codes, and license, check the <a href="https://github.com/laysakura/partial_csv_parser">GitHub repository</a>.
+ *
+ * @author Sho Nakatani
  */
 
 #ifndef INCLUDE_PARTIALCSVPARSER_HPP_
@@ -72,7 +77,9 @@ public:
 
 namespace PCP {
 
-// Exception classes
+/**
+ * Runtime error.
+ */
 class PCPError : public std::runtime_error {
 public:
   PCPError(const std::string &cause)
@@ -100,13 +107,13 @@ inline void _get_line_common_assert(
 }
 
 /**
- * Find a line including specified current_pos.
- * @param text Original text to find a line from.
- * @param text_length_byte Byte length of the original text.
- * @param current_pos Current position taking 0 ~ (text_length - 1).
- * @param line_terminator Character to terminate a line.
- * @param line Pointer of start of the current line will be output.
- * @param line_length_byte Byte length of current line (not including line terminator) will be output.
+ * Find a line including specified \p current_pos.
+ * @param[in] text Original text to find a line from.
+ * @param[in] text_length_byte Byte length of the original text.
+ * @param[in] current_pos Current position taking 0 ~ (\p text_length - 1).
+ * @param[in] line_terminator Character to terminate a line.
+ * @param[out] line Pointer of start of the current line will be output.
+ * @param[out] line_length_byte Byte length of current line (not including line terminator) will be output.
  *
    @verbatim
    \n aaaaaaaaaaa \n bbbbbbbbbbbbb \n cccccccccc \n
@@ -114,8 +121,8 @@ inline void _get_line_common_assert(
                     (1)         (2)(3)
    @endverbatim
  *
- * If current_pos is at between (1) and (2), line will point at (1).
- * If current_pos is at (3), line will also point at (1).
+ * If \p current_pos is at between (1) and (2), line will point at (1).
+ * If \p current_pos is at (3), line will also point at (1).
  *
    @verbatim
    \n ddddddddd \n eeeeeeeeeee \0
@@ -124,7 +131,7 @@ inline void _get_line_common_assert(
    @endverbatim
  *
  * Consider null character.
- * If current_pos is at between (1) and (2), line will point at (1).
+ * If \p current_pos is at between (1) and (2), line will point at (1).
  */
 inline void _get_current_line(
   const char * const text,
@@ -237,6 +244,14 @@ class PartialCsvParser;
 
 class CsvConfig {
 public:
+  /**
+   * Constructor.
+   * @param filepath Path to CSV file to read.
+   * @param has_header_line If CSV file has header at first line, set true.
+   * @param field_terminator Character to separate columns.
+   * @param line_terminator Character to separate rows.
+   * @param enclosure_char \p field_terminator and \p line_terminator enclosed by \p enclosure_char are ignored by parser.
+   */
   CsvConfig(
     const char * const filepath,
     bool has_header_line = true,
@@ -283,7 +298,7 @@ public:
 
   /**
    * Return header string array.
-   * has_header_line flag must be set true in constructor.
+   * \p has_header_line flag must be set true in constructor.
    */
   inline std::vector<std::string> headers() {
     ASSERT(has_header_line);
@@ -295,8 +310,17 @@ public:
     return _split(line, header_length, field_terminator);
   }
 
+  /**
+   * Return a character to separate columns.
+   */
   inline const char get_field_terminator() const { return field_terminator; }
+  /**
+   * Return a character to separate rows.
+   */
   inline const char get_line_terminator() const { return line_terminator; }
+  /**
+   * Return a character to ignore field terminator and line terminator.
+   */
   inline const char get_enclosure_char() const { return enclosure_char; }
 
 private:
@@ -324,16 +348,14 @@ public:
   /**
    * Constructor.
    * @param csv_config Instance of CsvConfig.
-   * @param parse_from CSV file's <em>approximate</em> offset to start parsing. Must be no less than offset of CSV body.
-   *   parse_from = PARSE_FROM_BODY_BEGINNING has the same meaning with parse_from = body_offset().
-   * @param parse_to CSV file's <em>approximate</em> offset to stop parsing. Must be greater than parse_from and no greater than filesize().
-   *   parse_to = PARSE_TO_FILE_END has the same meaning with parse_to = filesize() - 1.
+   * @param parse_from CSV file's <em>approximate</em> offset to start parsing. Must be no less than CsvConfig::body_offset().
+   *   \p parse_from = PARSE_FROM_BODY_BEGINNING has the same meaning with \p parse_from = CsvConfig::body_offset().
+   * @param parse_to CSV file's <em>approximate</em> offset to stop parsing. Must be greater than \p parse_from and less than CsvConfig::filesize().
+   *   \p parse_to = PARSE_TO_FILE_END has the same meaning with \p parse_to = CsvConfig::filesize() - 1.
    *
-   * In order to fully parse CSV lines without overlaps, parse_from and parse_to are interpreted with the following strategy.
+   * In order to fully parse CSV lines without overlaps, \p parse_from and \p parse_to are interpreted with the following strategy.
    *
-     @verbatim
-     <-------> means range from parse_from to parse_to.
-     @endverbatim
+   * <-------> means range from parse_from to parse_to.
    *
      @verbatim
      (beginning of CSV)  aaaaaaaaaaaaaaaa \0
@@ -380,8 +402,8 @@ public:
 
   /**
    * Returns an array of parsed columns.
-   * Parses only around [parse_from, parse_to) specified in constuctor is parsed.
-   * @return Array of columns if line to parse remains. Otherwise, empty vector is returned. Check by retval.empty().
+   * Parses only around [\p parse_from, \p parse_to) specified in constructor is parsed.
+   * @return Array of columns if line to parse remains. Otherwise, empty vector is returned. Check by \p retval.empty().
    */
   inline std::vector<std::string> get_row() {
     while (cur_pos <= parse_to) {
