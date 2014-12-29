@@ -7,12 +7,12 @@
 
 var indexSectionsWithContent =
 {
-  0: "_abcfghp~",
+  0: "_abcfghps~",
   1: "cp",
   2: "p",
   3: "p",
   4: "_bcfghp~",
-  5: "acp"
+  5: "aps"
 };
 
 var indexSectionNames =

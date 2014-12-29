@@ -62,6 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -97,17 +98,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac15b24a037c3aefd2ef7097174b82e13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#ac15b24a037c3aefd2ef7097174b82e13">PartialCsvParser</a> (<a class="el" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> *const csv_config, size_t read_from, size_t read_to)</td></tr>
-<tr class="separator:ac15b24a037c3aefd2ef7097174b82e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf19c1d20e4337cea84596d22eb915ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">PartialCsvParser</a> (<a class="el" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp;csv_config, size_t parse_from=PARSE_FROM_BODY_BEGINNING, size_t parse_to=PARSE_TO_FILE_END)</td></tr>
+<tr class="memdesc:aaf19c1d20e4337cea84596d22eb915ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aaf19c1d20e4337cea84596d22eb915ed">More...</a><br /></td></tr>
+<tr class="separator:aaf19c1d20e4337cea84596d22eb915ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7dd18ced1bab5bd08812b1b7ecd527f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">~PartialCsvParser</a> ()</td></tr>
 <tr class="separator:ab7dd18ced1bab5bd08812b1b7ecd527f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65af2617da69841fa4ed264cfa49ad4c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">get_row</a> ()</td></tr>
+<tr class="memdesc:a65af2617da69841fa4ed264cfa49ad4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an array of parsed columns.  <a href="#a65af2617da69841fa4ed264cfa49ad4c">More...</a><br /></td></tr>
 <tr class="separator:a65af2617da69841fa4ed264cfa49ad4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ba0328a77f68cb172581fc9c5fba6ad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#a1ba0328a77f68cb172581fc9c5fba6ad">has_more_rows</a> () const </td></tr>
-<tr class="separator:a1ba0328a77f68cb172581fc9c5fba6ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ac15b24a037c3aefd2ef7097174b82e13"></a>
+<a class="anchor" id="aaf19c1d20e4337cea84596d22eb915ed"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -117,20 +118,20 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">PCP::PartialCsvParser::PartialCsvParser </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp;&#160;</td>
           <td class="paramname"><em>csv_config</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>read_from</em>, </td>
+          <td class="paramname"><em>parse_from</em> = <code>PARSE_FROM_BODY_BEGINNING</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>read_to</em>&#160;</td>
+          <td class="paramname"><em>parse_to</em> = <code>PARSE_TO_FILE_END</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -144,6 +145,31 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">csv_config</td><td>Instance of <a class="el" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a>. </td></tr>
+    <tr><td class="paramname">parse_from</td><td>CSV file's <em>approximate</em> offset to start parsing. Must be no less than offset of CSV body. parse_from = PARSE_FROM_BODY_BEGINNING has the same meaning with parse_from = body_offset(). </td></tr>
+    <tr><td class="paramname">parse_to</td><td>CSV file's <em>approximate</em> offset to stop parsing. Must be greater than parse_from and no greater than filesize(). parse_to = PARSE_TO_FILE_END has the same meaning with parse_to = filesize() - 1.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>In order to fully parse CSV lines without overlaps, parse_from and parse_to are interpreted with the following strategy.</p>
+<pre class="fragment">&lt;-------&gt; means range from parse_from to parse_to.
+</pre><pre class="fragment">(beginning of CSV)  aaaaaaaaaaaaaaaa \0
+                    &lt;---&gt;&lt;-----&gt;&lt;--&gt;
+                     (1)   (2)   (3)
+</pre><p>In this severe edge case, only (1), <b>who covers the beginning of line</b>, parses line "aaaaaaaaaaaaaaaa" to prevent overlap.</p>
+<pre class="fragment">(beginning of CSV)  aaaaaaaaaaaaa \n bbbbbbbbbbb \0
+                    &lt;---&gt;&lt;--------&gt;  &lt;---------&gt;
+                     (1)    (2)          (3)
+</pre><p>In this case, (1) parses "aaaaaaaaaaaaa", (2) parses no line, and (3) parses "bbbbbbbbbbb".</p>
+<pre class="fragment">(beginning of CSV)  aaaaaaaaaaaaa \n bbbbbbbbbbb \0
+                    &lt;---&gt;&lt;-----------&gt;&lt;--------&gt;
+                     (1)      (2)         (3)
+</pre><p>In this case, (1) parses "aaaaaaaaaaaaa", (2) parses "bbbbbbbbbbb", and (3) parses no line.</p>
+<p>In short, <b>partial parser who covers the beginning of a line parses the line</b>. </p>
 
 </div>
 </div>
@@ -192,28 +218,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a class="anchor" id="a1ba0328a77f68cb172581fc9c5fba6ad"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool PCP::PartialCsvParser::has_more_rows </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>Returns an array of parsed columns. </p>
+<p>Parses only around [parse_from, parse_to) specified in constuctor is parsed. </p><dl class="section return"><dt>Returns</dt><dd>Array of columns if line to parse remains. Otherwise, empty vector is returned. Check by retval.empty(). </dd></dl>
 
 </div>
 </div>
@@ -223,7 +229,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 28 2014 23:31:06 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 29 2014 09:22:00 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

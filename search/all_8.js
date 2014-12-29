@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['_7ecsvconfig',['~CsvConfig',['../class_p_c_p_1_1_csv_config.html#a85b56c5f5e4a4d8970c99e9de9324eaa',1,'PCP::CsvConfig']]],
-  ['_7epartialcsvparser',['~PartialCsvParser',['../class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f',1,'PCP::PartialCsvParser']]]
+  ['strerror_5fthrow',['STRERROR_THROW',['../_partial_csv_parser_8hpp.html#ab6e1fa2f30bd919dd586759e4bf770be',1,'PartialCsvParser.hpp']]]
 ];

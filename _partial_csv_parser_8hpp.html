@@ -107,6 +107,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_p_c_p_error.html">PCP::PCPError</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html">PCP::CsvConfig</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html">PCP::PartialCsvParser</a></td></tr>
@@ -129,23 +131,23 @@ Macros</h2></td></tr>
 <tr class="separator:aa85937d2df9b8f617841e2aa68a7753f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0966b817b229d48e5ffc7feab19a0be6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(cond)&#160;&#160;&#160;std::assert(cond);</td></tr>
 <tr class="separator:a0966b817b229d48e5ffc7feab19a0be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6e1fa2f30bd919dd586759e4bf770be"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#ab6e1fa2f30bd919dd586759e4bf770be">STRERROR_THROW</a>(err_class, msg)</td></tr>
+<tr class="separator:ab6e1fa2f30bd919dd586759e4bf770be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaa5bb20079c7f5d174699af0adf5a54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a>(msg)</td></tr>
 <tr class="separator:aaaa5bb20079c7f5d174699af0adf5a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37e7ecf8c3dbdbf4c120ee95c099baa1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_partial_csv_parser_8hpp.html#a37e7ecf8c3dbdbf4c120ee95c099baa1">CSV_CONFIG_MUST_ALIVE</a>&#160;&#160;&#160;<a class="el" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(csv_config)</td></tr>
-<tr class="separator:a37e7ecf8c3dbdbf4c120ee95c099baa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ad3ab64f62d337aa2601e7ef23489d8f4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">PCP::_filesize</a> (int opened_fd)</td></tr>
+<tr class="memitem:ad3ab64f62d337aa2601e7ef23489d8f4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">PCP::_filesize</a> (int opened_fd)  throw (PCPError)</td></tr>
 <tr class="separator:ad3ab64f62d337aa2601e7ef23489d8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a277231601ad2528166b2d489fc0b8b53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">PCP::_get_line_common_assert</a> (const char *const text, size_t text_length_byte, size_t current_pos)</td></tr>
 <tr class="separator:a277231601ad2528166b2d489fc0b8b53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9d04007e5c5588ea82239b4f4ab1898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#ad9d04007e5c5588ea82239b4f4ab1898">PCP::_get_current_line</a> (const char *const text, size_t text_length_byte, size_t current_pos, const char **line, size_t *line_length_byte, char line_terminator= '\n')</td></tr>
-<tr class="memdesc:ad9d04007e5c5588ea82239b4f4ab1898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a line including specified current_pos.  <a href="#ad9d04007e5c5588ea82239b4f4ab1898">More...</a><br /></td></tr>
-<tr class="separator:ad9d04007e5c5588ea82239b4f4ab1898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a2e8581dd916409b48d933b44eae5d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a4a2e8581dd916409b48d933b44eae5d7">PCP::_get_next_line</a> (const char *const text, size_t text_length_byte, size_t current_pos, const char **line, size_t *line_length_byte, char line_terminator= '\n')</td></tr>
-<tr class="memdesc:a4a2e8581dd916409b48d933b44eae5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find next line of specified current_pos.  <a href="#a4a2e8581dd916409b48d933b44eae5d7">More...</a><br /></td></tr>
-<tr class="separator:a4a2e8581dd916409b48d933b44eae5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac758311c6b4b947f12a742770b5f7a5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#ac758311c6b4b947f12a742770b5f7a5d">PCP::_get_current_line</a> (const char *const text, size_t text_length_byte, size_t current_pos, char line_terminator, const char **line, size_t *line_length_byte)</td></tr>
+<tr class="memdesc:ac758311c6b4b947f12a742770b5f7a5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a line including specified current_pos.  <a href="#ac758311c6b4b947f12a742770b5f7a5d">More...</a><br /></td></tr>
+<tr class="separator:ac758311c6b4b947f12a742770b5f7a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbd9d6f9a09d17ab111de8b3028767ea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#abbd9d6f9a09d17ab111de8b3028767ea">PCP::_get_next_line</a> (const char *const text, size_t text_length_byte, size_t current_pos, char line_terminator, const char **line, size_t *line_length_byte)</td></tr>
+<tr class="memdesc:abbd9d6f9a09d17ab111de8b3028767ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find next line of specified current_pos.  <a href="#abbd9d6f9a09d17ab111de8b3028767ea">More...</a><br /></td></tr>
+<tr class="separator:abbd9d6f9a09d17ab111de8b3028767ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02673b8eee0cb6ac2cfcef03a2860c02"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">PCP::_split</a> (const char *const str, size_t len, char delimiter)</td></tr>
 <tr class="separator:a02673b8eee0cb6ac2cfcef03a2860c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -160,18 +162,6 @@ Functions</h2></td></tr>
           <td class="paramtype">&#160;</td>
           <td class="paramname">cond</td><td>)</td>
           <td>&#160;&#160;&#160;std::assert(cond);</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a37e7ecf8c3dbdbf4c120ee95c099baa1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CSV_CONFIG_MUST_ALIVE&#160;&#160;&#160;<a class="el" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(csv_config)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -268,10 +258,39 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ab6e1fa2f30bd919dd586759e4bf770be"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define STRERROR_THROW</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">err_class, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">msg&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">{ \</div>
+<div class="line">    throw err_class(std::string(<span class="stringliteral">&quot;Fatal from PartialCsvParser &quot;</span>) + msg + <span class="stringliteral">&quot;: &quot;</span> + strerror(errno)); \</div>
+<div class="line">  }</div>
+</div><!-- fragment -->
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 28 2014 23:31:06 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 29 2014 09:22:00 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

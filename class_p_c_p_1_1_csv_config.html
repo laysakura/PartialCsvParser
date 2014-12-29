@@ -62,6 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -97,22 +98,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4204f209046276f7630a71b72a226845"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#a4204f209046276f7630a71b72a226845">CsvConfig</a> (const char *const filepath, bool has_header_line=true, char field_terminator= ',', char line_terminator= '\n', char enclosure_char= '&quot;') </td></tr>
+<tr class="memitem:a4204f209046276f7630a71b72a226845"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#a4204f209046276f7630a71b72a226845">CsvConfig</a> (const char *const filepath, bool has_header_line=true, char field_terminator= ',', char line_terminator= '\n', char enclosure_char= '&quot;')   throw (PCPError)</td></tr>
 <tr class="separator:a4204f209046276f7630a71b72a226845"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85b56c5f5e4a4d8970c99e9de9324eaa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#a85b56c5f5e4a4d8970c99e9de9324eaa">~CsvConfig</a> ()</td></tr>
 <tr class="separator:a85b56c5f5e4a4d8970c99e9de9324eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a596c6599cb72bf93a5cc4a7f4b07fadf"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a> () const </td></tr>
 <tr class="memdesc:a596c6599cb72bf93a5cc4a7f4b07fadf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the size of CSV file.  <a href="#a596c6599cb72bf93a5cc4a7f4b07fadf">More...</a><br /></td></tr>
 <tr class="separator:a596c6599cb72bf93a5cc4a7f4b07fadf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73b33aa17d61b546eacc4b68c7237bfd"><td class="memItemLeft" align="right" valign="top">const char *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a> () const </td></tr>
+<tr class="memdesc:a73b33aa17d61b546eacc4b68c7237bfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the pointer of CSV content.  <a href="#a73b33aa17d61b546eacc4b68c7237bfd">More...</a><br /></td></tr>
+<tr class="separator:a73b33aa17d61b546eacc4b68c7237bfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62aea47d27b4c4f593141cbcf0da4d85"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">body_offset</a> ()</td></tr>
 <tr class="memdesc:a62aea47d27b4c4f593141cbcf0da4d85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the offset where CSV body (excluding header line) starts from.  <a href="#a62aea47d27b4c4f593141cbcf0da4d85">More...</a><br /></td></tr>
 <tr class="separator:a62aea47d27b4c4f593141cbcf0da4d85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5fa7be33bc70b89a645318ad73a5129"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#aa5fa7be33bc70b89a645318ad73a5129">headers</a> ()</td></tr>
 <tr class="memdesc:aa5fa7be33bc70b89a645318ad73a5129"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return header string array.  <a href="#aa5fa7be33bc70b89a645318ad73a5129">More...</a><br /></td></tr>
 <tr class="separator:aa5fa7be33bc70b89a645318ad73a5129"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae2ee43ecd998abdc59ee827eb0d1d49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#aae2ee43ecd998abdc59ee827eb0d1d49">generate_partial_parser</a> (size_t read_from=READ_FROM_BODY_BEGINNING, size_t read_to=READ_TO_FILE_END)</td></tr>
-<tr class="memdesc:aae2ee43ecd998abdc59ee827eb0d1d49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return generated instance of <a class="el" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a>.  <a href="#aae2ee43ecd998abdc59ee827eb0d1d49">More...</a><br /></td></tr>
-<tr class="separator:aae2ee43ecd998abdc59ee827eb0d1d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e67bce5ddf6f79149fa53f876941c71"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#a0e67bce5ddf6f79149fa53f876941c71">get_field_terminator</a> () const </td></tr>
+<tr class="separator:a0e67bce5ddf6f79149fa53f876941c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a250d71e4aa3786628da627ffc6570598"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#a250d71e4aa3786628da627ffc6570598">get_line_terminator</a> () const </td></tr>
+<tr class="separator:a250d71e4aa3786628da627ffc6570598"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d82031e2fbe5c0fda5498fa2f3e1b45"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html#a9d82031e2fbe5c0fda5498fa2f3e1b45">get_enclosure_char</a> () const </td></tr>
+<tr class="separator:a9d82031e2fbe5c0fda5498fa2f3e1b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a4204f209046276f7630a71b72a226845"></a>
@@ -156,6 +163,12 @@ Public Member Functions</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+        <tr>
+          <td align="right">throw </td><td>(</td><td colspan="2"><a class="el" href="class_p_c_p_1_1_p_c_p_error.html">PCPError</a></td>
+        </tr>
+        <tr>
+          <td align="right"></td><td>)</td><td></td><td></td>
         </tr>
       </table>
   </td>
@@ -216,6 +229,31 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a73b33aa17d61b546eacc4b68c7237bfd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* const PCP::CsvConfig::content </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the pointer of CSV content. </p>
+
+</div>
+</div>
 <a class="anchor" id="a596c6599cb72bf93a5cc4a7f4b07fadf"></a>
 <div class="memitem">
 <div class="memproto">
@@ -241,7 +279,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aae2ee43ecd998abdc59ee827eb0d1d49"></a>
+<a class="anchor" id="a9d82031e2fbe5c0fda5498fa2f3e1b45"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -249,21 +287,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a> PCP::CsvConfig::generate_partial_parser </td>
+          <td class="memname">const char PCP::CsvConfig::get_enclosure_char </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>read_from</em> = <code>READ_FROM_BODY_BEGINNING</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>read_to</em> = <code>READ_TO_FILE_END</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -273,29 +300,51 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return generated instance of <a class="el" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">read_from</td><td>CSV file's <em>approximate</em> offset to start parsing. Must be no less than offset of CSV body. read_from = READ_FROM_BODY_BEGINNING has the same meaning with read_from = <a class="el" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85" title="Return the offset where CSV body (excluding header line) starts from. ">body_offset()</a>. </td></tr>
-    <tr><td class="paramname">read_to</td><td>CSV file's <em>approximate</em> offset to stop parsing. Must be greater than read_from and no greater than <a class="el" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf" title="Return the size of CSV file. ">filesize()</a>. read_to = READ_TO_FILE_END has the same meaning with read_to = <a class="el" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf" title="Return the size of CSV file. ">filesize()</a> - 1.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>In order to fully parse CSV lines without overlaps, read_from and read_to are interpreted with the following strategy.</p>
-<pre class="fragment">&lt;-------&gt; means range from read_from to read_to.
-</pre><pre class="fragment">(beginning of CSV)  aaaaaaaaaaaaaaaa \0
-                    &lt;---&gt;&lt;-----&gt;&lt;--&gt;
-                     (1)   (2)   (3)
-</pre><p>In this severe edge case, only (1), <b>who covers the beginning of line</b>, parses line "aaaaaaaaaaaaaaaa" to prevent overlap.</p>
-<pre class="fragment">(beginning of CSV)  aaaaaaaaaaaaa \n bbbbbbbbbbb \0
-                    &lt;---&gt;&lt;--------&gt;  &lt;---------&gt;
-                     (1)    (2)          (3)
-</pre><p>In this case, (1) parses "aaaaaaaaaaaaa", (2) parses no line, and (3) parses "bbbbbbbbbbb".</p>
-<pre class="fragment">(beginning of CSV)  aaaaaaaaaaaaa \n bbbbbbbbbbb \0
-                    &lt;---&gt;&lt;-----------&gt;&lt;--------&gt;
-                     (1)      (2)         (3)
-</pre><p>In this case, (1) parses "aaaaaaaaaaaaa", (2) parses "bbbbbbbbbbb", and (3) parses no line.</p>
-<p>In short, <b>partial parser who covers the beginning of a line parses the line</b>. </p>
+</div>
+</div>
+<a class="anchor" id="a0e67bce5ddf6f79149fa53f876941c71"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char PCP::CsvConfig::get_field_terminator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a250d71e4aa3786628da627ffc6570598"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char PCP::CsvConfig::get_line_terminator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -331,7 +380,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 28 2014 23:31:06 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 29 2014 09:22:00 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

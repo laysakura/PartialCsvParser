@@ -150,255 +150,296 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">// Macros for error cases</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">   63</a></span>&#160;<span class="preprocessor">#define PERROR_ABORT(msg) \</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#ab6e1fa2f30bd919dd586759e4bf770be">   63</a></span>&#160;<span class="preprocessor">#define STRERROR_THROW(err_class, msg) \</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">  { \</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">    std::perror((std::string(&quot;Fatal from PartialCsvParser &quot;) + std::string(msg)).c_str()); \</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">    std::abort(); \</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">  }</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html">   69</a></span>&#160;<span class="keyword">namespace </span>PCP {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">// Utility functions</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">   72</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">_filesize</a>(<span class="keywordtype">int</span> opened_fd) {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keyword">struct </span>stat st;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">if</span> (fstat(opened_fd, &amp;st) != 0) <a class="code" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a>(<span class="stringliteral">&quot;while getting stat(2) of file&quot;</span>);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordflow">return</span> st.st_size;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">   78</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">_get_line_common_assert</a>(</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> text,</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordtype">size_t</span> text_length_byte,</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordtype">size_t</span> current_pos)</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;{</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(text);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(text_length_byte &gt;= 1);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(0 &lt;= current_pos &amp;&amp; current_pos &lt;= text_length_byte - 1);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html#ad9d04007e5c5588ea82239b4f4ab1898">  114</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_p_c_p.html#ad9d04007e5c5588ea82239b4f4ab1898">_get_current_line</a>(</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> text,</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keywordtype">size_t</span> text_length_byte,</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <span class="keywordtype">size_t</span> current_pos,</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="comment">/* out */</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> ** line,</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="keywordtype">size_t</span> * line_length_byte,</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <span class="comment">/* optional */</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="keywordtype">char</span> line_terminator = <span class="charliteral">&#39;\n&#39;</span>)</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;{</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <a class="code" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">_get_line_common_assert</a>(text, text_length_byte, current_pos);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="comment">// \n aaaaaaaaaaaa \n</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <span class="comment">//    ^            ^</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="comment">//    start        end</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> *line_start = text + current_pos, *line_end = text + current_pos;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="comment">// search line_start</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <span class="keywordflow">while</span> (line_start &gt; text &amp;&amp; *(line_start - 1) != line_terminator) --line_start;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="comment">// search line_end</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keywordflow">while</span> (line_end &lt; text + text_length_byte &amp;&amp; *line_end != line_terminator) ++line_end;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  *line = line_start;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  *line_length_byte = line_end - line_start;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">    throw err_class(std::string(&quot;Fatal from PartialCsvParser &quot;) + msg + &quot;: &quot; + strerror(errno)); \</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">   67</a></span>&#160;<span class="preprocessor">#define PERROR_ABORT(msg) \</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">  { \</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">    std::perror((std::string(&quot;Fatal from PartialCsvParser &quot;) + std::string(msg)).c_str()); \</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">    std::abort(); \</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">  }</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html">   73</a></span>&#160;<span class="keyword">namespace </span>PCP {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">// Exception classes</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_p_c_p_error.html">   76</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_p_c_p_1_1_p_c_p_error.html">PCPError</a> : <span class="keyword">public</span> std::runtime_error {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_p_c_p_error.html#a2ee431ae7697f3b3302ac67ee4e26e74">   78</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_p_c_p_error.html#a2ee431ae7697f3b3302ac67ee4e26e74">PCPError</a>(<span class="keyword">const</span> std::string &amp;cause)</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  : std::runtime_error(cause)</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  {}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;};</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">// Utility functions</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">   85</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">_filesize</a>(<span class="keywordtype">int</span> opened_fd) <span class="keywordflow">throw</span>(<a class="code" href="class_p_c_p_1_1_p_c_p_error.html">PCPError</a>) {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keyword">struct </span>stat st;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">if</span> (fstat(opened_fd, &amp;st) != 0) <a class="code" href="_partial_csv_parser_8hpp.html#ab6e1fa2f30bd919dd586759e4bf770be">STRERROR_THROW</a>(<a class="code" href="class_p_c_p_1_1_p_c_p_error.html">PCPError</a>, <span class="stringliteral">&quot;while getting stat(2) of file&quot;</span>);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">return</span> st.st_size;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">   91</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">_get_line_common_assert</a>(</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> text,</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordtype">size_t</span> text_length_byte,</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordtype">size_t</span> current_pos)</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;{</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(text);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(text_length_byte &gt;= 1);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(0 &lt;= current_pos);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(current_pos &lt;= text_length_byte - 1);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html#ac758311c6b4b947f12a742770b5f7a5d">  129</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_p_c_p.html#ac758311c6b4b947f12a742770b5f7a5d">_get_current_line</a>(</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> text,</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <span class="keywordtype">size_t</span> text_length_byte,</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <span class="keywordtype">size_t</span> current_pos,</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="keywordtype">char</span> line_terminator,</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="comment">/* out */</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> ** line,</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keywordtype">size_t</span> * line_length_byte)</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;{</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <a class="code" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">_get_line_common_assert</a>(text, text_length_byte, current_pos);</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html#a4a2e8581dd916409b48d933b44eae5d7">  168</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_p_c_p.html#a4a2e8581dd916409b48d933b44eae5d7">_get_next_line</a>(</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> text,</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="keywordtype">size_t</span> text_length_byte,</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  <span class="keywordtype">size_t</span> current_pos,</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  <span class="comment">/* out */</span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> ** line,</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  <span class="keywordtype">size_t</span> * line_length_byte,</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  <span class="comment">/* optional */</span></div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  <span class="keywordtype">char</span> line_terminator = <span class="charliteral">&#39;\n&#39;</span>)</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;{</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <a class="code" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">_get_line_common_assert</a>(text, text_length_byte, current_pos);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="comment">// \n aaaaaaaaaaaa \n</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="comment">//    ^            ^</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="comment">//    start        end</span></div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> *line_start = text + current_pos, *line_end;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  <span class="comment">// search line_start</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <span class="keywordflow">while</span> (line_start &lt; text + text_length_byte &amp;&amp; *line_start != line_terminator) {</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    ++line_start;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordflow">if</span> (line_start == text + text_length_byte) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  }</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  ++line_start;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="comment">// search line_end</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  line_end = line_start;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <span class="keywordflow">while</span> (line_end &lt; text + text_length_byte &amp;&amp; *line_end != line_terminator) ++line_end;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  *line = line_start;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  *line_length_byte = line_end - line_start;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;}</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
-<div class="line"><a name="l00200"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">  200</a></span>&#160;std::vector&lt;std::string&gt; <a class="code" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">_split</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> str, <span class="keywordtype">size_t</span> len, <span class="keywordtype">char</span> delimiter) {</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(str);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(len &gt;= 0);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  std::vector&lt;std::string&gt; ret;  <span class="comment">// NRVO optimization may prevent copy when returning this local variable.</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> *p_beg = str, *p_end = str;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <span class="keywordflow">while</span> (p_end - str &lt; len) {</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="comment">// come to delimiter</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keywordflow">if</span> (*p_end == delimiter) {</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      ret.push_back(std::string(p_beg, p_end - p_beg));</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;      p_beg = p_end + 1;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    }</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    ++p_end;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  }</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <span class="comment">// come to end of str</span></div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  ret.push_back(std::string(p_beg, p_end - p_beg));</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;}</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="comment">// \n aaaaaaaaaaaa \n</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="comment">//    ^            ^</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  <span class="comment">//    start        end</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> *line_start = text + current_pos, *line_end = text + current_pos;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="comment">// search line_start</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  <span class="keywordflow">while</span> (line_start &gt; text &amp;&amp; *(line_start - 1) != line_terminator) --line_start;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="comment">// search line_end</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keywordflow">while</span> (line_end &lt; text + text_length_byte &amp;&amp; *line_end != line_terminator) ++line_end;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  *line = line_start;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  *line_length_byte = line_end - line_start;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;}</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
+<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html#abbd9d6f9a09d17ab111de8b3028767ea">  183</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_p_c_p.html#abbd9d6f9a09d17ab111de8b3028767ea">_get_next_line</a>(</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> text,</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  <span class="keywordtype">size_t</span> text_length_byte,</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <span class="keywordtype">size_t</span> current_pos,</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <span class="keywordtype">char</span> line_terminator,</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="comment">/* out */</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> ** line,</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <span class="keywordtype">size_t</span> * line_length_byte)</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;{</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  <a class="code" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">_get_line_common_assert</a>(text, text_length_byte, current_pos);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <span class="comment">// \n aaaaaaaaaaaa \n</span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <span class="comment">//    ^            ^</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="comment">//    start        end</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> *line_start = text + current_pos, *line_end;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  <span class="comment">// search line_start</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  <span class="keywordflow">while</span> (line_start &lt; text + text_length_byte &amp;&amp; *line_start != line_terminator) {</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    ++line_start;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keywordflow">if</span> (line_start == text + text_length_byte) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  }</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  ++line_start;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="comment">// search line_end</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  line_end = line_start;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <span class="keywordflow">while</span> (line_end &lt; text + text_length_byte &amp;&amp; *line_end != line_terminator) ++line_end;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  *line = line_start;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  *line_length_byte = line_end - line_start;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;}</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno"><a class="line" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">  214</a></span>&#160;<span class="keyword">inline</span> std::vector&lt;std::string&gt; <a class="code" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">_split</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> str, <span class="keywordtype">size_t</span> len, <span class="keywordtype">char</span> delimiter) {</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(str);</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(len &gt;= 0);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  std::vector&lt;std::string&gt; ret;  <span class="comment">// NRVO optimization may prevent copy when returning this local variable.</span></div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="keyword">class </span>PartialCsvParser;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
-<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html">  223</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> {</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00225"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a4204f209046276f7630a71b72a226845">  225</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_csv_config.html#a4204f209046276f7630a71b72a226845">CsvConfig</a>(</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> filepath,</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="keywordtype">bool</span> has_header_line = <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordtype">char</span> field_terminator = <span class="charliteral">&#39;,&#39;</span>,</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordtype">char</span> line_terminator = <span class="charliteral">&#39;\n&#39;</span>,</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordtype">char</span> enclosure_char = <span class="charliteral">&#39;&quot;&#39;</span>)</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  : filepath(filepath), has_header_line(has_header_line),</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    field_terminator(field_terminator), line_terminator(line_terminator),</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    enclosure_char(enclosure_char),</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    header_length(<a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a>::HEADER_LENGTH_NOT_CALCULATED)</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  {</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keywordflow">if</span> ((fd = open(filepath, O_RDONLY)) == -1)</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;      <a class="code" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a>((std::string(<span class="stringliteral">&quot;while opening &quot;</span>) + filepath).c_str());  <span class="comment">// TODO 例外を投げる</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    csv_size = <a class="code" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">_filesize</a>(fd);</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    csv_text = <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(mmap(NULL, csv_size, PROT_READ, MAP_PRIVATE, fd, 0));</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    std::printf(<span class="stringliteral">&quot;size=%d\n\n%s\n&quot;</span>, csv_size, csv_text);</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="comment">// reads header</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;  }</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;</div>
-<div class="line"><a name="l00245"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a85b56c5f5e4a4d8970c99e9de9324eaa">  245</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_csv_config.html#a85b56c5f5e4a4d8970c99e9de9324eaa">~CsvConfig</a>() {</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordflow">if</span> (munmap((<span class="keywordtype">void</span>*)csv_text, csv_size) != 0) <a class="code" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a>(<span class="stringliteral">&quot;while munmap&quot;</span>);</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <span class="keywordflow">if</span> (close(fd) != 0) <a class="code" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a>(<span class="stringliteral">&quot;while closing file descriptor&quot;</span>);</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  }</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;</div>
-<div class="line"><a name="l00253"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">  253</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> csv_size; }</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
-<div class="line"><a name="l00258"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">  258</a></span>&#160;  <span class="keywordtype">size_t</span> <a class="code" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">body_offset</a>() {</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keywordflow">if</span> (!has_header_line) <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="keywordflow">if</span> (header_length != HEADER_LENGTH_NOT_CALCULATED) <span class="keywordflow">return</span> header_length + 1;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <a class="code" href="class_p_c_p_1_1_csv_config.html#aa5fa7be33bc70b89a645318ad73a5129">headers</a>();  <span class="comment">// calculate header_length</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="keywordflow">return</span> header_length;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  }</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;</div>
-<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#aa5fa7be33bc70b89a645318ad73a5129">  269</a></span>&#160;  std::vector&lt;std::string&gt; <a class="code" href="class_p_c_p_1_1_csv_config.html#aa5fa7be33bc70b89a645318ad73a5129">headers</a>() {</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(has_header_line);</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    std::vector&lt;std::string&gt; header;  <span class="comment">// NRVO optimization may prevent copy when returning this local variable.</span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> * line = 0;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <a class="code" href="namespace_p_c_p.html#ad9d04007e5c5588ea82239b4f4ab1898">_get_current_line</a>(csv_text, csv_size, 0, &amp;line, &amp;header_length, line_terminator);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">_split</a>(line, header_length, field_terminator);</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  }</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
-<div class="line"><a name="l00319"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#aae2ee43ecd998abdc59ee827eb0d1d49">  319</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a> <a class="code" href="class_p_c_p_1_1_csv_config.html#aae2ee43ecd998abdc59ee827eb0d1d49">generate_partial_parser</a>(</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordtype">size_t</span> read_from = READ_FROM_BODY_BEGINNING,</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <span class="keywordtype">size_t</span> read_to = READ_TO_FILE_END)</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  {</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keywordflow">if</span> (read_from == READ_FROM_BODY_BEGINNING) read_from = <a class="code" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">body_offset</a>();</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="keywordflow">if</span> (read_to == READ_TO_FILE_END) read_to = <a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>() - 1;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(<a class="code" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">body_offset</a>() &lt;= read_from);</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(read_from &lt; read_to);</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(read_to &lt; <a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>());</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a>(read_from, read_to, <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  }</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> filepath;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">bool</span> has_header_line;</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> field_terminator;</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> line_terminator;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> enclosure_char;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keywordtype">int</span> fd;</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  <span class="keywordtype">size_t</span> csv_size;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * csv_text;</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  <span class="keywordtype">size_t</span> header_length;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> HEADER_LENGTH_NOT_CALCULATED = -1;</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> READ_FROM_BODY_BEGINNING = -1;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> READ_TO_FILE_END = -1;</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  PREVENT_CLASS_DEFAULT_METHODS(<a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a>);</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;};</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;</div>
-<div class="line"><a name="l00352"></a><span class="lineno"><a class="line" href="_partial_csv_parser_8hpp.html#a37e7ecf8c3dbdbf4c120ee95c099baa1">  352</a></span>&#160;<span class="preprocessor">#define CSV_CONFIG_MUST_ALIVE ASSERT(csv_config)</span></div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
-<div class="line"><a name="l00354"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html">  354</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a> {</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00356"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#ac15b24a037c3aefd2ef7097174b82e13">  356</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#ac15b24a037c3aefd2ef7097174b82e13">PartialCsvParser</a>(<a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> * <span class="keyword">const</span> csv_config, <span class="keywordtype">size_t</span> read_from, <span class="keywordtype">size_t</span> read_to)</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  : csv_config(csv_config), read_from(read_from), read_to(read_to),</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    p_cur_from(0)</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  {</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a37e7ecf8c3dbdbf4c120ee95c099baa1">CSV_CONFIG_MUST_ALIVE</a>;</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    p_cur_from = csv_config-&gt;csv_text + read_from;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <a class="code" href="namespace_p_c_p.html#ad9d04007e5c5588ea82239b4f4ab1898">_get_current_line</a>(</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;      csv_config-&gt;csv_text, std::strlen(csv_config-&gt;csv_text), read_to,</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;      &amp;p_last_possible_line_from, &amp;last_possible_line_length);</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  }</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;</div>
-<div class="line"><a name="l00367"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">  367</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">~PartialCsvParser</a>() {}</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;</div>
-<div class="line"><a name="l00369"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">  369</a></span>&#160;  std::vector&lt;std::string&gt; <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">get_row</a>() {</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(<a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#a1ba0328a77f68cb172581fc9c5fba6ad">has_more_rows</a>());</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    std::vector&lt;std::string&gt; row;  <span class="comment">// NRVO optimization may prevent copy when returning this local variable.</span></div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="keywordflow">return</span> row;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;  }</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;</div>
-<div class="line"><a name="l00375"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#a1ba0328a77f68cb172581fc9c5fba6ad">  375</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#a1ba0328a77f68cb172581fc9c5fba6ad">has_more_rows</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="comment">// aaaaaaaaaaaaa \n bbbbbbbbbbbbbbbbb \n</span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <span class="comment">//</span></div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;  }</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;  <a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> * <span class="keyword">const</span> csv_config;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">size_t</span> read_from, read_to;</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> *p_cur_from, *p_last_possible_line_from;</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  <span class="keywordtype">size_t</span> last_possible_line_length;</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  PREVENT_CLASS_DEFAULT_METHODS(<a class="code" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a>);</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;};</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;}</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* INCLUDE_PARTIALCSVPARSER_HPP_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_ac15b24a037c3aefd2ef7097174b82e13"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#ac15b24a037c3aefd2ef7097174b82e13">PCP::PartialCsvParser::PartialCsvParser</a></div><div class="ttdeci">PartialCsvParser(CsvConfig *const csv_config, size_t read_from, size_t read_to)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:356</div></div>
-<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_a1ba0328a77f68cb172581fc9c5fba6ad"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#a1ba0328a77f68cb172581fc9c5fba6ad">PCP::PartialCsvParser::has_more_rows</a></div><div class="ttdeci">bool has_more_rows() const </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:375</div></div>
-<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_ab7dd18ced1bab5bd08812b1b7ecd527f"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">PCP::PartialCsvParser::~PartialCsvParser</a></div><div class="ttdeci">~PartialCsvParser()</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:367</div></div>
-<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a85b56c5f5e4a4d8970c99e9de9324eaa"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a85b56c5f5e4a4d8970c99e9de9324eaa">PCP::CsvConfig::~CsvConfig</a></div><div class="ttdeci">~CsvConfig()</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:245</div></div>
-<div class="ttc" id="namespace_p_c_p_html_ad3ab64f62d337aa2601e7ef23489d8f4"><div class="ttname"><a href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">PCP::_filesize</a></div><div class="ttdeci">size_t _filesize(int opened_fd)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:72</div></div>
-<div class="ttc" id="namespace_p_c_p_html_a02673b8eee0cb6ac2cfcef03a2860c02"><div class="ttname"><a href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">PCP::_split</a></div><div class="ttdeci">std::vector&lt; std::string &gt; _split(const char *const str, size_t len, char delimiter)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:200</div></div>
-<div class="ttc" id="class_p_c_p_1_1_csv_config_html_aa5fa7be33bc70b89a645318ad73a5129"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#aa5fa7be33bc70b89a645318ad73a5129">PCP::CsvConfig::headers</a></div><div class="ttdeci">std::vector&lt; std::string &gt; headers()</div><div class="ttdoc">Return header string array. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:269</div></div>
-<div class="ttc" id="class_p_c_p_1_1_csv_config_html_aae2ee43ecd998abdc59ee827eb0d1d49"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#aae2ee43ecd998abdc59ee827eb0d1d49">PCP::CsvConfig::generate_partial_parser</a></div><div class="ttdeci">PartialCsvParser generate_partial_parser(size_t read_from=READ_FROM_BODY_BEGINNING, size_t read_to=READ_TO_FILE_END)</div><div class="ttdoc">Return generated instance of PartialCsvParser. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:319</div></div>
-<div class="ttc" id="class_p_c_p_1_1_csv_config_html"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html">PCP::CsvConfig</a></div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:223</div></div>
-<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_a65af2617da69841fa4ed264cfa49ad4c"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">PCP::PartialCsvParser::get_row</a></div><div class="ttdeci">std::vector&lt; std::string &gt; get_row()</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:369</div></div>
-<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a62aea47d27b4c4f593141cbcf0da4d85"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">PCP::CsvConfig::body_offset</a></div><div class="ttdeci">size_t body_offset()</div><div class="ttdoc">Return the offset where CSV body (excluding header line) starts from. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:258</div></div>
-<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html">PCP::PartialCsvParser</a></div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:354</div></div>
-<div class="ttc" id="_partial_csv_parser_8hpp_html_a37e7ecf8c3dbdbf4c120ee95c099baa1"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#a37e7ecf8c3dbdbf4c120ee95c099baa1">CSV_CONFIG_MUST_ALIVE</a></div><div class="ttdeci">#define CSV_CONFIG_MUST_ALIVE</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:352</div></div>
-<div class="ttc" id="namespace_p_c_p_html_a4a2e8581dd916409b48d933b44eae5d7"><div class="ttname"><a href="namespace_p_c_p.html#a4a2e8581dd916409b48d933b44eae5d7">PCP::_get_next_line</a></div><div class="ttdeci">bool _get_next_line(const char *const text, size_t text_length_byte, size_t current_pos, const char **line, size_t *line_length_byte, char line_terminator= '\n')</div><div class="ttdoc">Find next line of specified current_pos. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:168</div></div>
-<div class="ttc" id="_partial_csv_parser_8hpp_html_aaaa5bb20079c7f5d174699af0adf5a54"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a></div><div class="ttdeci">#define PERROR_ABORT(msg)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:63</div></div>
-<div class="ttc" id="namespace_p_c_p_html_ad9d04007e5c5588ea82239b4f4ab1898"><div class="ttname"><a href="namespace_p_c_p.html#ad9d04007e5c5588ea82239b4f4ab1898">PCP::_get_current_line</a></div><div class="ttdeci">void _get_current_line(const char *const text, size_t text_length_byte, size_t current_pos, const char **line, size_t *line_length_byte, char line_terminator= '\n')</div><div class="ttdoc">Find a line including specified current_pos. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:114</div></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> *p_beg = str, *p_end = str;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  <span class="keywordflow">while</span> (p_end - str &lt; len) {</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="comment">// come to delimiter</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordflow">if</span> (*p_end == delimiter) {</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      ret.push_back(std::string(p_beg, p_end - p_beg));</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      p_beg = p_end + 1;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    }</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    ++p_end;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  }</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  <span class="comment">// come to end of str</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  ret.push_back(std::string(p_beg, p_end - p_beg));</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;}</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="keyword">class </span>CsvConfig;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="keyword">class </span>PartialCsvParser;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
+<div class="line"><a name="l00238"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html">  238</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> {</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a4204f209046276f7630a71b72a226845">  240</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_csv_config.html#a4204f209046276f7630a71b72a226845">CsvConfig</a>(</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> filepath,</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keywordtype">bool</span> has_header_line = <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="keywordtype">char</span> field_terminator = <span class="charliteral">&#39;,&#39;</span>,</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keywordtype">char</span> line_terminator = <span class="charliteral">&#39;\n&#39;</span>,</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="keywordtype">char</span> enclosure_char = <span class="charliteral">&#39;&quot;&#39;</span>)</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  throw(<a class="code" href="class_p_c_p_1_1_p_c_p_error.html">PCPError</a>)</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  : filepath(filepath), has_header_line(has_header_line),</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    field_terminator(field_terminator), line_terminator(line_terminator),</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    enclosure_char(enclosure_char),</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    header_length(<a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a>::HEADER_LENGTH_NOT_CALCULATED)</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  {</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keywordflow">if</span> ((fd = open(filepath, O_RDONLY)) == -1)</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;      <a class="code" href="_partial_csv_parser_8hpp.html#ab6e1fa2f30bd919dd586759e4bf770be">STRERROR_THROW</a>(<a class="code" href="class_p_c_p_1_1_p_c_p_error.html">PCPError</a>, std::string(<span class="stringliteral">&quot;while open &quot;</span>) + filepath);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    csv_size = <a class="code" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">_filesize</a>(fd);</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordflow">if</span> ((csv_text = static_cast&lt;const char *&gt;(mmap(NULL, csv_size, PROT_READ, MAP_PRIVATE, fd, 0))) == (<span class="keywordtype">void</span>*)-1)</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      <a class="code" href="_partial_csv_parser_8hpp.html#ab6e1fa2f30bd919dd586759e4bf770be">STRERROR_THROW</a>(<a class="code" href="class_p_c_p_1_1_p_c_p_error.html">PCPError</a>, std::string(<span class="stringliteral">&quot;while mmap &quot;</span>) + filepath);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  }</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
+<div class="line"><a name="l00259"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a85b56c5f5e4a4d8970c99e9de9324eaa">  259</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_csv_config.html#a85b56c5f5e4a4d8970c99e9de9324eaa">~CsvConfig</a>() {</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="keywordflow">if</span> (munmap((<span class="keywordtype">void</span>*)csv_text, csv_size) != 0) <a class="code" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a>(<span class="stringliteral">&quot;while munmap&quot;</span>);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keywordflow">if</span> (close(fd) != 0) <a class="code" href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a>(<span class="stringliteral">&quot;while closing file descriptor&quot;</span>);</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  }</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
+<div class="line"><a name="l00267"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">  267</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> csv_size; }</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
+<div class="line"><a name="l00272"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">  272</a></span>&#160;  <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> <a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> csv_text; }</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
+<div class="line"><a name="l00277"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">  277</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">body_offset</a>() {</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="keywordflow">if</span> (!has_header_line) <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="keywordflow">if</span> (header_length != HEADER_LENGTH_NOT_CALCULATED) <span class="keywordflow">return</span> header_length + 1;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <a class="code" href="class_p_c_p_1_1_csv_config.html#aa5fa7be33bc70b89a645318ad73a5129">headers</a>();  <span class="comment">// calculate header_length</span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keywordflow">return</span> header_length;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  }</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;</div>
+<div class="line"><a name="l00288"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#aa5fa7be33bc70b89a645318ad73a5129">  288</a></span>&#160;  <span class="keyword">inline</span> std::vector&lt;std::string&gt; <a class="code" href="class_p_c_p_1_1_csv_config.html#aa5fa7be33bc70b89a645318ad73a5129">headers</a>() {</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(has_header_line);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    std::vector&lt;std::string&gt; header;  <span class="comment">// NRVO optimization may prevent copy when returning this local variable.</span></div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> * line = 0;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <a class="code" href="namespace_p_c_p.html#ac758311c6b4b947f12a742770b5f7a5d">_get_current_line</a>(csv_text, csv_size, 0, line_terminator, &amp;line, &amp;header_length);</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">_split</a>(line, header_length, field_terminator);</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  }</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;</div>
+<div class="line"><a name="l00298"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a0e67bce5ddf6f79149fa53f876941c71">  298</a></span>&#160;  <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="class_p_c_p_1_1_csv_config.html#a0e67bce5ddf6f79149fa53f876941c71">get_field_terminator</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> field_terminator; }</div>
+<div class="line"><a name="l00299"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a250d71e4aa3786628da627ffc6570598">  299</a></span>&#160;  <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="class_p_c_p_1_1_csv_config.html#a250d71e4aa3786628da627ffc6570598">get_line_terminator</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> line_terminator; }</div>
+<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_csv_config.html#a9d82031e2fbe5c0fda5498fa2f3e1b45">  300</a></span>&#160;  <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="class_p_c_p_1_1_csv_config.html#a9d82031e2fbe5c0fda5498fa2f3e1b45">get_enclosure_char</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> enclosure_char; }</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> filepath;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">bool</span> has_header_line;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> field_terminator;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> line_terminator;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> enclosure_char;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  <span class="keywordtype">int</span> fd;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  <span class="keywordtype">size_t</span> csv_size;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> * csv_text;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <span class="keywordtype">size_t</span> header_length;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> HEADER_LENGTH_NOT_CALCULATED = -1;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  PREVENT_CLASS_DEFAULT_METHODS(<a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a>);</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;};</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;</div>
+<div class="line"><a name="l00321"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html">  321</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a> {</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;</div>
+<div class="line"><a name="l00365"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">  365</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">PartialCsvParser</a>(</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp; csv_config,</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <span class="keywordtype">size_t</span> parse_from = PARSE_FROM_BODY_BEGINNING,</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keywordtype">size_t</span> parse_to = PARSE_TO_FILE_END)</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  : csv_config(csv_config), parse_from(parse_from), parse_to(parse_to)</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;  {</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keywordflow">if</span> (parse_from == PARSE_FROM_BODY_BEGINNING) this-&gt;parse_from = csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">body_offset</a>();</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="keywordflow">if</span> (parse_to == PARSE_TO_FILE_END) this-&gt;parse_to = csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>() - 1;</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    cur_pos = this-&gt;parse_from;</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">body_offset</a>() &lt;= this-&gt;parse_from);</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(this-&gt;parse_from &lt; this-&gt;parse_to);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <a class="code" href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a>(this-&gt;parse_to &lt; csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>());</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;  }</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;</div>
+<div class="line"><a name="l00379"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">  379</a></span>&#160;  <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">~PartialCsvParser</a>() {}</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;</div>
+<div class="line"><a name="l00386"></a><span class="lineno"><a class="line" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">  386</a></span>&#160;  <span class="keyword">inline</span> std::vector&lt;std::string&gt; <a class="code" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">get_row</a>() {</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    <span class="keywordflow">while</span> (cur_pos &lt;= parse_to) {</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;      <span class="keyword">const</span> <span class="keywordtype">char</span> * line;</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;      <span class="keywordtype">size_t</span> line_length;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;      <a class="code" href="namespace_p_c_p.html#ac758311c6b4b947f12a742770b5f7a5d">_get_current_line</a>(csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>(), csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">filesize</a>(), cur_pos, csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a250d71e4aa3786628da627ffc6570598">get_line_terminator</a>(), &amp;line, &amp;line_length);</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;      <span class="comment">// cur_pos exactly is the beginning of current line.</span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;      <span class="comment">//</span></div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;      <span class="comment">// (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n</span></div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;      <span class="comment">//                                &lt;----...</span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;      <span class="comment">//                                cur_pos</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;      <span class="comment">//</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;      <span class="comment">// Parse &quot;aaaaaaaaaaaaaa&quot; and move cur_pos to the beginning of the next line.</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;      <span class="keywordflow">if</span> (csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>() + cur_pos == line) {</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;        cur_pos += line_length + 1;  <span class="comment">// +1 is from line_delimitor</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">_split</a>(line, line_length, csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a0e67bce5ddf6f79149fa53f876941c71">get_field_terminator</a>());</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;      }</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;      <span class="comment">// parse_to is at the same line with cur_pos.</span></div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;      <span class="comment">//</span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;      <span class="comment">// (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n</span></div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;      <span class="comment">//                                    &lt;----------&gt;</span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;      <span class="comment">//                                    cur_pos    parse_to</span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;      <span class="keywordflow">if</span> (csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>() + parse_to &lt;= line + line_length + 1)  <span class="comment">// +1 is from line_delimitor</span></div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;        <span class="keywordflow">return</span> std::vector&lt;std::string&gt;(0);</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;      <span class="comment">// parse_to is beyond the same line with cur_pos.</span></div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;      <span class="comment">//</span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;      <span class="comment">// (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n bbbbbbbbbb</span></div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;      <span class="comment">//                                    &lt;--------------...</span></div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;      <span class="comment">//                                    cur_pos</span></div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;      <span class="comment">//</span></div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;      <span class="comment">// Move cur_pos to the beginning of the next line.</span></div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;      <span class="keywordflow">if</span> (csv_config.<a class="code" href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">content</a>() + parse_to &gt; line + line_length + 1)  <span class="comment">// +1 is from line_delimitor</span></div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;        cur_pos += line_length + 1;  <span class="comment">// +1 is from line_delimitor</span></div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    }</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="keywordflow">return</span> std::vector&lt;std::string&gt;(0);</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;  }</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> PARSE_FROM_BODY_BEGINNING = -1;</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;  <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> PARSE_TO_FILE_END = -1;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;  <a class="code" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp; csv_config;</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;  <span class="keywordtype">size_t</span> parse_from, parse_to;</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;  <span class="keywordtype">size_t</span> cur_pos;</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;  PREVENT_CLASS_DEFAULT_METHODS(<a class="code" href="class_p_c_p_1_1_partial_csv_parser.html">PartialCsvParser</a>);</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;};</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;}</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* INCLUDE_PARTIALCSVPARSER_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_ab7dd18ced1bab5bd08812b1b7ecd527f"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">PCP::PartialCsvParser::~PartialCsvParser</a></div><div class="ttdeci">~PartialCsvParser()</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:379</div></div>
+<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a0e67bce5ddf6f79149fa53f876941c71"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a0e67bce5ddf6f79149fa53f876941c71">PCP::CsvConfig::get_field_terminator</a></div><div class="ttdeci">const char get_field_terminator() const </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:298</div></div>
+<div class="ttc" id="class_p_c_p_1_1_p_c_p_error_html_a2ee431ae7697f3b3302ac67ee4e26e74"><div class="ttname"><a href="class_p_c_p_1_1_p_c_p_error.html#a2ee431ae7697f3b3302ac67ee4e26e74">PCP::PCPError::PCPError</a></div><div class="ttdeci">PCPError(const std::string &amp;cause)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:78</div></div>
+<div class="ttc" id="namespace_p_c_p_html_ac758311c6b4b947f12a742770b5f7a5d"><div class="ttname"><a href="namespace_p_c_p.html#ac758311c6b4b947f12a742770b5f7a5d">PCP::_get_current_line</a></div><div class="ttdeci">void _get_current_line(const char *const text, size_t text_length_byte, size_t current_pos, char line_terminator, const char **line, size_t *line_length_byte)</div><div class="ttdoc">Find a line including specified current_pos. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:129</div></div>
+<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a85b56c5f5e4a4d8970c99e9de9324eaa"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a85b56c5f5e4a4d8970c99e9de9324eaa">PCP::CsvConfig::~CsvConfig</a></div><div class="ttdeci">~CsvConfig()</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:259</div></div>
+<div class="ttc" id="namespace_p_c_p_html_ad3ab64f62d337aa2601e7ef23489d8f4"><div class="ttname"><a href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">PCP::_filesize</a></div><div class="ttdeci">size_t _filesize(int opened_fd)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:85</div></div>
+<div class="ttc" id="namespace_p_c_p_html_a02673b8eee0cb6ac2cfcef03a2860c02"><div class="ttname"><a href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">PCP::_split</a></div><div class="ttdeci">std::vector&lt; std::string &gt; _split(const char *const str, size_t len, char delimiter)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:214</div></div>
+<div class="ttc" id="class_p_c_p_1_1_csv_config_html_aa5fa7be33bc70b89a645318ad73a5129"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#aa5fa7be33bc70b89a645318ad73a5129">PCP::CsvConfig::headers</a></div><div class="ttdeci">std::vector&lt; std::string &gt; headers()</div><div class="ttdoc">Return header string array. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:288</div></div>
+<div class="ttc" id="class_p_c_p_1_1_csv_config_html"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html">PCP::CsvConfig</a></div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:238</div></div>
+<div class="ttc" id="_partial_csv_parser_8hpp_html_ab6e1fa2f30bd919dd586759e4bf770be"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#ab6e1fa2f30bd919dd586759e4bf770be">STRERROR_THROW</a></div><div class="ttdeci">#define STRERROR_THROW(err_class, msg)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:63</div></div>
+<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_a65af2617da69841fa4ed264cfa49ad4c"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">PCP::PartialCsvParser::get_row</a></div><div class="ttdeci">std::vector&lt; std::string &gt; get_row()</div><div class="ttdoc">Returns an array of parsed columns. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:386</div></div>
+<div class="ttc" id="class_p_c_p_1_1_p_c_p_error_html"><div class="ttname"><a href="class_p_c_p_1_1_p_c_p_error.html">PCP::PCPError</a></div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:76</div></div>
+<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a62aea47d27b4c4f593141cbcf0da4d85"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85">PCP::CsvConfig::body_offset</a></div><div class="ttdeci">size_t body_offset()</div><div class="ttdoc">Return the offset where CSV body (excluding header line) starts from. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:277</div></div>
+<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html">PCP::PartialCsvParser</a></div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:321</div></div>
+<div class="ttc" id="namespace_p_c_p_html_abbd9d6f9a09d17ab111de8b3028767ea"><div class="ttname"><a href="namespace_p_c_p.html#abbd9d6f9a09d17ab111de8b3028767ea">PCP::_get_next_line</a></div><div class="ttdeci">bool _get_next_line(const char *const text, size_t text_length_byte, size_t current_pos, char line_terminator, const char **line, size_t *line_length_byte)</div><div class="ttdoc">Find next line of specified current_pos. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:183</div></div>
+<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a9d82031e2fbe5c0fda5498fa2f3e1b45"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a9d82031e2fbe5c0fda5498fa2f3e1b45">PCP::CsvConfig::get_enclosure_char</a></div><div class="ttdeci">const char get_enclosure_char() const </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:300</div></div>
+<div class="ttc" id="class_p_c_p_1_1_partial_csv_parser_html_aaf19c1d20e4337cea84596d22eb915ed"><div class="ttname"><a href="class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed">PCP::PartialCsvParser::PartialCsvParser</a></div><div class="ttdeci">PartialCsvParser(CsvConfig &amp;csv_config, size_t parse_from=PARSE_FROM_BODY_BEGINNING, size_t parse_to=PARSE_TO_FILE_END)</div><div class="ttdoc">Constructor. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:365</div></div>
+<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a73b33aa17d61b546eacc4b68c7237bfd"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a73b33aa17d61b546eacc4b68c7237bfd">PCP::CsvConfig::content</a></div><div class="ttdeci">const char *const content() const </div><div class="ttdoc">Return the pointer of CSV content. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:272</div></div>
+<div class="ttc" id="_partial_csv_parser_8hpp_html_aaaa5bb20079c7f5d174699af0adf5a54"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#aaaa5bb20079c7f5d174699af0adf5a54">PERROR_ABORT</a></div><div class="ttdeci">#define PERROR_ABORT(msg)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:67</div></div>
 <div class="ttc" id="_partial_csv_parser_8hpp_html_a0966b817b229d48e5ffc7feab19a0be6"><div class="ttname"><a href="_partial_csv_parser_8hpp.html#a0966b817b229d48e5ffc7feab19a0be6">ASSERT</a></div><div class="ttdeci">#define ASSERT(cond)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:56</div></div>
-<div class="ttc" id="namespace_p_c_p_html_a277231601ad2528166b2d489fc0b8b53"><div class="ttname"><a href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">PCP::_get_line_common_assert</a></div><div class="ttdeci">void _get_line_common_assert(const char *const text, size_t text_length_byte, size_t current_pos)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:78</div></div>
-<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a596c6599cb72bf93a5cc4a7f4b07fadf"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">PCP::CsvConfig::filesize</a></div><div class="ttdeci">size_t filesize() const </div><div class="ttdoc">Return the size of CSV file. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:253</div></div>
-<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a4204f209046276f7630a71b72a226845"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a4204f209046276f7630a71b72a226845">PCP::CsvConfig::CsvConfig</a></div><div class="ttdeci">CsvConfig(const char *const filepath, bool has_header_line=true, char field_terminator= ',', char line_terminator= '\n', char enclosure_char= '&quot;') </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:225</div></div>
+<div class="ttc" id="namespace_p_c_p_html_a277231601ad2528166b2d489fc0b8b53"><div class="ttname"><a href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">PCP::_get_line_common_assert</a></div><div class="ttdeci">void _get_line_common_assert(const char *const text, size_t text_length_byte, size_t current_pos)</div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:91</div></div>
+<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a596c6599cb72bf93a5cc4a7f4b07fadf"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf">PCP::CsvConfig::filesize</a></div><div class="ttdeci">size_t filesize() const </div><div class="ttdoc">Return the size of CSV file. </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:267</div></div>
+<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a250d71e4aa3786628da627ffc6570598"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a250d71e4aa3786628da627ffc6570598">PCP::CsvConfig::get_line_terminator</a></div><div class="ttdeci">const char get_line_terminator() const </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:299</div></div>
+<div class="ttc" id="class_p_c_p_1_1_csv_config_html_a4204f209046276f7630a71b72a226845"><div class="ttname"><a href="class_p_c_p_1_1_csv_config.html#a4204f209046276f7630a71b72a226845">PCP::CsvConfig::CsvConfig</a></div><div class="ttdeci">CsvConfig(const char *const filepath, bool has_header_line=true, char field_terminator= ',', char line_terminator= '\n', char enclosure_char= '&quot;') </div><div class="ttdef"><b>Definition:</b> PartialCsvParser.hpp:240</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 28 2014 23:31:06 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 29 2014 09:22:00 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
