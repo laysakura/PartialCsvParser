@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['partialcsvparser',['PartialCsvParser',['../index.html',1,'']]],
+  ['partialcsvparser_27s_20reference_20manual',['PartialCsvParser&apos;s reference manual',['../index.html',1,'']]],
   ['partialcsvparser',['PartialCsvParser',['../class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed',1,'PCP::PartialCsvParser']]],
   ['partialcsvparser',['PartialCsvParser',['../class_p_c_p_1_1_partial_csv_parser.html',1,'PCP']]],
   ['partialcsvparser_2ehpp',['PartialCsvParser.hpp',['../_partial_csv_parser_8hpp.html',1,'']]],
