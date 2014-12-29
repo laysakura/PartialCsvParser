@@ -88,17 +88,6 @@ inline size_t _filesize(int opened_fd) throw(PCPError) {
   return st.st_size;
 }
 
-inline void _get_line_common_assert(
-  const char * const text,
-  size_t text_length_byte,
-  size_t current_pos)
-{
-  ASSERT(text);
-  ASSERT(text_length_byte >= 1);
-  ASSERT(0 <= current_pos);
-  ASSERT(current_pos <= text_length_byte - 1);
-}
-
 /**
  * Find a line including specified current_pos.
  * @param text Original text to find a line from.
@@ -135,7 +124,10 @@ inline void _get_current_line(
   const char ** line,
   size_t * line_length_byte)
 {
-  _get_line_common_assert(text, text_length_byte, current_pos);
+  ASSERT(text);
+  ASSERT(text_length_byte >= 1);
+  ASSERT(0 <= current_pos);
+  ASSERT(current_pos <= text_length_byte - 1);
 
   // \n aaaaaaaaaaaa \n
   //    ^            ^
