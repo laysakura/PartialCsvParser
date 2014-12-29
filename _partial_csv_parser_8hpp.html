@@ -110,6 +110,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_p_c_p_error.html">PCP::PCPError</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runtime error.  <a href="class_p_c_p_1_1_p_c_p_error.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_p_c_p_csv_error.html">PCP::PCPCsvError</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thrown when invalid CSV is parsed.  <a href="class_p_c_p_1_1_p_c_p_csv_error.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_csv_config.html">PCP::CsvConfig</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html">PCP::PartialCsvParser</a></td></tr>
@@ -141,14 +144,9 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ad3ab64f62d337aa2601e7ef23489d8f4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#ad3ab64f62d337aa2601e7ef23489d8f4">PCP::_filesize</a> (int opened_fd)  throw (PCPError)</td></tr>
 <tr class="separator:ad3ab64f62d337aa2601e7ef23489d8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a277231601ad2528166b2d489fc0b8b53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a277231601ad2528166b2d489fc0b8b53">PCP::_get_line_common_assert</a> (const char *const text, size_t text_length_byte, size_t current_pos)</td></tr>
-<tr class="separator:a277231601ad2528166b2d489fc0b8b53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac758311c6b4b947f12a742770b5f7a5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#ac758311c6b4b947f12a742770b5f7a5d">PCP::_get_current_line</a> (const char *const text, size_t text_length_byte, size_t current_pos, char line_terminator, const char **line, size_t *line_length_byte)</td></tr>
 <tr class="memdesc:ac758311c6b4b947f12a742770b5f7a5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a line including specified <code>current_pos</code>.  <a href="#ac758311c6b4b947f12a742770b5f7a5d">More...</a><br /></td></tr>
 <tr class="separator:ac758311c6b4b947f12a742770b5f7a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbd9d6f9a09d17ab111de8b3028767ea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#abbd9d6f9a09d17ab111de8b3028767ea">PCP::_get_next_line</a> (const char *const text, size_t text_length_byte, size_t current_pos, char line_terminator, const char **line, size_t *line_length_byte)</td></tr>
-<tr class="memdesc:abbd9d6f9a09d17ab111de8b3028767ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find next line of specified current_pos.  <a href="#abbd9d6f9a09d17ab111de8b3028767ea">More...</a><br /></td></tr>
-<tr class="separator:abbd9d6f9a09d17ab111de8b3028767ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02673b8eee0cb6ac2cfcef03a2860c02"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_p_c_p.html#a02673b8eee0cb6ac2cfcef03a2860c02">PCP::_split</a> (const char *const str, size_t len, char delimiter)</td></tr>
 <tr class="separator:a02673b8eee0cb6ac2cfcef03a2860c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -291,7 +289,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 29 2014 10:19:11 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 29 2014 11:09:33 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
