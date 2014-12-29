@@ -41,6 +41,10 @@ script:
 
   # build benchmarks
   - (cd benchmark ; cmake . && make VERBOSE=1)
+  # generate small dataset
+  ./script/generate-benchmark-data.sh 1
+  # run light-weight benchmark
+  - (cd benchmark ; time ./PartialCsvParserBench -p 2 -c 10000 -f csv/10000col.csv)
 
 notifications:
   email:
