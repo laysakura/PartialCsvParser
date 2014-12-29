@@ -87,6 +87,21 @@ public:
   {}
 };
 
+/**
+ * Thrown when invalid CSV is parsed.
+ *
+ * CSV format is (weakly) defined in <a href="http://tools.ietf.org/html/rfc4180#section-2">RFC4180 Section2</a>
+ *
+ * PartialCsvParser throws this exception when the following condition is satisfied.
+ * @li A row has different number of columns from first row.
+  */
+class PCPCsvError : public PCPError {
+public:
+  PCPCsvError(const std::string &cause)
+  : PCPError(cause)
+  {}
+};
+
 
 // Utility functions
 inline size_t _filesize(int opened_fd) throw(PCPError) {
@@ -194,13 +209,26 @@ public:
   : filepath(filepath), has_header_line(has_header_line),
     field_terminator(field_terminator), line_terminator(line_terminator),
     enclosure_char(enclosure_char),
-    header_length(CsvConfig::HEADER_LENGTH_NOT_CALCULATED)
+    n_columns(0)
   {
     if ((fd = open(filepath, O_RDONLY)) == -1)
       STRERROR_THROW(PCPError, std::string("while open ") + filepath);
     csv_size = _filesize(fd);
     if ((csv_text = static_cast<const char *>(mmap(NULL, csv_size, PROT_READ, MAP_PRIVATE, fd, 0))) == (void*)-1)
       STRERROR_THROW(PCPError, std::string("while mmap ") + filepath);
+
+    // parse first line to calculate n_columns
+    const char * line = 0;
+    size_t line_length = 0;
+    _get_current_line(csv_text, csv_size, 0, line_terminator, &line, &line_length);
+    std::vector<std::string> columns = _split(line, line_length, field_terminator);
+    n_columns = columns.size();
+
+    // set headers if exist
+    if (has_header_line) {
+      header_length = line_length;
+      headers = columns;
+    }
   }
 
   ~CsvConfig() {
@@ -219,27 +247,25 @@ public:
   inline const char * const content() const { return csv_text; }
 
   /**
+   * Return the number of columns in first line.
+   */
+  inline size_t get_n_columns() const { return n_columns; }
+
+  /**
    * Return the offset where CSV body (excluding header line) starts from.
    */
-  inline size_t body_offset() {
+  inline size_t body_offset() const {
     if (!has_header_line) return 0;
-    if (header_length != HEADER_LENGTH_NOT_CALCULATED) return header_length + 1;
-    headers();  // calculate header_length
-    return header_length;
+    return header_length + 1;
   }
 
   /**
    * Return header string array.
    * \p has_header_line flag must be set true in constructor.
    */
-  inline std::vector<std::string> headers() {
+  inline std::vector<std::string> get_headers() const {
     ASSERT(has_header_line);
-    std::vector<std::string> header;  // NRVO optimization may prevent copy when returning this local variable.
-
-    const char * line = 0;
-    _get_current_line(csv_text, csv_size, 0, line_terminator, &line, &header_length);
-
-    return _split(line, header_length, field_terminator);
+    return headers;
   }
 
   /**
@@ -266,9 +292,10 @@ private:
   size_t csv_size;
   const char * csv_text;
 
+  std::vector<std::string> headers;
   size_t header_length;
 
-  static const size_t HEADER_LENGTH_NOT_CALCULATED = -1;
+  size_t n_columns;
 
   PREVENT_CLASS_DEFAULT_METHODS(CsvConfig);
 };
@@ -282,7 +309,7 @@ public:
    * @param csv_config Instance of CsvConfig.
    * @param parse_from CSV file's <em>approximate</em> offset to start parsing. Must be no less than CsvConfig::body_offset().
    *   \p parse_from = PARSE_FROM_BODY_BEGINNING has the same meaning with \p parse_from = CsvConfig::body_offset().
-   * @param parse_to CSV file's <em>approximate</em> offset to stop parsing. Must be greater than \p parse_from and less than CsvConfig::filesize().
+   * @param parse_to CSV file's <em>approximate</em> offset to stop parsing. Must be no less than \p parse_from and less than CsvConfig::filesize().
    *   \p parse_to = PARSE_TO_FILE_END has the same meaning with \p parse_to = CsvConfig::filesize() - 1.
    *
    * In order to fully parse CSV lines without overlaps, \p parse_from and \p parse_to are interpreted with the following strategy.
@@ -326,8 +353,10 @@ public:
     if (parse_to == PARSE_TO_FILE_END) this->parse_to = csv_config.filesize() - 1;
     cur_pos = this->parse_from;
     ASSERT(csv_config.body_offset() <= this->parse_from);
-    ASSERT(this->parse_from < this->parse_to);
     ASSERT(this->parse_to < csv_config.filesize());
+    // Do not assert this->parse_from <= this->parse_to.
+    // This case occurs when CSV file only has header, has no body.
+    // Even in such case, get_row() can be safely called, which returns empty vector.
   }
 
   ~PartialCsvParser() {}
@@ -337,7 +366,7 @@ public:
    * Parses only around [\p parse_from, \p parse_to) specified in constructor is parsed.
    * @return Array of columns if line to parse remains. Otherwise, empty vector is returned. Check by \p retval.empty().
    */
-  inline std::vector<std::string> get_row() {
+  inline std::vector<std::string> get_row() throw(PCPCsvError) {
     while (cur_pos <= parse_to) {
       const char * line;
       size_t line_length;
@@ -352,7 +381,14 @@ public:
       // Parse "aaaaaaaaaaaaaa" and move cur_pos to the beginning of the next line.
       if (csv_config.content() + cur_pos == line) {
         cur_pos += line_length + 1;  // +1 is from line_delimitor
-        return _split(line, line_length, csv_config.get_field_terminator());
+
+        const std::vector<std::string> & columns = _split(line, line_length, csv_config.get_field_terminator());
+        if (columns.size() != csv_config.get_n_columns()) {
+          std::ostringstream ss; \
+          ss << "The following line has " << columns.size() << " columns, while the first line has " << csv_config.get_n_columns() << " columns." << std::endl << std::string(line, line_length);
+          throw PCPCsvError(ss.str());
+        }
+        return columns;
       }
 
       // parse_to is at the same line with cur_pos.
