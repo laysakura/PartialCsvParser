@@ -37,7 +37,7 @@ script:
   - (cd example ; cmake . && make VERBOSE=1)
   # execute examples
   - pwd
-  - (cd example ; for exe in $(find . -type f -executable); do echo $exe ; ./$exe || exit ; done)
+  - (cd example ; for exe in $(find . -type f -executable -depth 1); do echo $exe ; ./$exe || exit ; done)
 
 notifications:
   email:
