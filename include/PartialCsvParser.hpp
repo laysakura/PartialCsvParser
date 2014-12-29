@@ -353,8 +353,10 @@ public:
     if (parse_to == PARSE_TO_FILE_END) this->parse_to = csv_config.filesize() - 1;
     cur_pos = this->parse_from;
     ASSERT(csv_config.body_offset() <= this->parse_from);
-    ASSERT(this->parse_from <= this->parse_to);
     ASSERT(this->parse_to < csv_config.filesize());
+    // Do not assert this->parse_from <= this->parse_to.
+    // This case occurs when CSV file only has header, has no body.
+    // Even in such case, get_row() can be safely called, which returns empty vector.
   }
 
   ~PartialCsvParser() {}
