@@ -1,0 +1,31 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_POLICY(SET CMP0003 NEW)
+
+PROJECT(partial_csv_parser_examples)
+
+#
+# setting variables
+SET(PROJ_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+SET(EXAMPLE_DIR ${PROJ_ROOT_DIR}/example)
+
+#
+# compile environments
+SET(CMAKE_CXX_FLAGS "-O2 -g -Wall ${CMAKE_CXX_FLAGS}")
+
+INCLUDE_DIRECTORIES(
+    ${PROJ_ROOT_DIR}/include
+)
+
+
+#
+# an executable from a example source file
+FILE(GLOB EXAMPLE_SRCS RELATIVE ${PROJ_ROOT_DIR} ${EXAMPLE_DIR}/*.cpp)
+FOREACH(EXAMPLE_SRC ${EXAMPLE_SRCS})
+    STRING(REPLACE ".cpp" "" EXAMPLE_EXE ${EXAMPLE_SRC})
+
+    ADD_EXECUTABLE(${EXAMPLE_EXE} ${EXAMPLE_SRC})
+    TARGET_LINK_LIBRARIES(${EXAMPLE_EXE} pthread)
+ENDFOREACH(EXAMPLE_SRC ${EXAMPLE_SRCS})
+
+
+##ADD_EXECUTABLE(example/00_parse_with_1parser example/00_parse_with_1parser.cpp)
