@@ -151,14 +151,10 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">csv_config</td><td>Instance of <a class="el" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a>. </td></tr>
     <tr><td class="paramname">parse_from</td><td>CSV file's <em>approximate</em> offset to start parsing. Must be no less than <a class="el" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85" title="Return the offset where CSV body (excluding header line) starts from. ">CsvConfig::body_offset()</a>. <code>parse_from</code> = PARSE_FROM_BODY_BEGINNING has the same meaning with <code>parse_from</code> = <a class="el" href="class_p_c_p_1_1_csv_config.html#a62aea47d27b4c4f593141cbcf0da4d85" title="Return the offset where CSV body (excluding header line) starts from. ">CsvConfig::body_offset()</a>. </td></tr>
-    <tr><td class="paramname">parse_to</td><td>CSV file's <em>approximate</em> offset to stop parsing. Must be greater than <code>parse_from</code> and less than <a class="el" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf" title="Return the size of CSV file. ">CsvConfig::filesize()</a>. </td></tr>
+    <tr><td class="paramname">parse_to</td><td>CSV file's <em>approximate</em> offset to stop parsing. Must be greater than <code>parse_from</code> and less than <a class="el" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf" title="Return the size of CSV file. ">CsvConfig::filesize()</a>. <code>parse_to</code> = PARSE_TO_FILE_END has the same meaning with <code>parse_to</code> = <a class="el" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf" title="Return the size of CSV file. ">CsvConfig::filesize()</a> - 1.</td></tr>
   </table>
   </dd>
 </dl>
-<p>parse_to = PARSE_TO_FILE_END</p>
-<p>has the same meaning with </p>
-<p>parse_to = <a class="el" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf" title="Return the size of CSV file. ">CsvConfig::filesize()</a> - 1</p>
-<p>.</p>
 <p>In order to fully parse CSV lines without overlaps, <code>parse_from</code> and <code>parse_to</code> are interpreted with the following strategy.</p>
 <p>&lt;----&mdash;&gt; means range from parse_from to parse_to.</p>
 <pre class="fragment">(beginning of CSV)  aaaaaaaaaaaaaaaa \0
@@ -223,7 +219,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns an array of parsed columns. </p>
-<p>Parses only around [parse_from, parse_to) specified in constuctor is parsed. </p><dl class="section return"><dt>Returns</dt><dd>Array of columns if line to parse remains. Otherwise, empty vector is returned. Check by retval.empty(). </dd></dl>
+<p>Parses only around [<code>parse_from</code>, <code>parse_to</code>) specified in constructor is parsed. </p><dl class="section return"><dt>Returns</dt><dd>Array of columns if line to parse remains. Otherwise, empty vector is returned. Check by <code>retval.empty()</code>. </dd></dl>
 
 </div>
 </div>
@@ -233,7 +229,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Dec 29 2014 10:02:20 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Dec 29 2014 10:05:15 for partial_csv_parser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
