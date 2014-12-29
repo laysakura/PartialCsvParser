@@ -14,7 +14,7 @@ SET(CMAKE_CXX_FLAGS "-O2 -g -Wall ${CMAKE_CXX_FLAGS}")
 
 INCLUDE_DIRECTORIES(
     ${PROJ_ROOT_DIR}/include
-    ${PROJ_ROOT_DIR}/contrib/csv_parser_cplusplus/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/contrib/csv_parser_cplusplus/include
 )
 
 
