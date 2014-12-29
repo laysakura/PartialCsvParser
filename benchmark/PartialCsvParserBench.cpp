@@ -1,10 +1,11 @@
 #include <PartialCsvParser.hpp>
 #include <vector>
 #include <string>
-#include <unordered_map>
 #include <iostream>
+#include <cstdlib>
 #include <pthread.h>
 #include "benchmark.hpp"
+#include "cmdline_options.hpp"
 
 
 typedef struct parser_thread_arg_t {
@@ -23,15 +24,32 @@ void * partial_parse(parser_thread_arg_t * arg) {
   return NULL;
 }
 
-int main() {
-  const char * filepath = "in.csv";
-  const size_t n_threads = 4;
+inline void help_exit(int argc, char * argv[]) {
+  std::cerr << argv[0] << " [-h] -p N_THREADS -c N_EXPECTED_COLUMNS -f FILENAME" << std::endl;
+  exit(2);
+}
 
+int main(int argc, char * argv[]) {
+  // command line options
+  if (cmdline_option_exists(argv, argv + argc, "-h")) help_exit(argc, argv);
+
+  const char * n_threads_str = get_cmdline_option(argv, argv + argc, "-p");
+  if (!n_threads_str) help_exit(argc, argv);
+  const size_t n_threads = std::atoi(n_threads_str);
+
+  const char * n_expected_columns_str = get_cmdline_option(argv, argv + argc, "-c");
+  if (!n_expected_columns_str) help_exit(argc, argv);
+  const size_t n_expected_columns = std::atoi(n_expected_columns_str);
+
+  const char * filepath = get_cmdline_option(argv, argv + argc, "-f");
+  if (!filepath) help_exit(argc, argv);
+
+  // instantiate CsvConfig
   BENCH_START;
   PCP::CsvConfig csv_config(filepath, false);
   BENCH_STOP("mmap(2) file");
 
-  // Setup range each thread parse.
+  // setup range each thread parse
   size_t size_per_thread = (csv_config.filesize() - csv_config.body_offset()) / n_threads;
   std::vector<parser_thread_arg_t> parser_thread_args(n_threads);
   for (size_t i = 0; i < n_threads; ++i) {
@@ -58,7 +76,13 @@ int main() {
   size_t n_total_columns = 0;
   for (size_t i = 0; i < n_threads; ++i) n_total_columns += parser_thread_args[i].n_columns;
 
-  std::cout << n_total_columns << std::endl;
-
-  return 0;
+  // check the answer
+  if (n_total_columns == n_expected_columns) {
+    std::cout << "OK. Parsed " << n_total_columns << " columns." << std::endl;
+    return 0;
+  }
+  else {
+    std::cout << "NG. Parsed " << n_total_columns << " columns, while " << n_expected_columns << " columns are expected." << std::endl;
+    return 1;
+  }
 }
