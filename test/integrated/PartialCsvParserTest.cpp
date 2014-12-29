@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <PartialCsvParser.hpp>
 
 using namespace PCP;
@@ -181,3 +182,34 @@ TEST_F(PartialCsvParserTest, 2worker_WithHeader_2col_3line_WithoutQuote_WithLast
 
   EXPECT_TRUE(parser2.get_row().empty());
 }
+
+
+class ParseWithManyParserTest :
+  public ::testing::TestWithParam<size_t>
+{};
+
+TEST_P(ParseWithManyParserTest, each_parser_parses_n_bytes)
+{
+  const size_t n = GetParam();
+
+  CsvConfig csv_config("fixture/WithHeader_2col_3line_WithoutQuote_WithLastNL.csv");
+  std::vector<std::string> headers = csv_config.get_headers();
+  EXPECT_EQ("col1", headers[0]);
+  EXPECT_EQ("col2", headers[1]);
+
+  std::vector< std::vector<std::string> > rows;
+
+  for (size_t offset = csv_config.body_offset(); offset <= csv_config.filesize() - 1; offset += n) {
+    PartialCsvParser parser(csv_config, offset, std::min(offset + n - 1, csv_config.filesize() - 1));
+    std::vector<std::string> row;
+    while (!(row = parser.get_row()).empty()) rows.push_back(row);
+  }
+
+  EXPECT_EQ(3, rows.size());
+  EXPECT_EQ("101", rows[0][0]); EXPECT_EQ("102", rows[0][1]);
+  EXPECT_EQ("201", rows[1][0]); EXPECT_EQ("202", rows[1][1]);
+  EXPECT_EQ("301", rows[2][0]); EXPECT_EQ("302", rows[2][1]);
+}
+
+CsvConfig csv_config("fixture/WithHeader_2col_3line_WithoutQuote_WithLastNL.csv");
+INSTANTIATE_TEST_CASE_P(_, ParseWithManyParserTest, ::testing::Range(1UL, csv_config.filesize()));

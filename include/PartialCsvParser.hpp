@@ -392,7 +392,7 @@ public:
       // (\n or beginning of CSV file)  aaaaaaaaaaaaaa \n
       //                                    <---------->
       //                                    cur_pos    parse_to
-      if (csv_config.content() + parse_to <= line + line_length + 1)  // +1 is from line_delimitor
+      if (csv_config.content() + parse_to < line + line_length + 1)  // +1 is from line_delimitor
         return std::vector<std::string>(0);
 
       // parse_to is beyond the same line with cur_pos.
@@ -402,7 +402,7 @@ public:
       //                                    cur_pos
       //
       // Move cur_pos to the beginning of the next line.
-      if (csv_config.content() + parse_to > line + line_length + 1)  // +1 is from line_delimitor
+      if (csv_config.content() + parse_to >= line + line_length + 1)  // +1 is from line_delimitor
         cur_pos = (line - csv_config.content()) + line_length + 1;  // +1 is from line_delimitor
     }
     return std::vector<std::string>(0);
