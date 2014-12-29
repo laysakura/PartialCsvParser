@@ -11,7 +11,7 @@
 
 void * partial_parse(PCP::partial_csv_t * partial_csv) {
   // instantiate parser
-  PCP::PartialCsvParser parser(partial_csv->csv_config, partial_csv->parse_from, partial_csv->parse_to);
+  PCP::PartialCsvParser parser(*partial_csv->csv_config, partial_csv->parse_from, partial_csv->parse_to);
 
   // parse & print body lines
   std::vector<std::string> row;
@@ -38,8 +38,8 @@ int main() {
   // Setup range each thread parse.
   // One thread parses the former part of CSV, the other parses latter.
   size_t half_offset = (csv_config.filesize() - csv_config.body_offset()) / 2;
-  PCP::partial_csv_t partial_csv1 = { csv_config, csv_config.body_offset(), half_offset };
-  PCP::partial_csv_t partial_csv2 = { csv_config, half_offset + 1, csv_config.filesize() - 1 };
+  PCP::partial_csv_t partial_csv1 = { &csv_config, csv_config.body_offset(), half_offset };
+  PCP::partial_csv_t partial_csv2 = { &csv_config, half_offset + 1, csv_config.filesize() - 1 };
 
   // create threads, join them.
   pthread_t th1, th2;

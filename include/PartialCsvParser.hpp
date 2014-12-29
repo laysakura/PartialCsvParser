@@ -303,7 +303,7 @@ private:
  * Set of parameters passed to PartialCsvParser::PartialCsvParser().
  */
 typedef struct partial_csv_t {
-  CsvConfig & csv_config;
+  const CsvConfig * csv_config;
   size_t parse_from;
   size_t parse_to;
 } partial_csv_t;
@@ -352,7 +352,7 @@ public:
    * In short, <b>partial parser who covers the beginning of a line parses the line</b>.
    */
   PartialCsvParser(
-    CsvConfig & csv_config,
+    const CsvConfig & csv_config,
     size_t parse_from = PARSE_FROM_BODY_BEGINNING,
     size_t parse_to = PARSE_TO_FILE_END)
   : csv_config(csv_config), parse_from(parse_from), parse_to(parse_to)
@@ -424,7 +424,7 @@ private:
   static const size_t PARSE_FROM_BODY_BEGINNING = -1;
   static const size_t PARSE_TO_FILE_END = -1;
 
-  CsvConfig & csv_config;
+  const CsvConfig & csv_config;
   size_t parse_from, parse_to;
   size_t cur_pos;
 
