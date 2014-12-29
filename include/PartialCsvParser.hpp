@@ -6,6 +6,8 @@
  * @par
  *
  * To see installation, sample codes, and license, check the <a href="https://github.com/laysakura/partial_csv_parser">GitHub repository</a>.
+ *
+ * @author Sho Nakatani
  */
 
 #ifndef INCLUDE_PARTIALCSVPARSER_HPP_
