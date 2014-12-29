@@ -15,9 +15,13 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
+#include <stdexcept>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <cerrno>
+#include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
@@ -37,10 +41,6 @@
 
 // Assertion also usable with Google Test
 #ifdef PCP_GTEST
-#include <stdexcept>
-#include <sstream>
-#include <string>
-
 class PCPAssertionFailed : public std::runtime_error {
 public:
   PCPAssertionFailed(const std::string &cause)
@@ -59,7 +59,7 @@ public:
 #include <cassert>
 
 #define ASSERT(cond) \
-  std::assert(cond);
+  assert(cond);
 
 #endif /* PCP_GTEST */
 
@@ -67,7 +67,7 @@ public:
 // Macros for error cases
 #define STRERROR_THROW(err_class, msg) \
   { \
-    throw err_class(std::string("Fatal from PartialCsvParser ") + msg + ": " + strerror(errno)); \
+    throw err_class(std::string("Fatal from PartialCsvParser ") + msg + ": " + std::strerror(errno)); \
   }
 #define PERROR_ABORT(msg) \
   { \
@@ -295,6 +295,16 @@ private:
 
   PREVENT_CLASS_DEFAULT_METHODS(CsvConfig);
 };
+
+
+/**
+ * Set of parameters passed to PartialCsvParser::PartialCsvParser().
+ */
+typedef struct partial_csv_t {
+  CsvConfig & csv_config;
+  size_t parse_from;
+  size_t parse_to;
+} partial_csv_t;
 
 
 class PartialCsvParser {

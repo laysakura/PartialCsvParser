@@ -26,12 +26,17 @@ script:
   # run unit test
   - (cd test ; ./run_unit_test)
   # show core dump log on error
-  - (cd test/unit ; for i in $(find ./ -name 'core*' -print); do gdb $(pwd)/run_unit_test core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done;)
+  - (cd test/unit ; for i in $(find ./ -name 'core*' -print); do gdb $(pwd)/run_unit_test core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done; rm -f core*)
 
   # run integrated test
   - (cd test ; ./run_integrated_test)
   # show core dump log on error
   - (cd test/unit ; for i in $(find ./ -name 'core*' -print); do gdb $(pwd)/run_integrated_test core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done; rm -f core*)
+
+  # build examples
+  - cmake . && make VERBOSE=1
+  # execute examples
+  - (cd example ; for exe in $(find . -type f -executable); do ./$exe || exit ; done)
 
 notifications:
   email:
