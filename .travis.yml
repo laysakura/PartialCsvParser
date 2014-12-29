@@ -34,7 +34,7 @@ script:
   - (cd test/unit ; for i in $(find ./ -name 'core*' -print); do gdb $(pwd)/run_integrated_test core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done; rm -f core*)
 
   # build examples
-  - cmake . && make VERBOSE=1
+  - (cd example ; cmake . && make VERBOSE=1)
   # execute examples
   - (cd example ; for exe in $(find . -type f -executable); do ./$exe || exit ; done)
 
