@@ -13,7 +13,7 @@ var indexSectionsWithContent =
   3: "p",
   4: "_bcfghp~",
   5: "aps",
-  6: "h"
+  6: "p"
 };
 
 var indexSectionNames =
