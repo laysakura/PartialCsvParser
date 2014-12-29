@@ -403,7 +403,7 @@ public:
       //
       // Move cur_pos to the beginning of the next line.
       if (csv_config.content() + parse_to > line + line_length + 1)  // +1 is from line_delimitor
-        cur_pos += line_length + 1;  // +1 is from line_delimitor
+        cur_pos = (line - csv_config.content()) + line_length + 1;  // +1 is from line_delimitor
     }
     return std::vector<std::string>(0);
   }
