@@ -29,6 +29,8 @@ This parser is meant to be created to **parse a CSV file in parallel**.
 
 - **Single-header library**.
     - Just copy [PartialCsvParser.hpp](./include/PartialCsvParser.hpp) into your project and include it.
+    - You can freely add the header file to your repository, and even modify it.
+        - I appreciate your pull requests if you make some improvements :)
 
 - Simple interface working with STL (Standard Template Library).
 
@@ -227,7 +229,7 @@ Since `partial_parse()` invocations are not ordered, printed result may be such 
 [PCP::PartialCsvParser::PartialCsvParser()](http://laysakura.github.io/partial_csv_parser/class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed)
 takes 2 offsets: `parse_from` and `parse_to`.
 
-If you have multiple threads and each of them has holds different part of `[parse_from, parse_to]`,
+If you have multiple threads and each of them holds different part of `[parse_from, parse_to]`,
 CSV file is parsed in parallel.
 
 It is assured that all lines of CSV file are parsed exactly once if all instances of parsers' `[parse_from, parse_to]` ranges
