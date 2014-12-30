@@ -88,7 +88,7 @@ rw=randread
 size=512m
 directory=/dev/shm
 
-$ vim sequential-read-hdd.fio
+$ vim sequential-read-mem.fio
 [sequential-read]
 rw=read
 size=512m
