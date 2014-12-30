@@ -5,7 +5,7 @@ Following benchmarks are taken.
 - Scalability of PartialCsvParser.
 
 - Comparison with other CSV parser.
-    - [PartialCsvParser](https://github.com/laysakura/partial_csv_parser) v0.1.1
+    - [PartialCsvParser](https://github.com/laysakura/PartialCsvParser) v0.1.1
     - [csv-parser-cplusplus](https://code.google.com/p/csv-parser-cplusplus/) v1.0.0
 
 
@@ -160,8 +160,8 @@ With 4 threads, for example.
 
 ```bash
 $ time ./PartialCsvParser_bench -p 4 -c 20480000 -f csv/20480000col.csv
-/Users/nakatani.sho/git/partial_csv_parser/benchmark/PartialCsvParser_bench.cpp:50 - 0.0186529 seconds - mmap(2) file
-/Users/nakatani.sho/git/partial_csv_parser/benchmark/PartialCsvParser_bench.cpp:73 - 3.97924 seconds - join parsing threads
+/Users/nakatani.sho/git/PartialCsvParser/benchmark/PartialCsvParser_bench.cpp:50 - 0.0186529 seconds - mmap(2) file
+/Users/nakatani.sho/git/PartialCsvParser/benchmark/PartialCsvParser_bench.cpp:73 - 3.97924 seconds - join parsing threads
 OK. Parsed 20480000 columns.
 
 real    0m4.010s
@@ -176,7 +176,7 @@ Check the wall-clock time. 4.010 seconds in this execution.
 
 ```bash
 $ time ./csv_parser_cplusplus_bench -c 20480000 -f csv/20480000col.csv
-/Users/nakatani.sho/git/partial_csv_parser/benchmark/csv_parser_cplusplus_bench.cpp:42 - 34.0444 seconds - parse
+/Users/nakatani.sho/git/PartialCsvParser/benchmark/csv_parser_cplusplus_bench.cpp:42 - 34.0444 seconds - parse
 OK. Parsed 20480000 columns.
 
 real    0m34.049s

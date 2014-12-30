@@ -1,8 +1,8 @@
 # PartialCsvParser
 
-[![Build Status](https://travis-ci.org/laysakura/partial_csv_parser.svg?branch=master)](https://travis-ci.org/laysakura/partial_csv_parser)
+[![Build Status](https://travis-ci.org/laysakura/PartialCsvParser.svg?branch=master)](https://travis-ci.org/laysakura/PartialCsvParser)
 
-[PartialCsvParser](https://github.com/laysakura/partial_csv_parser) is a C++ CSV parser.
+[PartialCsvParser](https://github.com/laysakura/PartialCsvParser) is a C++ CSV parser.
 
 This parser is meant to be created to **parse a CSV file in parallel**.
 
@@ -226,21 +226,21 @@ Since `partial_parse()` invocations are not ordered, printed result may be such 
 
 ## Reference manual
 
-[Reference manual](http://laysakura.github.io/partial_csv_parser) powered by Doxygen is available.
+[Reference manual](http://laysakura.github.io/PartialCsvParser) powered by Doxygen is available.
 
 
 ## Parser behaviors
 
 ### All lines of CSV file are parsed exactly once
 
-[PCP::PartialCsvParser::PartialCsvParser()](http://laysakura.github.io/partial_csv_parser/class_p_c_p_1_1_partial_csv_parser.html#aaf19c1d20e4337cea84596d22eb915ed)
+[PCP::PartialCsvParser::PartialCsvParser()](http://laysakura.github.io/PartialCsvParser/class_p_c_p_1_1_PartialCsvParser.html#aaf19c1d20e4337cea84596d22eb915ed)
 takes 2 offsets: `parse_from` and `parse_to`.
 
 If you have multiple threads and each of them holds different part of `[parse_from, parse_to]`,
 CSV file is parsed in parallel.
 
 It is assured that all lines of CSV file are parsed exactly once if all instances of parsers' `[parse_from, parse_to]` ranges
-cover `[` [PCP::CsvConfig::body_offset()](http://laysakura.github.io/partial_csv_parser/class_p_c_p_1_1_csv_config.html#aa28eae4c19dda51ea055973ae2cdd84e) `,` [PCP::CsvConfig::filesize()](http://laysakura.github.io/partial_csv_parser/class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf) `- 1]`
+cover `[` [PCP::CsvConfig::body_offset()](http://laysakura.github.io/PartialCsvParser/class_p_c_p_1_1_csv_config.html#aa28eae4c19dda51ea055973ae2cdd84e) `,` [PCP::CsvConfig::filesize()](http://laysakura.github.io/PartialCsvParser/class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf) `- 1]`
 without gaps and overlaps (See the following diagram).
 
 ```
@@ -261,7 +261,7 @@ header1,header2 \n aaaaaaaa,bbbbbbbbbb \n ccccccccc,dddd \n
   ```bash
   $ wget https://googletest.googlecode.com/files/gtest-1.7.0.zip
   $ unzip gtest-1.7.0.zip
-  $ mv gtest-1.7.0 /path/to/partial_csv_parser/contrib/gtest
+  $ mv gtest-1.7.0 /path/to/PartialCsvParser/contrib/gtest
 ```
 
 2. Build test cases executables.

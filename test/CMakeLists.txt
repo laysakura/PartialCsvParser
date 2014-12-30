@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 CMAKE_POLICY(SET CMP0003 NEW)
 
-PROJECT(partial_csv_parser)
+PROJECT(PartialCsvParser)
 
 #
 # setting variables
