@@ -219,6 +219,9 @@ public:
     csv_size = _filesize(fd);
     if ((csv_text = static_cast<const char *>(mmap(NULL, csv_size, PROT_READ, MAP_PRIVATE, fd, 0))) == (void*)-1)
       STRERROR_THROW(PCPError, std::string("while mmap ") + filepath);
+    // prefetch pages from disk to avoid random accesses from threads.
+    if (madvise((void*)csv_text, csv_size, MADV_WILLNEED) == -1)
+      STRERROR_THROW(PCPError, std::string("while madvise ") + filepath);
 
     // parse first line to calculate n_columns
     const char * line = 0;
