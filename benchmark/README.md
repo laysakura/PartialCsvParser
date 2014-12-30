@@ -101,7 +101,7 @@ Change the `directory` to access to different devices.
 
 ### Tips: Memory file system on Mac OSX
 
-Unlikely Linux, Mac OSX does not have tmpfs mounted to `/dev/shm`.
+Unlike Linux, Mac OSX does not have tmpfs mounted to `/dev/shm`.
 
 You can create and destroy memory file system by the following way.
 
