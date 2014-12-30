@@ -27,6 +27,13 @@ This parser is meant to be created to **parse a CSV file in parallel**.
 
 ## Features
 
+- Pretty good single-thread & multi-thread performance.
+    - Following graphs show sequential performance comparison with other CSV parsers and scalability evaluation.
+      Check [benchmark/](./benchmark) for more detailed explanation on performance.
+
+      ![Comparison of CSV parser's performance](https://docs.google.com/spreadsheets/d/1ZqmajL9r4aXAvk_7rp3j7KdLWN71-IbWhVtxB6HpSw4/pubchart?oid=1550764323&format=image)
+      ![Scalability on clokoap100](https://docs.google.com/spreadsheets/d/1ZqmajL9r4aXAvk_7rp3j7KdLWN71-IbWhVtxB6HpSw4/pubchart?oid=1943811886&format=image)
+
 - **Single-header library**.
     - Just copy [PartialCsvParser.hpp](./include/PartialCsvParser.hpp) into your project and include it.
     - You can freely add the header file to your repository, and even modify it.
