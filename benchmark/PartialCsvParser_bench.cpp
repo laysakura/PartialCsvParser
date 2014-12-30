@@ -47,7 +47,7 @@ int main(int argc, char * argv[]) {
   // instantiate CsvConfig
   BENCH_START;
   PCP::CsvConfig csv_config(filepath, false);
-  BENCH_STOP("mmap(2) file");
+  BENCH_STOP("mmap(2)+madvise(2) file");
 
   // setup range each thread parse
   size_t size_per_thread = (csv_config.filesize() - csv_config.body_offset()) / n_threads;
