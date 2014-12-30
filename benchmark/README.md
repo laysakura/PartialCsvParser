@@ -90,7 +90,7 @@ directory=/dev/shm
 
 $ vim sequential-read-hdd.fio
 [sequential-read]
-rw=randread
+rw=read
 size=512m
 directory=/dev/shm
 
