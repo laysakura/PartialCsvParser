@@ -95,21 +95,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
+<p>Parser to split CSV into rows and columns.  
+ <a href="class_p_c_p_1_1_partial_csv_parser.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_partial_csv_parser_8hpp_source.html">PartialCsvParser.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a022a47f082ce6d359fb895f2f7503280"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#a022a47f082ce6d359fb895f2f7503280">PartialCsvParser</a> (const <a class="el" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp;csv_config, size_t parse_from=PARSE_FROM_BODY_BEGINNING, size_t parse_to=PARSE_TO_FILE_END)</td></tr>
-<tr class="memdesc:a022a47f082ce6d359fb895f2f7503280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a022a47f082ce6d359fb895f2f7503280">More...</a><br /></td></tr>
-<tr class="separator:a022a47f082ce6d359fb895f2f7503280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a688edf0594f76baf0ddc197926b0f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#a0a688edf0594f76baf0ddc197926b0f3">PartialCsvParser</a> (const <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html">Memory::CsvConfig</a> &amp;csv_config, size_t parse_from=PARSE_FROM_BODY_BEGINNING, size_t parse_to=PARSE_TO_FILE_END)</td></tr>
+<tr class="memdesc:a0a688edf0594f76baf0ddc197926b0f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a0a688edf0594f76baf0ddc197926b0f3">More...</a><br /></td></tr>
+<tr class="separator:a0a688edf0594f76baf0ddc197926b0f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7dd18ced1bab5bd08812b1b7ecd527f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#ab7dd18ced1bab5bd08812b1b7ecd527f">~PartialCsvParser</a> ()</td></tr>
 <tr class="separator:ab7dd18ced1bab5bd08812b1b7ecd527f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65af2617da69841fa4ed264cfa49ad4c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_p_c_p_1_1_partial_csv_parser.html#a65af2617da69841fa4ed264cfa49ad4c">get_row</a> ()  throw (PCPCsvError)</td></tr>
 <tr class="memdesc:a65af2617da69841fa4ed264cfa49ad4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an array of parsed columns.  <a href="#a65af2617da69841fa4ed264cfa49ad4c">More...</a><br /></td></tr>
 <tr class="separator:a65af2617da69841fa4ed264cfa49ad4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a022a47f082ce6d359fb895f2f7503280"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Parser to split CSV into rows and columns. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a0a688edf0594f76baf0ddc197926b0f3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -119,7 +124,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">PCP::PartialCsvParser::PartialCsvParser </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_p_c_p_1_1_csv_config.html">CsvConfig</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html">Memory::CsvConfig</a> &amp;&#160;</td>
           <td class="paramname"><em>csv_config</em>, </td>
         </tr>
         <tr>
@@ -150,9 +155,9 @@ Public Member Functions</h2></td></tr>
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">csv_config</td><td>Instance of <a class="el" href="class_p_c_p_1_1_csv_config.html" title="Parses CSV file. ">CsvConfig</a>. </td></tr>
-    <tr><td class="paramname">parse_from</td><td>CSV file's <em>approximate</em> offset to start parsing. Must be no less than <a class="el" href="class_p_c_p_1_1_csv_config.html#aa28eae4c19dda51ea055973ae2cdd84e" title="Return the offset where CSV body (excluding header line) starts from. ">CsvConfig::body_offset()</a>. <code>parse_from</code> = PARSE_FROM_BODY_BEGINNING has the same meaning with <code>parse_from</code> = <a class="el" href="class_p_c_p_1_1_csv_config.html#aa28eae4c19dda51ea055973ae2cdd84e" title="Return the offset where CSV body (excluding header line) starts from. ">CsvConfig::body_offset()</a>. </td></tr>
-    <tr><td class="paramname">parse_to</td><td>CSV file's <em>approximate</em> offset to stop parsing. Must be no less than <code>parse_from</code> and less than <a class="el" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf" title="Return the size of CSV file. ">CsvConfig::filesize()</a>. <code>parse_to</code> = PARSE_TO_FILE_END has the same meaning with <code>parse_to</code> = <a class="el" href="class_p_c_p_1_1_csv_config.html#a596c6599cb72bf93a5cc4a7f4b07fadf" title="Return the size of CSV file. ">CsvConfig::filesize()</a> - 1.</td></tr>
+    <tr><td class="paramname">csv_config</td><td>Instance of <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html" title="Parses CSV from memory. ">Memory::CsvConfig</a> or its child class. </td></tr>
+    <tr><td class="paramname">parse_from</td><td>CSV file's <em>approximate</em> offset to start parsing. Must be no less than <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html#a9216a2db12b73e47a44b59469d740dc3" title="Return the offset where CSV body (excluding header line) starts from. ">CsvConfig::body_offset()</a>. <code>parse_from</code> = PARSE_FROM_BODY_BEGINNING has the same meaning with <code>parse_from</code> = <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html#a9216a2db12b73e47a44b59469d740dc3" title="Return the offset where CSV body (excluding header line) starts from. ">CsvConfig::body_offset()</a>. </td></tr>
+    <tr><td class="paramname">parse_to</td><td>CSV file's <em>approximate</em> offset to stop parsing. Must be no less than <code>parse_from</code> and less than <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html#ac7073ed3dd097f017eb4dedac8c99d42" title="Return the size of CSV file. ">CsvConfig::filesize()</a>. <code>parse_to</code> = PARSE_TO_FILE_END has the same meaning with <code>parse_to</code> = <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html#ac7073ed3dd097f017eb4dedac8c99d42" title="Return the size of CSV file. ">CsvConfig::filesize()</a> - 1.</td></tr>
   </table>
   </dd>
 </dl>
@@ -236,7 +241,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 31 2014 09:53:24 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Dec 31 2014 10:32:38 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
