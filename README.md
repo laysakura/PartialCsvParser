@@ -127,8 +127,7 @@ Got a row: Germany      Franziskaner    Hefe-Weissbier
 ### More examples
 
 - [Parses a CSV file in parallel](./example/01_parse_with_2parsers_threaded.cpp)
-- [TSV from memory](./example/03_parse_tsv_from_memory.cpp)
-- [UTF-8 CSV file](./example/02_parse_utf8.cpp)
+- [UTF-8 TSV from memory](./example/03_parse_tsv_from_memory.cpp)
 
 
 ## Anti-features
