@@ -200,6 +200,7 @@ namespace Memory {
  */
 class CsvConfig {
 public:
+
   /**
    * Constructor to parse CSV from null-terminated C string.
    * @param str_with_null_terminator CSV string terminated with '\0'.
@@ -214,15 +215,12 @@ public:
     char field_terminator = ',',
     char line_terminator = '\n',
     bool _lazy_initialization = false)
-  throw(PCPError)
   : has_header_line(has_header_line),
     field_terminator(field_terminator), line_terminator(line_terminator),
     csv_text(str_with_null_terminator),
     n_columns(0)
   {
-    // UTF-8 compatibility
-    ASSERT(0 <= field_terminator); ASSERT(field_terminator <= 127);
-    ASSERT(0 <= line_terminator); ASSERT(line_terminator <= 127);
+    assert_utf8_compatibility();
 
     if (!_lazy_initialization) {
       ASSERT(csv_text);
@@ -231,10 +229,36 @@ public:
     }
   }
 
+  /**
+   * Constructor to parse CSV from string with length.
+   * @param str_length Length of \p str.
+   * @param str CSV string, which is not necessarily terminated with '\0'.
+   * @param has_header_line If CSV file has header at first line, set true.
+   * @param field_terminator Character to separate columns. For UTF-8 compatibility, only 0 ~ 127 are allowed.
+   * @param line_terminator Character to separate rows. For UTF-8 compatibility, only 0 ~ 127 are allowed.
+   */
+  CsvConfig(
+    size_t str_length,
+    const char * const str,
+    bool has_header_line = true,
+    char field_terminator = ',',
+    char line_terminator = '\n')
+  : has_header_line(has_header_line),
+    field_terminator(field_terminator), line_terminator(line_terminator),
+    csv_size(str_length), csv_text(str),
+    n_columns(0)
+  {
+    ASSERT(str_length > 0);
+    ASSERT(str);
+    assert_utf8_compatibility();
+
+    init();
+  }
+
   virtual ~CsvConfig() {}
 
   /**
-   * Return the size of CSV file.
+   * Return the size of CSV from file.
    */
   inline size_t filesize() const { return csv_size; }
 
@@ -302,6 +326,12 @@ protected:
     }
   }
 
+private:
+  inline void assert_utf8_compatibility() const {
+    ASSERT(0 <= field_terminator); ASSERT(field_terminator <= 127);
+    ASSERT(0 <= line_terminator); ASSERT(line_terminator <= 127);
+  }
+
   PREVENT_CLASS_DEFAULT_METHODS(CsvConfig);
 };
 
@@ -362,12 +392,15 @@ typedef struct partial_csv_t {
 } partial_csv_t;
 
 
+/**
+ * Parser to split CSV into rows and columns.
+ */
 class PartialCsvParser {
 public:
 
   /**
    * Constructor.
-   * @param csv_config Instance of CsvConfig.
+   * @param csv_config Instance of Memory::CsvConfig or its child class.
    * @param parse_from CSV file's <em>approximate</em> offset to start parsing. Must be no less than CsvConfig::body_offset().
    *   \p parse_from = PARSE_FROM_BODY_BEGINNING has the same meaning with \p parse_from = CsvConfig::body_offset().
    * @param parse_to CSV file's <em>approximate</em> offset to stop parsing. Must be no less than \p parse_from and less than CsvConfig::filesize().
