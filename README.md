@@ -44,6 +44,8 @@ I appreciate your pull requests if you make some improvements :)
       ![Comparison of CSV parser's performance](https://docs.google.com/spreadsheets/d/1ZqmajL9r4aXAvk_7rp3j7KdLWN71-IbWhVtxB6HpSw4/pubchart?oid=1550764323&format=image)
       ![Scalability on clokoap100](https://docs.google.com/spreadsheets/d/1ZqmajL9r4aXAvk_7rp3j7KdLWN71-IbWhVtxB6HpSw4/pubchart?oid=1943811886&format=image)
 
+- Input CSV from both files and memories.
+
 - Simple interface working with STL (Standard Template Library).
 
 - Column separator (`,` by default) and line separator (`\n` by default) are customizable.
