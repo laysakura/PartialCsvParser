@@ -157,7 +157,7 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">csv_config</td><td>Instance of <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html" title="Parses CSV from memory. ">Memory::CsvConfig</a> or its child class. </td></tr>
     <tr><td class="paramname">parse_from</td><td>CSV file's <em>approximate</em> offset to start parsing. Must be no less than <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html#a9216a2db12b73e47a44b59469d740dc3" title="Return the offset where CSV body (excluding header line) starts from. ">CsvConfig::body_offset()</a>. <code>parse_from</code> = PARSE_FROM_BODY_BEGINNING has the same meaning with <code>parse_from</code> = <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html#a9216a2db12b73e47a44b59469d740dc3" title="Return the offset where CSV body (excluding header line) starts from. ">CsvConfig::body_offset()</a>. </td></tr>
-    <tr><td class="paramname">parse_to</td><td>CSV file's <em>approximate</em> offset to stop parsing. Must be no less than <code>parse_from</code> and less than <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html#ac7073ed3dd097f017eb4dedac8c99d42" title="Return the size of CSV file. ">CsvConfig::filesize()</a>. <code>parse_to</code> = PARSE_TO_FILE_END has the same meaning with <code>parse_to</code> = <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html#ac7073ed3dd097f017eb4dedac8c99d42" title="Return the size of CSV file. ">CsvConfig::filesize()</a> - 1.</td></tr>
+    <tr><td class="paramname">parse_to</td><td>CSV file's <em>approximate</em> offset to stop parsing. Must be no less than <code>parse_from</code> and less than <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html#ac7073ed3dd097f017eb4dedac8c99d42" title="Return the size of CSV from file. ">CsvConfig::filesize()</a>. <code>parse_to</code> = PARSE_TO_FILE_END has the same meaning with <code>parse_to</code> = <a class="el" href="class_p_c_p_1_1_memory_1_1_csv_config.html#ac7073ed3dd097f017eb4dedac8c99d42" title="Return the size of CSV from file. ">CsvConfig::filesize()</a> - 1.</td></tr>
   </table>
   </dd>
 </dl>
@@ -241,7 +241,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Dec 31 2014 10:32:38 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Dec 31 2014 10:33:03 for PartialCsvParser by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
