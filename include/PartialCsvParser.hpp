@@ -188,59 +188,50 @@ inline std::vector<std::string> _split(const char * const str, size_t len, char 
 }
 
 
+namespace Memory { class CsvConfig; }
 class CsvConfig;
 class PartialCsvParser;
 
+
+namespace Memory {
+
+/**
+ * Parses CSV from memory.
+ */
 class CsvConfig {
 public:
   /**
-   * Constructor.
-   * @param filepath Path to CSV file to read.
+   * Constructor to parse CSV from null-terminated C string.
+   * @param str_with_null_terminator CSV string terminated with '\0'.
    * @param has_header_line If CSV file has header at first line, set true.
    * @param field_terminator Character to separate columns. For UTF-8 compatibility, only 0 ~ 127 are allowed.
    * @param line_terminator Character to separate rows. For UTF-8 compatibility, only 0 ~ 127 are allowed.
+   * @param _lazy_initialization Always set false.
    */
   CsvConfig(
-    const char * const filepath,
+    const char * const str_with_null_terminator,
     bool has_header_line = true,
     char field_terminator = ',',
-    char line_terminator = '\n')
+    char line_terminator = '\n',
+    bool _lazy_initialization = false)
   throw(PCPError)
-  : filepath(filepath), has_header_line(has_header_line),
+  : has_header_line(has_header_line),
     field_terminator(field_terminator), line_terminator(line_terminator),
+    csv_text(str_with_null_terminator),
     n_columns(0)
   {
     // UTF-8 compatibility
     ASSERT(0 <= field_terminator); ASSERT(field_terminator <= 127);
     ASSERT(0 <= line_terminator); ASSERT(line_terminator <= 127);
 
-    if ((fd = open(filepath, O_RDONLY)) == -1)
-      STRERROR_THROW(PCPError, std::string("while open ") + filepath);
-    csv_size = _filesize(fd);
-    if ((csv_text = static_cast<const char *>(mmap(NULL, csv_size, PROT_READ, MAP_PRIVATE, fd, 0))) == (void*)-1)
-      STRERROR_THROW(PCPError, std::string("while mmap ") + filepath);
-    // prefetch pages from disk to avoid random accesses from threads.
-    if (madvise((void*)csv_text, csv_size, MADV_WILLNEED) == -1)
-      STRERROR_THROW(PCPError, std::string("while madvise ") + filepath);
-
-    // parse first line to calculate n_columns
-    const char * line = 0;
-    size_t line_length = 0;
-    _get_current_line(csv_text, csv_size, 0, line_terminator, &line, &line_length);
-    std::vector<std::string> columns = _split(line, line_length, field_terminator);
-    n_columns = columns.size();
-
-    // set headers if exist
-    if (has_header_line) {
-      header_length = line_length;
-      headers = columns;
+    if (!_lazy_initialization) {
+      ASSERT(csv_text);
+      csv_size = std::strlen(csv_text);
+      init();
     }
   }
 
-  ~CsvConfig() {
-    if (munmap((void*)csv_text, csv_size) != 0) PERROR_ABORT("while munmap");
-    if (close(fd) != 0) PERROR_ABORT("while closing file descriptor");
-  }
+  virtual ~CsvConfig() {}
 
   /**
    * Return the size of CSV file.
@@ -283,13 +274,11 @@ public:
    */
   inline const char get_line_terminator() const { return line_terminator; }
 
-private:
-  const char * const filepath;
+protected:
   const bool has_header_line;
   const char field_terminator;
   const char line_terminator;
 
-  int fd;
   size_t csv_size;
   const char * csv_text;
 
@@ -297,6 +286,67 @@ private:
   size_t header_length;
 
   size_t n_columns;
+
+  inline void init() {
+    // parse first line to calculate n_columns
+    const char * line = 0;
+    size_t line_length = 0;
+    _get_current_line(csv_text, csv_size, 0, line_terminator, &line, &line_length);
+    std::vector<std::string> columns = _split(line, line_length, field_terminator);
+    n_columns = columns.size();
+
+    // set headers if exist
+    if (has_header_line) {
+      header_length = line_length;
+      headers = columns;
+    }
+  }
+
+  PREVENT_CLASS_DEFAULT_METHODS(CsvConfig);
+};
+
+}
+
+
+/**
+ * Parses CSV file.
+ */
+class CsvConfig : public Memory::CsvConfig {
+public:
+  /**
+   * Constructor.
+   * @param filepath Path to CSV file to read.
+   * @param has_header_line If CSV file has header at first line, set true.
+   * @param field_terminator Character to separate columns. For UTF-8 compatibility, only 0 ~ 127 are allowed.
+   * @param line_terminator Character to separate rows. For UTF-8 compatibility, only 0 ~ 127 are allowed.
+   */
+  CsvConfig(
+    const char * const filepath,
+    bool has_header_line = true,
+    char field_terminator = ',',
+    char line_terminator = '\n')
+  throw(PCPError)
+  : Memory::CsvConfig(0, has_header_line, field_terminator, line_terminator, true)
+  {
+    if ((fd = open(filepath, O_RDONLY)) == -1)
+      STRERROR_THROW(PCPError, std::string("while open ") + filepath);
+    csv_size = _filesize(fd);
+    if ((csv_text = static_cast<const char *>(mmap(NULL, csv_size, PROT_READ, MAP_PRIVATE, fd, 0))) == (void*)-1)
+      STRERROR_THROW(PCPError, std::string("while mmap ") + filepath);
+    // prefetch pages from disk to avoid random accesses from threads.
+    if (madvise((void*)csv_text, csv_size, MADV_WILLNEED) == -1)
+      STRERROR_THROW(PCPError, std::string("while madvise ") + filepath);
+
+    init();
+  }
+
+  ~CsvConfig() {
+    if (munmap((void*)csv_text, csv_size) != 0) PERROR_ABORT("while munmap");
+    if (close(fd) != 0) PERROR_ABORT("while closing file descriptor");
+  }
+
+private:
+  int fd;
 
   PREVENT_CLASS_DEFAULT_METHODS(CsvConfig);
 };
@@ -355,7 +405,7 @@ public:
    * In short, <b>partial parser who covers the beginning of a line parses the line</b>.
    */
   PartialCsvParser(
-    const CsvConfig & csv_config,
+    const Memory::CsvConfig & csv_config,
     size_t parse_from = PARSE_FROM_BODY_BEGINNING,
     size_t parse_to = PARSE_TO_FILE_END)
   : csv_config(csv_config), parse_from(parse_from), parse_to(parse_to)
@@ -427,7 +477,7 @@ private:
   static const size_t PARSE_FROM_BODY_BEGINNING = -1;
   static const size_t PARSE_TO_FILE_END = -1;
 
-  const CsvConfig & csv_config;
+  const Memory::CsvConfig & csv_config;
   size_t parse_from, parse_to;
   size_t cur_pos;
 
