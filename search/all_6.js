@@ -1,12 +1,13 @@
 var searchData=
 [
   ['partialcsvparser_27s_20reference_20manual',['PartialCsvParser&apos;s reference manual',['../index.html',1,'']]],
+  ['memory',['Memory',['../namespace_p_c_p_1_1_memory.html',1,'PCP']]],
   ['parse_5ffrom',['parse_from',['../struct_p_c_p_1_1partial__csv__t.html#a3b29837086ea84b1f2adf1b1378076d2',1,'PCP::partial_csv_t']]],
   ['parse_5fto',['parse_to',['../struct_p_c_p_1_1partial__csv__t.html#ae70ca449e0550775c6c21ad8046d9f64',1,'PCP::partial_csv_t']]],
   ['partial_5fcsv_5ft',['partial_csv_t',['../struct_p_c_p_1_1partial__csv__t.html',1,'PCP']]],
   ['partial_5fcsv_5ft',['partial_csv_t',['../namespace_p_c_p.html#a061d04d3ec716200b891b79883268e32',1,'PCP']]],
-  ['partialcsvparser',['PartialCsvParser',['../class_p_c_p_1_1_partial_csv_parser.html#a022a47f082ce6d359fb895f2f7503280',1,'PCP::PartialCsvParser']]],
   ['partialcsvparser',['PartialCsvParser',['../class_p_c_p_1_1_partial_csv_parser.html',1,'PCP']]],
+  ['partialcsvparser',['PartialCsvParser',['../class_p_c_p_1_1_partial_csv_parser.html#a022a47f082ce6d359fb895f2f7503280',1,'PCP::PartialCsvParser']]],
   ['partialcsvparser_2ehpp',['PartialCsvParser.hpp',['../_partial_csv_parser_8hpp.html',1,'']]],
   ['pcp',['PCP',['../namespace_p_c_p.html',1,'']]],
   ['pcpcsverror',['PCPCsvError',['../class_p_c_p_1_1_p_c_p_csv_error.html#a97655759dc1c02fcb4d5e6416137b4e0',1,'PCP::PCPCsvError']]],
