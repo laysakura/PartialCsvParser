@@ -10,17 +10,17 @@ This parser is meant to be created to **parse a CSV file in parallel**.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [PartialCsvParser](#partialcsvparser)
-  - [Features](#features)
-  - [Examples](#examples)
-    - [Simplest example: Parse and print a CSV file](#simplest-example-parse-and-print-a-csv-file)
-    - [Multi-thread example: Parses a CSV file in parallel](#multi-thread-example-parses-a-csv-file-in-parallel)
-  - [Anti-features](#anti-features)
-  - [Reference manual](#reference-manual)
-  - [Parser behaviors](#parser-behaviors)
-    - [All lines of CSV file are parsed exactly once](#all-lines-of-csv-file-are-parsed-exactly-once)
-  - [For developers](#for-developers)
-    - [How to run test cases](#how-to-run-test-cases)
+- [Installation](#installation)
+- [Features](#features)
+- [Examples](#examples)
+  - [Simplest example: Parse and print a CSV file](#simplest-example-parse-and-print-a-csv-file)
+  - [More examples](#more-examples)
+- [Anti-features](#anti-features)
+- [Reference manual](#reference-manual)
+- [Parser behaviors](#parser-behaviors)
+  - [All lines of CSV file are parsed exactly once](#all-lines-of-csv-file-are-parsed-exactly-once)
+- [For developers](#for-developers)
+  - [How to run test cases](#how-to-run-test-cases)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

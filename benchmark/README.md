@@ -1,3 +1,23 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [PartialCsvParser benchmark](#partialcsvparser-benchmark)
+  - [Evaluation settings](#evaluation-settings)
+    - [MBA](#mba)
+    - [clokoap100](#clokoap100)
+    - [Tips: How to check read speed](#tips-how-to-check-read-speed)
+    - [Tips: Memory file system on Mac OSX](#tips-memory-file-system-on-mac-osx)
+  - [Benchmark results](#benchmark-results)
+    - [Comparison with othre libraries](#comparison-with-othre-libraries)
+    - [Scalability](#scalability)
+  - [Generate benchmark data](#generate-benchmark-data)
+  - [Build benchmark executables](#build-benchmark-executables)
+  - [Run PartialCsvParser benchmark](#run-partialcsvparser-benchmark)
+  - [Run csv-parser-cplusplus benchmark](#run-csv-parser-cplusplus-benchmark)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # PartialCsvParser benchmark
 
 Following benchmarks are taken.
