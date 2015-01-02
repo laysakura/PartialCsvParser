@@ -137,7 +137,7 @@ Got a row: Germany      Franziskaner    Hefe-Weissbier
 - Multi-byte line separator like CRLF is not supported.
     - This may be easily fixed, thanks :D
 
-- **Enclosure character (usually `"`) is not supported**.
+- **Enclosure character (typically `"`) is not supported**.
     - The following CSV file is recognized to have 2-row and 2-column,
       while it should 1-row and 3-column if `"` is treated as enclosure character.
 
